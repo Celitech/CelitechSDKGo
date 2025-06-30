@@ -1,0 +1,43 @@
+image: golang:1.18
+
+pipelines:
+  tags:
+    '*':
+      - step:
+          name: Pre-check for Environment Variables
+          script:
+            - echo "Checking if necessary environment variables are defined..."
+            - |
+              if [ -z "$MANIFEST_PATH" ]; then
+                echo "Error: MANIFEST_PATH is not defined"
+                exit 1
+              fi
+      - step:
+          name: Publish
+          caches:
+            - go
+          script:
+            - apt-get update && apt-get install -y jq
+            - MODULE_NAME=$(jq -r '.config.languageOptions.go.goModuleName' $MANIFEST_PATH)
+            
+            - >
+              echo "Go module name: $MODULE_NAME"
+            - >
+              if [ -z "$MODULE_NAME" ]; then
+                echo "Error: MODULE_NAME is empty"
+                exit 1
+              fi
+            - >
+              if [ ! -f "go.mod" ]; then
+                echo "Error: go.mod file not found"
+                exit 1
+              fi
+              
+            - go mod download
+            - GOPROXY=proxy.golang.org go list -m $MODULE_NAME
+          needs:
+            - step: Pre-check for Environment Variables
+
+definitions:
+  caches:
+    go: ~/.cache/go-build
