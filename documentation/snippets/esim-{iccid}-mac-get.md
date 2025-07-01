@@ -1,0 +1,20 @@
+```go
+import (
+  "fmt"
+  "encoding/json"
+  "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
+  "github.com/Celitech/CelitechSDKGo/pkg/celitech"
+
+)
+
+config := celitechconfig.NewConfig()
+client := celitech.NewCelitech(config)
+
+response, err := client.ESim.GetEsimMac(context.Background(), "iccid")
+if err != nil {
+  panic(err)
+}
+
+fmt.Println(response)
+
+```

@@ -1,0 +1,29 @@
+```go
+import (
+  "fmt"
+  "encoding/json"
+  "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
+  "github.com/Celitech/CelitechSDKGo/pkg/celitech"
+  "github.com/Celitech/CelitechSDKGo/pkg/util"
+  "github.com/Celitech/CelitechSDKGo/pkg/purchases"
+)
+
+config := celitechconfig.NewConfig()
+client := celitech.NewCelitech(config)
+
+
+request := purchases.CreatePurchaseRequest{
+  Destination: util.ToPointer("Destination"),
+  DataLimitInGb: util.ToPointer(float64(123)),
+  StartDate: util.ToPointer("StartDate"),
+  EndDate: util.ToPointer("EndDate"),
+}
+
+response, err := client.Purchases.CreatePurchase(context.Background(), request)
+if err != nil {
+  panic(err)
+}
+
+fmt.Println(response)
+
+```
