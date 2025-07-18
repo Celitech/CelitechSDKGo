@@ -8,6 +8,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 response, err := client.ESim.GetEsimMac(context.Background(), "iccid")
