@@ -41,6 +41,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 
@@ -91,6 +93,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 
@@ -137,6 +141,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 
@@ -186,6 +192,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 
@@ -233,6 +241,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 response, err := client.Purchases.GetPurchaseConsumption(context.Background(), "purchaseId")
