@@ -9,13 +9,15 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 
 request := purchases.EditPurchaseRequest{
-  PurchaseId: util.ToPointer("PurchaseId"),
-  StartDate: util.ToPointer("StartDate"),
-  EndDate: util.ToPointer("EndDate"),
+  PurchaseId: util.ToPointer("ae471106-c8b4-42cf-b83a-b061291f2922"),
+  StartDate: util.ToPointer("2023-11-01"),
+  EndDate: util.ToPointer("2023-11-20"),
 }
 
 response, err := client.Purchases.EditPurchase(context.Background(), request)

@@ -41,14 +41,16 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 
 request := purchases.CreatePurchaseV2Request{
-  Destination: util.ToPointer("Destination"),
+  Destination: util.ToPointer("FRA"),
   DataLimitInGb: util.ToPointer(float64(123)),
-  StartDate: util.ToPointer("StartDate"),
-  EndDate: util.ToPointer("EndDate"),
+  StartDate: util.ToPointer("2023-11-01"),
+  EndDate: util.ToPointer("2023-11-20"),
   Quantity: util.ToPointer(float64(123)),
 }
 
@@ -91,6 +93,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 
@@ -137,14 +141,16 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 
 request := purchases.TopUpEsimRequest{
-  Iccid: util.ToPointer("Iccid"),
+  Iccid: util.ToPointer("1111222233334444555000"),
   DataLimitInGb: util.ToPointer(float64(123)),
-  StartDate: util.ToPointer("StartDate"),
-  EndDate: util.ToPointer("EndDate"),
+  StartDate: util.ToPointer("2023-11-01"),
+  EndDate: util.ToPointer("2023-11-20"),
 }
 
 response, err := client.Purchases.TopUpEsim(context.Background(), request)
@@ -186,13 +192,15 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 
 request := purchases.EditPurchaseRequest{
-  PurchaseId: util.ToPointer("PurchaseId"),
-  StartDate: util.ToPointer("StartDate"),
-  EndDate: util.ToPointer("EndDate"),
+  PurchaseId: util.ToPointer("ae471106-c8b4-42cf-b83a-b061291f2922"),
+  StartDate: util.ToPointer("2023-11-01"),
+  EndDate: util.ToPointer("2023-11-20"),
 }
 
 response, err := client.Purchases.EditPurchase(context.Background(), request)
@@ -233,6 +241,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 response, err := client.Purchases.GetPurchaseConsumption(context.Background(), "purchaseId")

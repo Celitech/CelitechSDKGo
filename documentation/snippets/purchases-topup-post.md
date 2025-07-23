@@ -9,14 +9,16 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 
 request := purchases.TopUpEsimRequest{
-  Iccid: util.ToPointer("Iccid"),
+  Iccid: util.ToPointer("1111222233334444555000"),
   DataLimitInGb: util.ToPointer(float64(123)),
-  StartDate: util.ToPointer("StartDate"),
-  EndDate: util.ToPointer("EndDate"),
+  StartDate: util.ToPointer("2023-11-01"),
+  EndDate: util.ToPointer("2023-11-20"),
 }
 
 response, err := client.Purchases.TopUpEsim(context.Background(), request)

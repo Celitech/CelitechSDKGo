@@ -9,14 +9,16 @@ import (
 )
 
 config := celitechconfig.NewConfig()
+config.SetBaseUrl("BaseUrl")
+config.SetTimeout("Timeout")
 client := celitech.NewCelitech(config)
 
 
 request := purchases.CreatePurchaseV2Request{
-  Destination: util.ToPointer("Destination"),
+  Destination: util.ToPointer("FRA"),
   DataLimitInGb: util.ToPointer(float64(123)),
-  StartDate: util.ToPointer("StartDate"),
-  EndDate: util.ToPointer("EndDate"),
+  StartDate: util.ToPointer("2023-11-01"),
+  EndDate: util.ToPointer("2023-11-20"),
   Quantity: util.ToPointer(float64(123)),
 }
 
