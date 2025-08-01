@@ -8,8 +8,9 @@ import (
 )
 
 config := celitechconfig.NewConfig()
-config.SetBaseUrl("BaseUrl")
-config.SetTimeout("Timeout")
+config.SetBaseUrl("BASE_URL")
+config.SetClientId("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 response, err := client.ESim.GetEsimHistory(context.Background(), "iccid")
