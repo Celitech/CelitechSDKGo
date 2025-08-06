@@ -9,8 +9,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
-config.SetBaseUrl("BaseUrl")
-config.SetTimeout("Timeout")
+config.SetClientId("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 
