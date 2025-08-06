@@ -40,13 +40,13 @@ import (
 )
 
 config := celitechconfig.NewConfig()
-config.SetBaseUrl("BaseUrl")
-config.SetTimeout("Timeout")
+config.SetClientId("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 
 params := esim.GetEsimRequestParams{
-  Iccid: util.toPointer(util.ToPointer("Iccid")),
+  Iccid: util.toPointer(util.ToPointer("1111222233334444555000")),
 }
 
 response, err := client.ESim.GetEsim(context.Background(), params)
@@ -87,8 +87,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
-config.SetBaseUrl("BaseUrl")
-config.SetTimeout("Timeout")
+config.SetClientId("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 response, err := client.ESim.GetEsimDevice(context.Background(), "iccid")
@@ -129,8 +129,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
-config.SetBaseUrl("BaseUrl")
-config.SetTimeout("Timeout")
+config.SetClientId("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 response, err := client.ESim.GetEsimHistory(context.Background(), "iccid")
@@ -171,8 +171,8 @@ import (
 )
 
 config := celitechconfig.NewConfig()
-config.SetBaseUrl("BaseUrl")
-config.SetTimeout("Timeout")
+config.SetClientId("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 response, err := client.ESim.GetEsimMac(context.Background(), "iccid")
