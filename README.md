@@ -1,4 +1,4 @@
-# Celitech Go SDK 1.3.46
+# Celitech Go SDK 1.3.49
 
 Welcome to the Celitech SDK documentation. This guide will help you get started with integrating and using the Celitech SDK in your project.
 
@@ -6,8 +6,8 @@ Welcome to the Celitech SDK documentation. This guide will help you get started 
 
 ## Versions
 
-- API version: `1.3.46`
-- SDK version: `1.3.46`
+- API version: `1.3.49`
+- SDK version: `1.3.49`
 
 ## About the API
 
@@ -23,6 +23,7 @@ Useful links: [Homepage](https://www.celitech.com) | [Support email](mailto:supp
 - [Authentication](#authentication)
   - [OAuth Authentication](#oauth-authentication)
   - [Environment Variables](#environment-variables)
+- [Setting a Custom Timeout](#setting-a-custom-timeout)
 - [Services](#services)
   - [Response Wrappers](#response-wrappers)
 - [Models](#models)
@@ -61,6 +62,20 @@ These are the environment variables for the SDK:
 Environment variables are a way to configure your application outside the code. You can set these environment variables on the command line or use your project's existing tooling for managing environment variables.
 
 If you are using a `.env` file, a template with the variable names is provided in the `.env.example` file located in the same directory as this README.
+
+## Setting a Custom Timeout
+
+You can set a custom timeout for the SDK's HTTP requests as follows:
+
+```go
+import "time"
+
+config := celitechconfig.NewConfig()
+
+sdk := celitech.NewCelitech(config)
+
+sdk.SetTimeout(10 * time.Second)
+```
 
 ## Services
 
