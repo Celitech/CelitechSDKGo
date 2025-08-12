@@ -3,7 +3,7 @@ package purchases
 import "encoding/json"
 
 type CreatePurchaseRequest struct {
-	// ISO representation of the package's destination.
+	// ISO representation of the package's destination. Supports both ISO2 (e.g., 'FR') and ISO3 (e.g., 'FRA') country codes.
 	Destination *string `json:"destination,omitempty" required:"true"`
 	// Size of the package in GB. The available options are 0.5, 1, 2, 3, 5, 8, 20GB
 	DataLimitInGb *float64 `json:"dataLimitInGB,omitempty" required:"true"`

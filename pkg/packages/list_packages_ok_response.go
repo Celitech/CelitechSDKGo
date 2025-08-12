@@ -53,8 +53,10 @@ func (l *ListPackagesOkResponse) UnmarshalJSON(data []byte) error {
 type Packages struct {
 	// ID of the package
 	Id *string `json:"id,omitempty"`
-	// ISO representation of the package's destination.
+	// ISO3 representation of the package's destination.
 	Destination *string `json:"destination,omitempty"`
+	// ISO2 representation of the package's destination.
+	DestinationIso2 *string `json:"destinationISO2,omitempty"`
 	// Size of the package in Bytes
 	DataLimitInBytes *float64 `json:"dataLimitInBytes,omitempty"`
 	// Min number of days for the package
@@ -85,6 +87,17 @@ func (p *Packages) GetDestination() *string {
 
 func (p *Packages) SetDestination(destination string) {
 	p.Destination = &destination
+}
+
+func (p *Packages) GetDestinationIso2() *string {
+	if p == nil {
+		return nil
+	}
+	return p.DestinationIso2
+}
+
+func (p *Packages) SetDestinationIso2(destinationIso2 string) {
+	p.DestinationIso2 = &destinationIso2
 }
 
 func (p *Packages) GetDataLimitInBytes() *float64 {
