@@ -220,8 +220,10 @@ type Package_ struct {
 	Id *string `json:"id,omitempty"`
 	// Size of the package in Bytes
 	DataLimitInBytes *float64 `json:"dataLimitInBytes,omitempty"`
-	// ISO representation of the package's destination.
+	// ISO3 representation of the package's destination.
 	Destination *string `json:"destination,omitempty"`
+	// ISO2 representation of the package's destination.
+	DestinationIso2 *string `json:"destinationISO2,omitempty"`
 	// Name of the package's destination
 	DestinationName *string `json:"destinationName,omitempty"`
 	// Price of the package in cents
@@ -259,6 +261,17 @@ func (p *Package_) GetDestination() *string {
 
 func (p *Package_) SetDestination(destination string) {
 	p.Destination = &destination
+}
+
+func (p *Package_) GetDestinationIso2() *string {
+	if p == nil {
+		return nil
+	}
+	return p.DestinationIso2
+}
+
+func (p *Package_) SetDestinationIso2(destinationIso2 string) {
+	p.DestinationIso2 = &destinationIso2
 }
 
 func (p *Package_) GetDestinationName() *string {
