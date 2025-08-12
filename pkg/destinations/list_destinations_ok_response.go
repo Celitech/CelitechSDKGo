@@ -28,8 +28,10 @@ func (l ListDestinationsOkResponse) String() string {
 type Destinations struct {
 	// Name of the destination
 	Name *string `json:"name,omitempty"`
-	// ISO representation of the destination
+	// ISO3 representation of the destination
 	Destination *string `json:"destination,omitempty"`
+	// ISO2 representation of the destination
+	DestinationIso2 *string `json:"destinationISO2,omitempty"`
 	// This array indicates the geographical area covered by a specific destination. If the destination represents a single country, the array will include that country. However, if the destination represents a broader regional scope, the array will be populated with the names of the countries belonging to that region.
 	SupportedCountries []string `json:"supportedCountries,omitempty"`
 }
@@ -54,6 +56,17 @@ func (d *Destinations) GetDestination() *string {
 
 func (d *Destinations) SetDestination(destination string) {
 	d.Destination = &destination
+}
+
+func (d *Destinations) GetDestinationIso2() *string {
+	if d == nil {
+		return nil
+	}
+	return d.DestinationIso2
+}
+
+func (d *Destinations) SetDestinationIso2(destinationIso2 string) {
+	d.DestinationIso2 = &destinationIso2
 }
 
 func (d *Destinations) GetSupportedCountries() []string {
