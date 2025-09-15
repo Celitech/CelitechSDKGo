@@ -13,7 +13,6 @@ import (
 )
 
 type Celitech struct {
-	OAuth        *oauth.OAuthService
 	Destinations *destinations.DestinationsService
 	Packages     *packages.PackagesService
 	Purchases    *purchases.PurchasesService
@@ -24,6 +23,7 @@ type Celitech struct {
 
 func NewCelitech(config celitechconfig.Config) *Celitech {
 	oAuth := oauth.NewOAuthService()
+	oAuth.SetBaseUrl("https://auth.celitech.net")
 	destinations := destinations.NewDestinationsService()
 	packages := packages.NewPackagesService()
 	purchases := purchases.NewPurchasesService()
@@ -32,7 +32,6 @@ func NewCelitech(config celitechconfig.Config) *Celitech {
 
 	manager := configmanager.NewConfigManager(config, oAuth)
 	oAuth.WithConfigManager(manager)
-	oAuth.SetBaseUrl("https://auth.celitech.net")
 	destinations.WithConfigManager(manager)
 	packages.WithConfigManager(manager)
 	purchases.WithConfigManager(manager)
@@ -40,7 +39,6 @@ func NewCelitech(config celitechconfig.Config) *Celitech {
 	iFrame.WithConfigManager(manager)
 
 	return &Celitech{
-		OAuth:        oAuth,
 		Destinations: destinations,
 		Packages:     packages,
 		Purchases:    purchases,
@@ -64,6 +62,10 @@ func (c *Celitech) SetClientId(clientId string) {
 
 func (c *Celitech) SetClientSecret(clientSecret string) {
 	c.manager.SetClientSecret(clientSecret)
+}
+
+func (c *Celitech) SetOAuthBaseUrl(oAuthBaseUrl string) {
+	c.manager.SetOAuthBaseUrl(oAuthBaseUrl)
 }
 
 // c029837e0e474b76bc487506e8799df5e3335891efe4fb02bda7a1441840310c

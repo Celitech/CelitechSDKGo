@@ -12,7 +12,7 @@ config.SetClientId("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
-response, err := client.ESim.GetEsimDevice(context.Background(), "iccid")
+response, err := client.ESim.GetEsimDevice(context.Background(), "1111222233334444555000")
 if err != nil {
   panic(err)
 }

@@ -49,6 +49,11 @@ func (api *IFrameService) SetClientSecret(clientSecret string) {
 	config.SetClientSecret(clientSecret)
 }
 
+func (api *IFrameService) SetOAuthBaseUrl(oAuthBaseUrl string) {
+	config := api.getConfig()
+	config.SetOAuthBaseUrl(oAuthBaseUrl)
+}
+
 // Generate a new token to be used in the iFrame
 func (api *IFrameService) Token(ctx context.Context) (*shared.CelitechResponse[TokenOkResponse], *shared.CelitechError) {
 	config := *api.getConfig()

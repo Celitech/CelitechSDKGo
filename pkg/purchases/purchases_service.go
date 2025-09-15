@@ -49,6 +49,11 @@ func (api *PurchasesService) SetClientSecret(clientSecret string) {
 	config.SetClientSecret(clientSecret)
 }
 
+func (api *PurchasesService) SetOAuthBaseUrl(oAuthBaseUrl string) {
+	config := api.getConfig()
+	config.SetOAuthBaseUrl(oAuthBaseUrl)
+}
+
 // This endpoint is used to purchase a new eSIM by providing the package details.
 func (api *PurchasesService) CreatePurchaseV2(ctx context.Context, createPurchaseV2Request CreatePurchaseV2Request) (*shared.CelitechResponse[[]CreatePurchaseV2OkResponse], *shared.CelitechError) {
 	config := *api.getConfig()

@@ -9,19 +9,17 @@ import (
 
 	"github.com/Celitech/CelitechSDKGo/pkg/celitech"
 	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
-	"github.com/Celitech/CelitechSDKGo/pkg/oauth"
-	"github.com/Celitech/CelitechSDKGo/pkg/util"
 )
 
 func main() {
 	loadEnv()
 
 	config := celitechconfig.NewConfig()
+	config.SetClientId("CLIENT_ID")
+	config.SetClientSecret("CLIENT_SECRET")
 	client := celitech.NewCelitech(config)
 
-	request := oauth.GetAccessTokenRequest{}
-
-	response, err := client.OAuth.GetAccessToken(context.Background(), request)
+	response, err := client.Destinations.ListDestinations(context.Background())
 	if err != nil {
 		panic(err)
 	}

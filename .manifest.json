@@ -1,11 +1,11 @@
 {
-  "liblabVersion": "2.25.42",
-  "date": "2025-08-12T12:52:44.071Z",
+  "liblabVersion": "2.25.45",
+  "date": "2025-09-15T14:27:07.156Z",
   "config": {
     "language": "go",
-    "apiId": 2623,
+    "apiId": 2738,
     "sdkName": "Celitech",
-    "sdkVersion": "1.3.52",
+    "sdkVersion": "1.3.53",
     "languages": ["go"],
     "auth": ["oauth"],
     "docs": ["snippets", "enhancedApiSpec"],
@@ -14,7 +14,7 @@
     "rawConfig": {
       "sdkName": "Celitech",
       "apiName": "Celitech",
-      "apiVersion": "1.3.52",
+      "apiVersion": "1.3.53",
       "specFilePath": "swagger.yaml",
       "languages": ["typescript", "python", "php", "java", "go", "csharp"],
       "docs": ["snippets", "enhancedApiSpec"],
@@ -30,7 +30,8 @@
         },
         "authentication": {
           "oauth": {
-            "enabled": true
+            "enabled": true,
+            "refreshBuffer": 5000
           }
         },
         "responseHeaders": false,
@@ -53,25 +54,25 @@
       "languageOptions": {
         "typescript": {
           "githubRepoName": "CelitechSDKTypeScript",
-          "sdkVersion": "1.3.52",
+          "sdkVersion": "1.3.53",
           "liblabVersion": "2",
           "npmName": "celitech-sdk"
         },
         "python": {
           "githubRepoName": "CelitechSDKPython",
-          "sdkVersion": "1.3.52",
+          "sdkVersion": "1.3.53",
           "liblabVersion": "2",
           "pypiPackageName": "celitech-sdk"
         },
         "php": {
           "githubRepoName": "CelitechSDKPHP",
-          "sdkVersion": "1.3.52",
+          "sdkVersion": "1.3.53",
           "liblabVersion": "2",
           "packageName": "celitech-sdk/sdk"
         },
         "java": {
           "githubRepoName": "CelitechSDKJava",
-          "sdkVersion": "1.3.52",
+          "sdkVersion": "1.3.53",
           "liblabVersion": "2",
           "groupId": "io.github.celitech",
           "artifactId": "celitech-sdk",
@@ -87,13 +88,13 @@
         },
         "go": {
           "githubRepoName": "CelitechSDKGo",
-          "sdkVersion": "1.3.52",
+          "sdkVersion": "1.3.53",
           "liblabVersion": "2",
           "goModuleName": "github.com/Celitech/CelitechSDKGo"
         },
         "csharp": {
           "githubRepoName": "CelitechSDKCSharp",
-          "sdkVersion": "1.3.52",
+          "sdkVersion": "1.3.53",
           "liblabVersion": "2",
           "packageId": "Celitech.SDK"
         }
@@ -112,7 +113,7 @@
       }
     },
     "liblabConfigVersion": "1.0.0",
-    "apiVersion": "1.3.52",
+    "apiVersion": "1.3.53",
     "apiName": "Celitech",
     "specFilePath": "swagger.yaml",
     "createDocs": false,
@@ -122,7 +123,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.52",
+        "sdkVersion": "1.3.53",
         "packageId": "Celitech.SDK"
       },
       "go": {
@@ -130,7 +131,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.52",
+        "sdkVersion": "1.3.53",
         "goModuleName": "github.com/Celitech/CelitechSDKGo"
       },
       "java": {
@@ -139,7 +140,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.52",
+        "sdkVersion": "1.3.53",
         "groupId": "io.github.celitech",
         "artifactId": "celitech-sdk",
         "includeKotlinSnippets": false,
@@ -157,7 +158,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.52",
+        "sdkVersion": "1.3.53",
         "alwaysInitializeOptionals": true,
         "pypiPackageName": "celitech-sdk"
       },
@@ -166,7 +167,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.52",
+        "sdkVersion": "1.3.53",
         "packageName": "celitech-sdk/sdk"
       },
       "typescript": {
@@ -174,7 +175,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.52",
+        "sdkVersion": "1.3.53",
         "bundle": true,
         "denoteCommon": false,
         "exportClassDefault": false,
@@ -205,7 +206,8 @@
     "authentication": {
       "oauth": {
         "enabled": true,
-        "basic": false
+        "basic": false,
+        "refreshBuffer": 5000
       }
     },
     "devContainer": true,
@@ -266,7 +268,10 @@
       "queriesData": []
     },
     "ai": false,
-    "specType": "openapi"
+    "specType": "openapi",
+    "deprecatedOperations": {
+      "include": true
+    }
   },
   "files": [
     "internal/validation/validate_array_length.go",
@@ -316,7 +321,6 @@
     "pkg/celitechconfig/environments.go",
     "LICENSE",
     ".env.example",
-    "documentation/snippets/oauth2-token-post.md",
     "documentation/snippets/destinations-get.md",
     "documentation/snippets/packages-get.md",
     "documentation/snippets/purchases-v2-post.md",
@@ -330,7 +334,6 @@
     "documentation/snippets/esim-{iccid}-history-get.md",
     "documentation/snippets/esim-{iccid}-mac-get.md",
     "documentation/snippets/iframe-token-post.md",
-    "documentation/models/get_access_token_ok_response.md",
     "documentation/models/create_purchase_v2_request.md",
     "documentation/models/create_purchase_request.md",
     "documentation/models/top_up_esim_request.md",
@@ -366,13 +369,11 @@
     "pkg/purchases/edit_purchase_ok_response.go",
     "pkg/purchases/get_purchase_consumption_ok_response.go",
     "pkg/iframe/token_ok_response.go",
-    "documentation/models/get_access_token_request.md",
     "documentation/models/list_destinations_ok_response.md",
     "documentation/models/list_packages_ok_response.md",
     "documentation/models/get_esim_ok_response.md",
     "documentation/models/get_esim_device_ok_response.md",
     "documentation/models/get_esim_mac_ok_response.md",
-    "documentation/services/o_auth_service.md",
     "documentation/services/destinations_service.md",
     "documentation/services/packages_service.md",
     "documentation/services/i_frame_service.md",
@@ -392,8 +393,8 @@
     "pkg/purchases/top_up_esim_ok_response.go",
     "pkg/esim/get_esim_history_ok_response.go",
     "documentation/services/e_sim_service.md",
-    "documentation/services/purchases_service.md",
     "pkg/purchases/list_purchases_ok_response.go",
+    "documentation/services/purchases_service.md",
     "README.md"
   ]
 }

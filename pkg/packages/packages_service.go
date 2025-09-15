@@ -49,6 +49,11 @@ func (api *PackagesService) SetClientSecret(clientSecret string) {
 	config.SetClientSecret(clientSecret)
 }
 
+func (api *PackagesService) SetOAuthBaseUrl(oAuthBaseUrl string) {
+	config := api.getConfig()
+	config.SetOAuthBaseUrl(oAuthBaseUrl)
+}
+
 // List Packages
 func (api *PackagesService) ListPackages(ctx context.Context, params ListPackagesRequestParams) (*shared.CelitechResponse[ListPackagesOkResponse], *shared.CelitechError) {
 	config := *api.getConfig()
