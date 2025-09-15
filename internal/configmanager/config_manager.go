@@ -24,7 +24,7 @@ func NewConfigManager(config celitechconfig.Config, tokenService oauthtokenmanag
 		Purchases:         config,
 		ESim:              config,
 		IFrame:            config,
-		oAuthTokenManager: oauthtokenmanager.NewOAuthTokenManager(tokenService),
+		oAuthTokenManager: oauthtokenmanager.NewOAuthTokenManager(tokenService, 5000),
 	}
 }
 
@@ -62,6 +62,15 @@ func (c *ConfigManager) SetClientSecret(clientSecret string) {
 	c.Purchases.SetClientSecret(clientSecret)
 	c.ESim.SetClientSecret(clientSecret)
 	c.IFrame.SetClientSecret(clientSecret)
+}
+
+func (c *ConfigManager) SetOAuthBaseUrl(oAuthBaseUrl string) {
+	c.OAuth.SetOAuthBaseUrl(oAuthBaseUrl)
+	c.Destinations.SetOAuthBaseUrl(oAuthBaseUrl)
+	c.Packages.SetOAuthBaseUrl(oAuthBaseUrl)
+	c.Purchases.SetOAuthBaseUrl(oAuthBaseUrl)
+	c.ESim.SetOAuthBaseUrl(oAuthBaseUrl)
+	c.IFrame.SetOAuthBaseUrl(oAuthBaseUrl)
 }
 
 func (c *ConfigManager) GetTokenManager() *oauthtokenmanager.OAuthTokenManager {

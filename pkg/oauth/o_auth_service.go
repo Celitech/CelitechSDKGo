@@ -50,6 +50,11 @@ func (api *OAuthService) SetClientSecret(clientSecret string) {
 	config.SetClientSecret(clientSecret)
 }
 
+func (api *OAuthService) SetOAuthBaseUrl(oAuthBaseUrl string) {
+	config := api.getConfig()
+	config.SetOAuthBaseUrl(oAuthBaseUrl)
+}
+
 // This endpoint was added by liblab
 func (api *OAuthService) GetAccessToken(ctx context.Context, getAccessTokenRequest GetAccessTokenRequest) (*shared.CelitechResponse[GetAccessTokenOkResponse], *shared.CelitechError) {
 	config := *api.getConfig()

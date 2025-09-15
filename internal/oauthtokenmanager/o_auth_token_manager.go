@@ -7,8 +7,9 @@ import (
 )
 
 type OAuthTokenManager struct {
-	token        *OAuthToken
-	tokenService TokenService
+	token         *OAuthToken
+	tokenService  TokenService
+	refreshBuffer int64
 }
 
 type TokenService interface {
@@ -20,15 +21,28 @@ type GetOAuthAccessTokenResponse interface {
 	GetAccessToken() *string
 }
 
-func NewOAuthTokenManager(tokenService TokenService) *OAuthTokenManager {
+func NewOAuthTokenManager(tokenService TokenService, refreshBuffer int64) *OAuthTokenManager {
 	return &OAuthTokenManager{
-		tokenService: tokenService,
+		tokenService:  tokenService,
+		refreshBuffer: refreshBuffer,
 	}
 }
 
 func (m *OAuthTokenManager) GetToken(scopes []string, config celitechconfig.Config) (*OAuthToken, error) {
+
+	// Check if the token is expired or within the buffer window
+	// If so, return it instead of fetching a new one
 	if m.token != nil && m.token.HasAllScopes(scopes) {
-		return m.token, nil
+		// A token without an expiry is considered valid indefinitely.
+		if m.token.ExpiresAt == nil {
+			return m.token, nil
+		}
+
+		// Check if the token is still valid and not within the refresh buffer window.
+		bufferedExpiry := m.token.ExpiresAt.Add(-time.Duration(m.refreshBuffer) * time.Second)
+		if bufferedExpiry.After(time.Now()) {
+			return m.token, nil
+		}
 	}
 
 	updatedScopesMap := make(map[string]struct{})

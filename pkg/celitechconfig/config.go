@@ -7,6 +7,7 @@ type Config struct {
 	Timeout      *time.Duration
 	ClientId     *string
 	ClientSecret *string
+	OAuthBaseUrl *string
 	HookParams   map[string]string
 }
 
@@ -52,4 +53,12 @@ func (c *Config) SetClientSecret(clientSecret string) {
 
 func (c *Config) GetClientSecret() string {
 	return *c.ClientSecret
+}
+
+func (c *Config) SetOAuthBaseUrl(oAuthBaseUrl string) {
+	c.OAuthBaseUrl = &oAuthBaseUrl
+}
+
+func (c *Config) GetOAuthBaseUrl() string {
+	return *c.OAuthBaseUrl
 }

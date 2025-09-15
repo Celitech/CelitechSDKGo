@@ -49,6 +49,11 @@ func (api *ESimService) SetClientSecret(clientSecret string) {
 	config.SetClientSecret(clientSecret)
 }
 
+func (api *ESimService) SetOAuthBaseUrl(oAuthBaseUrl string) {
+	config := api.getConfig()
+	config.SetOAuthBaseUrl(oAuthBaseUrl)
+}
+
 // Get eSIM Status
 func (api *ESimService) GetEsim(ctx context.Context, params GetEsimRequestParams) (*shared.CelitechResponse[GetEsimOkResponse], *shared.CelitechError) {
 	config := *api.getConfig()

@@ -6,6 +6,7 @@ A list of all methods in the `PurchasesService` service. Click on the method nam
 | :------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [CreatePurchaseV2](#createpurchasev2)             | This endpoint is used to purchase a new eSIM by providing the package details.                                                                                                                                                                                                                                         |
 | [ListPurchases](#listpurchases)                   | This endpoint can be used to list all the successful purchases made between a given interval.                                                                                                                                                                                                                          |
+| [CreatePurchase](#createpurchase)                 | This endpoint is used to purchase a new eSIM by providing the package details.                                                                                                                                                                                                                                         |
 | [TopUpEsim](#topupesim)                           | This endpoint is used to top-up an eSIM with the previously associated destination by providing an existing ICCID and the package details. The top-up is only feasible for eSIMs in "ENABLED" or "INSTALLED" state. You can check this state using the Get eSIM Status endpoint.                                       |
 | [EditPurchase](#editpurchase)                     | This endpoint allows you to modify the dates of an existing package with a future activation start time. Editing can only be performed for packages that have not been activated, and it cannot change the package size. The modification must not change the package duration category to ensure pricing consistency. |
 | [GetPurchaseConsumption](#getpurchaseconsumption) | This endpoint can be called for consumption notifications (e.g. every 1 hour or when the user clicks a button). It returns the data balance (consumption) of purchased packages.                                                                                                                                       |
@@ -103,6 +104,57 @@ params := purchases.ListPurchasesRequestParams{
 }
 
 response, err := client.Purchases.ListPurchases(context.Background(), params)
+if err != nil {
+  panic(err)
+}
+
+fmt.Println(response)
+```
+
+## CreatePurchase
+
+This endpoint is used to purchase a new eSIM by providing the package details.
+
+- HTTP Method: `POST`
+- Endpoint: `/purchases`
+
+**Parameters**
+
+| Name                  | Type                  | Required | Description                 |
+| :-------------------- | :-------------------- | :------- | :-------------------------- |
+| ctx                   | Context               | ✅       | Default go language context |
+| createPurchaseRequest | CreatePurchaseRequest | ✅       |                             |
+
+**Return Type**
+
+`CreatePurchaseOkResponse`
+
+**Example Usage Code Snippet**
+
+```go
+import (
+  "fmt"
+  "encoding/json"
+  "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
+  "github.com/Celitech/CelitechSDKGo/pkg/celitech"
+  "github.com/Celitech/CelitechSDKGo/pkg/util"
+  "github.com/Celitech/CelitechSDKGo/pkg/purchases"
+)
+
+config := celitechconfig.NewConfig()
+config.SetClientId("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
+client := celitech.NewCelitech(config)
+
+
+request := purchases.CreatePurchaseRequest{
+  Destination: util.ToPointer("FRA"),
+  DataLimitInGb: util.ToPointer(float64(1)),
+  StartDate: util.ToPointer("2023-11-01"),
+  EndDate: util.ToPointer("2023-11-20"),
+}
+
+response, err := client.Purchases.CreatePurchase(context.Background(), request)
 if err != nil {
   panic(err)
 }
@@ -245,7 +297,7 @@ config.SetClientId("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
-response, err := client.Purchases.GetPurchaseConsumption(context.Background(), "purchaseId")
+response, err := client.Purchases.GetPurchaseConsumption(context.Background(), "4973fa15-6979-4daa-9cf3-672620df819c")
 if err != nil {
   panic(err)
 }

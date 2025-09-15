@@ -12,7 +12,7 @@ config.SetClientId("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
-response, err := client.Purchases.GetPurchaseConsumption(context.Background(), "purchaseId")
+response, err := client.Purchases.GetPurchaseConsumption(context.Background(), "4973fa15-6979-4daa-9cf3-672620df819c")
 if err != nil {
   panic(err)
 }
