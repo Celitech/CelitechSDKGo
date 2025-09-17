@@ -1,11 +1,11 @@
 {
-  "liblabVersion": "2.25.45",
-  "date": "2025-09-15T14:27:07.156Z",
+  "liblabVersion": "2.25.46",
+  "date": "2025-09-17T10:33:05.719Z",
   "config": {
     "language": "go",
-    "apiId": 2738,
+    "apiId": 2739,
     "sdkName": "Celitech",
-    "sdkVersion": "1.3.53",
+    "sdkVersion": "1.3.54",
     "languages": ["go"],
     "auth": ["oauth"],
     "docs": ["snippets", "enhancedApiSpec"],
@@ -14,7 +14,7 @@
     "rawConfig": {
       "sdkName": "Celitech",
       "apiName": "Celitech",
-      "apiVersion": "1.3.53",
+      "apiVersion": "1.3.54",
       "specFilePath": "swagger.yaml",
       "languages": ["typescript", "python", "php", "java", "go", "csharp"],
       "docs": ["snippets", "enhancedApiSpec"],
@@ -24,6 +24,9 @@
         "generateEnv": true,
         "inferServiceNames": false,
         "includeOptionalSnippetParameters": false,
+        "deprecatedOperations": {
+          "include": true
+        },
         "injectedModels": [],
         "license": {
           "type": "MIT"
@@ -54,25 +57,25 @@
       "languageOptions": {
         "typescript": {
           "githubRepoName": "CelitechSDKTypeScript",
-          "sdkVersion": "1.3.53",
+          "sdkVersion": "1.3.54",
           "liblabVersion": "2",
           "npmName": "celitech-sdk"
         },
         "python": {
           "githubRepoName": "CelitechSDKPython",
-          "sdkVersion": "1.3.53",
+          "sdkVersion": "1.3.54",
           "liblabVersion": "2",
           "pypiPackageName": "celitech-sdk"
         },
         "php": {
           "githubRepoName": "CelitechSDKPHP",
-          "sdkVersion": "1.3.53",
+          "sdkVersion": "1.3.54",
           "liblabVersion": "2",
           "packageName": "celitech-sdk/sdk"
         },
         "java": {
           "githubRepoName": "CelitechSDKJava",
-          "sdkVersion": "1.3.53",
+          "sdkVersion": "1.3.54",
           "liblabVersion": "2",
           "groupId": "io.github.celitech",
           "artifactId": "celitech-sdk",
@@ -88,13 +91,13 @@
         },
         "go": {
           "githubRepoName": "CelitechSDKGo",
-          "sdkVersion": "1.3.53",
+          "sdkVersion": "1.3.54",
           "liblabVersion": "2",
           "goModuleName": "github.com/Celitech/CelitechSDKGo"
         },
         "csharp": {
           "githubRepoName": "CelitechSDKCSharp",
-          "sdkVersion": "1.3.53",
+          "sdkVersion": "1.3.54",
           "liblabVersion": "2",
           "packageId": "Celitech.SDK"
         }
@@ -113,7 +116,7 @@
       }
     },
     "liblabConfigVersion": "1.0.0",
-    "apiVersion": "1.3.53",
+    "apiVersion": "1.3.54",
     "apiName": "Celitech",
     "specFilePath": "swagger.yaml",
     "createDocs": false,
@@ -123,7 +126,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.53",
+        "sdkVersion": "1.3.54",
         "packageId": "Celitech.SDK"
       },
       "go": {
@@ -131,7 +134,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.53",
+        "sdkVersion": "1.3.54",
         "goModuleName": "github.com/Celitech/CelitechSDKGo"
       },
       "java": {
@@ -140,7 +143,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.53",
+        "sdkVersion": "1.3.54",
         "groupId": "io.github.celitech",
         "artifactId": "celitech-sdk",
         "includeKotlinSnippets": false,
@@ -158,7 +161,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.53",
+        "sdkVersion": "1.3.54",
         "alwaysInitializeOptionals": true,
         "pypiPackageName": "celitech-sdk"
       },
@@ -167,7 +170,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.53",
+        "sdkVersion": "1.3.54",
         "packageName": "celitech-sdk/sdk"
       },
       "typescript": {
@@ -175,7 +178,7 @@
         "ignoreFiles": [],
         "liblabVersion": "2",
         "renameIllegalModelProperties": true,
-        "sdkVersion": "1.3.53",
+        "sdkVersion": "1.3.54",
         "bundle": true,
         "denoteCommon": false,
         "exportClassDefault": false,
@@ -241,6 +244,9 @@
       "httpCodesToRetry": [408, 429, 500, 502, 503, 504],
       "httpMethodsToRetry": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
     },
+    "deprecatedOperations": {
+      "include": true
+    },
     "multiTenant": true,
     "includeWatermark": false,
     "githubRepoName": "CelitechSDKGo",
@@ -268,10 +274,7 @@
       "queriesData": []
     },
     "ai": false,
-    "specType": "openapi",
-    "deprecatedOperations": {
-      "include": true
-    }
+    "specType": "openapi"
   },
   "files": [
     "internal/validation/validate_array_length.go",
