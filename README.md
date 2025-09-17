@@ -1,4 +1,4 @@
-# Celitech Go SDK 1.3.53
+# Celitech Go SDK 1.3.54
 
 Welcome to the Celitech SDK documentation. This guide will help you get started with integrating and using the Celitech SDK in your project.
 
@@ -6,8 +6,8 @@ Welcome to the Celitech SDK documentation. This guide will help you get started 
 
 ## Versions
 
-- API version: `1.3.53`
-- SDK version: `1.3.53`
+- API version: `1.3.54`
+- SDK version: `1.3.54`
 
 ## About the API
 
@@ -86,7 +86,6 @@ The SDK provides various services to interact with the API.
 
 | Name                                                                  |
 | :-------------------------------------------------------------------- |
-| [OAuthService](documentation/services/o_auth_service.md)              |
 | [DestinationsService](documentation/services/destinations_service.md) |
 | [PackagesService](documentation/services/packages_service.md)         |
 | [PurchasesService](documentation/services/purchases_service.md)       |
@@ -143,8 +142,6 @@ The SDK includes several models that represent the data structures used in API r
 
 | Name                                                                                             | Description |
 | :----------------------------------------------------------------------------------------------- | :---------- |
-| [GetAccessTokenRequest](documentation/models/get_access_token_request.md)                        |             |
-| [GetAccessTokenOkResponse](documentation/models/get_access_token_ok_response.md)                 |             |
 | [ListDestinationsOkResponse](documentation/models/list_destinations_ok_response.md)              |             |
 | [ListPackagesOkResponse](documentation/models/list_packages_ok_response.md)                      |             |
 | [CreatePurchaseV2Request](documentation/models/create_purchase_v2_request.md)                    |             |
