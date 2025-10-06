@@ -72,7 +72,7 @@ type Purchases struct {
 	// The `purchaseType` indicates whether this is the initial purchase that creates the eSIM (First Purchase) or a subsequent top-up on an existing eSIM (Top-up Purchase).
 	PurchaseType *string `json:"purchaseType,omitempty"`
 	// The `referenceId` that was provided by the partner during the purchase or top-up flow. This identifier can be used for analytics and debugging purposes.
-	ReferenceId *string `json:"referenceId,omitempty"`
+	ReferenceId *util.Nullable[string] `json:"referenceId,omitempty"`
 }
 
 func (p *Purchases) GetId() *string {
@@ -196,15 +196,19 @@ func (p *Purchases) SetPurchaseType(purchaseType string) {
 	p.PurchaseType = &purchaseType
 }
 
-func (p *Purchases) GetReferenceId() *string {
+func (p *Purchases) GetReferenceId() *util.Nullable[string] {
 	if p == nil {
 		return nil
 	}
 	return p.ReferenceId
 }
 
-func (p *Purchases) SetReferenceId(referenceId string) {
+func (p *Purchases) SetReferenceId(referenceId util.Nullable[string]) {
 	p.ReferenceId = &referenceId
+}
+
+func (p *Purchases) SetReferenceIdNull() {
+	p.ReferenceId = &util.Nullable[string]{IsNull: true}
 }
 
 func (p Purchases) String() string {
@@ -213,6 +217,10 @@ func (p Purchases) String() string {
 		return "error converting struct: Purchases to string"
 	}
 	return string(jsonData)
+}
+
+func (p *Purchases) UnmarshalJSON(data []byte) error {
+	return unmarshal.UnmarshalNullable(data, p)
 }
 
 type Package_ struct {
