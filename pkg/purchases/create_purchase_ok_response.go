@@ -3,8 +3,8 @@ package purchases
 import "encoding/json"
 
 type CreatePurchaseOkResponse struct {
-	Purchase *CreatePurchaseOkResponsePurchase `json:"purchase,omitempty"`
-	Profile  *CreatePurchaseOkResponseProfile  `json:"profile,omitempty"`
+	Purchase *CreatePurchaseOkResponsePurchase `json:"purchase,omitempty" required:"true"`
+	Profile  *CreatePurchaseOkResponseProfile  `json:"profile,omitempty" required:"true"`
 }
 
 func (c *CreatePurchaseOkResponse) GetPurchase() *CreatePurchaseOkResponsePurchase {
@@ -39,15 +39,15 @@ func (c CreatePurchaseOkResponse) String() string {
 
 type CreatePurchaseOkResponsePurchase struct {
 	// ID of the purchase
-	Id *string `json:"id,omitempty"`
+	Id *string `json:"id,omitempty" required:"true"`
 	// ID of the package
-	PackageId *string `json:"packageId,omitempty"`
+	PackageId *string `json:"packageId,omitempty" required:"true"`
 	// Start date of the package's validity in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	StartDate *string `json:"startDate,omitempty"`
+	StartDate *string `json:"startDate,omitempty" required:"true"`
 	// End date of the package's validity in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	EndDate *string `json:"endDate,omitempty"`
+	EndDate *string `json:"endDate,omitempty" required:"true"`
 	// Creation date of the purchase in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	CreatedDate *string `json:"createdDate,omitempty"`
+	CreatedDate *string `json:"createdDate,omitempty" required:"true"`
 	// Epoch value representing the start time of the package's validity
 	StartTime *float64 `json:"startTime,omitempty"`
 	// Epoch value representing the end time of the package's validity
@@ -141,11 +141,11 @@ func (c CreatePurchaseOkResponsePurchase) String() string {
 
 type CreatePurchaseOkResponseProfile struct {
 	// ID of the eSIM
-	Iccid *string `json:"iccid,omitempty" maxLength:"22" minLength:"18"`
+	Iccid *string `json:"iccid,omitempty" required:"true" maxLength:"22" minLength:"18"`
 	// QR Code of the eSIM as base64
-	ActivationCode *string `json:"activationCode,omitempty" maxLength:"8000" minLength:"1000"`
+	ActivationCode *string `json:"activationCode,omitempty" required:"true" maxLength:"8000" minLength:"1000"`
 	// Manual Activation Code of the eSIM
-	ManualActivationCode *string `json:"manualActivationCode,omitempty"`
+	ManualActivationCode *string `json:"manualActivationCode,omitempty" required:"true"`
 }
 
 func (c *CreatePurchaseOkResponseProfile) GetIccid() *string {

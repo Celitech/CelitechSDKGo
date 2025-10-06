@@ -7,9 +7,9 @@ import (
 )
 
 type ListPackagesOkResponse struct {
-	Packages []Packages `json:"packages,omitempty"`
+	Packages []Packages `json:"packages,omitempty" required:"true"`
 	// The cursor value representing the end of the current page of results. Use this cursor value as the "afterCursor" parameter in your next request to retrieve the subsequent page of results. It ensures that you continue fetching data from where you left off, facilitating smooth pagination
-	AfterCursor *util.Nullable[string] `json:"afterCursor,omitempty"`
+	AfterCursor *util.Nullable[string] `json:"afterCursor,omitempty" required:"true"`
 }
 
 func (l *ListPackagesOkResponse) GetPackages() []Packages {
@@ -52,19 +52,19 @@ func (l *ListPackagesOkResponse) UnmarshalJSON(data []byte) error {
 
 type Packages struct {
 	// ID of the package
-	Id *string `json:"id,omitempty"`
+	Id *string `json:"id,omitempty" required:"true"`
 	// ISO3 representation of the package's destination.
-	Destination *string `json:"destination,omitempty"`
+	Destination *string `json:"destination,omitempty" required:"true"`
 	// ISO2 representation of the package's destination.
-	DestinationIso2 *string `json:"destinationISO2,omitempty"`
+	DestinationIso2 *string `json:"destinationISO2,omitempty" required:"true"`
 	// Size of the package in Bytes
-	DataLimitInBytes *float64 `json:"dataLimitInBytes,omitempty"`
+	DataLimitInBytes *float64 `json:"dataLimitInBytes,omitempty" required:"true"`
 	// Min number of days for the package
-	MinDays *float64 `json:"minDays,omitempty"`
+	MinDays *float64 `json:"minDays,omitempty" required:"true"`
 	// Max number of days for the package
-	MaxDays *float64 `json:"maxDays,omitempty"`
+	MaxDays *float64 `json:"maxDays,omitempty" required:"true"`
 	// Price of the package in cents
-	PriceInCents *float64 `json:"priceInCents,omitempty"`
+	PriceInCents *float64 `json:"priceInCents,omitempty" required:"true"`
 }
 
 func (p *Packages) GetId() *string {

@@ -3,8 +3,8 @@ package purchases
 import "encoding/json"
 
 type CreatePurchaseV2OkResponse struct {
-	Purchase *CreatePurchaseV2OkResponsePurchase `json:"purchase,omitempty"`
-	Profile  *CreatePurchaseV2OkResponseProfile  `json:"profile,omitempty"`
+	Purchase *CreatePurchaseV2OkResponsePurchase `json:"purchase,omitempty" required:"true"`
+	Profile  *CreatePurchaseV2OkResponseProfile  `json:"profile,omitempty" required:"true"`
 }
 
 func (c *CreatePurchaseV2OkResponse) GetPurchase() *CreatePurchaseV2OkResponsePurchase {
@@ -39,11 +39,11 @@ func (c CreatePurchaseV2OkResponse) String() string {
 
 type CreatePurchaseV2OkResponsePurchase struct {
 	// ID of the purchase
-	Id *string `json:"id,omitempty"`
+	Id *string `json:"id,omitempty" required:"true"`
 	// ID of the package
-	PackageId *string `json:"packageId,omitempty"`
+	PackageId *string `json:"packageId,omitempty" required:"true"`
 	// Creation date of the purchase in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	CreatedDate *string `json:"createdDate,omitempty"`
+	CreatedDate *string `json:"createdDate,omitempty" required:"true"`
 }
 
 func (c *CreatePurchaseV2OkResponsePurchase) GetId() *string {
@@ -89,11 +89,11 @@ func (c CreatePurchaseV2OkResponsePurchase) String() string {
 
 type CreatePurchaseV2OkResponseProfile struct {
 	// ID of the eSIM
-	Iccid *string `json:"iccid,omitempty" maxLength:"22" minLength:"18"`
+	Iccid *string `json:"iccid,omitempty" required:"true" maxLength:"22" minLength:"18"`
 	// QR Code of the eSIM as base64
-	ActivationCode *string `json:"activationCode,omitempty" maxLength:"8000" minLength:"1000"`
+	ActivationCode *string `json:"activationCode,omitempty" required:"true" maxLength:"8000" minLength:"1000"`
 	// Manual Activation Code of the eSIM
-	ManualActivationCode *string `json:"manualActivationCode,omitempty"`
+	ManualActivationCode *string `json:"manualActivationCode,omitempty" required:"true"`
 }
 
 func (c *CreatePurchaseV2OkResponseProfile) GetIccid() *string {

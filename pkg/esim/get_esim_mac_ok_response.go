@@ -3,7 +3,7 @@ package esim
 import "encoding/json"
 
 type GetEsimMacOkResponse struct {
-	Esim *GetEsimMacOkResponseEsim `json:"esim,omitempty"`
+	Esim *GetEsimMacOkResponseEsim `json:"esim,omitempty" required:"true"`
 }
 
 func (g *GetEsimMacOkResponse) GetEsim() *GetEsimMacOkResponseEsim {
@@ -27,11 +27,11 @@ func (g GetEsimMacOkResponse) String() string {
 
 type GetEsimMacOkResponseEsim struct {
 	// ID of the eSIM
-	Iccid *string `json:"iccid,omitempty" maxLength:"22" minLength:"18"`
+	Iccid *string `json:"iccid,omitempty" required:"true" maxLength:"22" minLength:"18"`
 	// SM-DP+ Address
-	SmdpAddress *string `json:"smdpAddress,omitempty"`
+	SmdpAddress *string `json:"smdpAddress,omitempty" required:"true"`
 	// The manual activation code
-	ManualActivationCode *string `json:"manualActivationCode,omitempty"`
+	ManualActivationCode *string `json:"manualActivationCode,omitempty" required:"true"`
 }
 
 func (g *GetEsimMacOkResponseEsim) GetIccid() *string {

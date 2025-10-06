@@ -3,8 +3,8 @@ package purchases
 import "encoding/json"
 
 type TopUpEsimOkResponse struct {
-	Purchase *TopUpEsimOkResponsePurchase `json:"purchase,omitempty"`
-	Profile  *TopUpEsimOkResponseProfile  `json:"profile,omitempty"`
+	Purchase *TopUpEsimOkResponsePurchase `json:"purchase,omitempty" required:"true"`
+	Profile  *TopUpEsimOkResponseProfile  `json:"profile,omitempty" required:"true"`
 }
 
 func (t *TopUpEsimOkResponse) GetPurchase() *TopUpEsimOkResponsePurchase {
@@ -39,15 +39,15 @@ func (t TopUpEsimOkResponse) String() string {
 
 type TopUpEsimOkResponsePurchase struct {
 	// ID of the purchase
-	Id *string `json:"id,omitempty"`
+	Id *string `json:"id,omitempty" required:"true"`
 	// ID of the package
-	PackageId *string `json:"packageId,omitempty"`
+	PackageId *string `json:"packageId,omitempty" required:"true"`
 	// Start date of the package's validity in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	StartDate *string `json:"startDate,omitempty"`
+	StartDate *string `json:"startDate,omitempty" required:"true"`
 	// End date of the package's validity in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	EndDate *string `json:"endDate,omitempty"`
+	EndDate *string `json:"endDate,omitempty" required:"true"`
 	// Creation date of the purchase in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	CreatedDate *string `json:"createdDate,omitempty"`
+	CreatedDate *string `json:"createdDate,omitempty" required:"true"`
 	// Epoch value representing the start time of the package's validity
 	StartTime *float64 `json:"startTime,omitempty"`
 	// Epoch value representing the end time of the package's validity
@@ -141,7 +141,7 @@ func (t TopUpEsimOkResponsePurchase) String() string {
 
 type TopUpEsimOkResponseProfile struct {
 	// ID of the eSIM
-	Iccid *string `json:"iccid,omitempty" maxLength:"22" minLength:"18"`
+	Iccid *string `json:"iccid,omitempty" required:"true" maxLength:"22" minLength:"18"`
 }
 
 func (t *TopUpEsimOkResponseProfile) GetIccid() *string {
