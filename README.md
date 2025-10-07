@@ -1,4 +1,4 @@
-# Celitech Go SDK 1.3.55
+# Celitech Go SDK 1.3.58
 
 Welcome to the Celitech SDK documentation. This guide will help you get started with integrating and using the Celitech SDK in your project.
 
@@ -6,8 +6,8 @@ Welcome to the Celitech SDK documentation. This guide will help you get started 
 
 ## Versions
 
-- API version: `1.3.55`
-- SDK version: `1.3.55`
+- API version: `1.3.58`
+- SDK version: `1.3.58`
 
 ## About the API
 
@@ -157,7 +157,6 @@ The SDK includes several models that represent the data structures used in API r
 | [GetEsimOkResponse](documentation/models/get_esim_ok_response.md)                                |             |
 | [GetEsimDeviceOkResponse](documentation/models/get_esim_device_ok_response.md)                   |             |
 | [GetEsimHistoryOkResponse](documentation/models/get_esim_history_ok_response.md)                 |             |
-| [GetEsimMacOkResponse](documentation/models/get_esim_mac_ok_response.md)                         |             |
 | [TokenOkResponse](documentation/models/token_ok_response.md)                                     |             |
 
 </details>
