@@ -4,11 +4,11 @@ import "encoding/json"
 
 type EditPurchaseOkResponse struct {
 	// ID of the purchase
-	PurchaseId *string `json:"purchaseId,omitempty"`
+	PurchaseId *string `json:"purchaseId,omitempty" required:"true"`
 	// Start date of the package's validity in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	NewStartDate *string `json:"newStartDate,omitempty"`
+	NewStartDate *string `json:"newStartDate,omitempty" required:"true"`
 	// End date of the package's validity in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	NewEndDate *string `json:"newEndDate,omitempty"`
+	NewEndDate *string `json:"newEndDate,omitempty" required:"true"`
 	// Epoch value representing the new start time of the package's validity
 	NewStartTime *float64 `json:"newStartTime,omitempty"`
 	// Epoch value representing the new end time of the package's validity
