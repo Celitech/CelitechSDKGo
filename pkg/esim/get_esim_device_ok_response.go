@@ -3,7 +3,7 @@ package esim
 import "encoding/json"
 
 type GetEsimDeviceOkResponse struct {
-	Device *Device `json:"device,omitempty"`
+	Device *Device `json:"device,omitempty" required:"true"`
 }
 
 func (g *GetEsimDeviceOkResponse) GetDevice() *Device {
@@ -27,13 +27,13 @@ func (g GetEsimDeviceOkResponse) String() string {
 
 type Device struct {
 	// Name of the OEM
-	Oem *string `json:"oem,omitempty"`
+	Oem *string `json:"oem,omitempty" required:"true"`
 	// Name of the Device
-	HardwareName *string `json:"hardwareName,omitempty"`
+	HardwareName *string `json:"hardwareName,omitempty" required:"true"`
 	// Model of the Device
-	HardwareModel *string `json:"hardwareModel,omitempty"`
+	HardwareModel *string `json:"hardwareModel,omitempty" required:"true"`
 	// Serial Number of the eSIM
-	Eid *string `json:"eid,omitempty"`
+	Eid *string `json:"eid,omitempty" required:"true"`
 }
 
 func (d *Device) GetOem() *string {
