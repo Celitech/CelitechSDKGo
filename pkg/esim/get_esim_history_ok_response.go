@@ -3,7 +3,7 @@ package esim
 import "encoding/json"
 
 type GetEsimHistoryOkResponse struct {
-	Esim *GetEsimHistoryOkResponseEsim `json:"esim,omitempty"`
+	Esim *GetEsimHistoryOkResponseEsim `json:"esim,omitempty" required:"true"`
 }
 
 func (g *GetEsimHistoryOkResponse) GetEsim() *GetEsimHistoryOkResponseEsim {
@@ -27,8 +27,8 @@ func (g GetEsimHistoryOkResponse) String() string {
 
 type GetEsimHistoryOkResponseEsim struct {
 	// ID of the eSIM
-	Iccid   *string   `json:"iccid,omitempty" maxLength:"22" minLength:"18"`
-	History []History `json:"history,omitempty"`
+	Iccid   *string   `json:"iccid,omitempty" required:"true" maxLength:"22" minLength:"18"`
+	History []History `json:"history,omitempty" required:"true"`
 }
 
 func (g *GetEsimHistoryOkResponseEsim) GetIccid() *string {
@@ -63,9 +63,9 @@ func (g GetEsimHistoryOkResponseEsim) String() string {
 
 type History struct {
 	// The status of the eSIM at a given time, possible values are 'RELEASED', 'DOWNLOADED', 'INSTALLED', 'ENABLED', 'DELETED', or 'ERROR'
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status,omitempty" required:"true"`
 	// The date when the eSIM status changed in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	StatusDate *string `json:"statusDate,omitempty"`
+	StatusDate *string `json:"statusDate,omitempty" required:"true"`
 	// Epoch value representing the date when the eSIM status changed
 	Date *float64 `json:"date,omitempty"`
 }
