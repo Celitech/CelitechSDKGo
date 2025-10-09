@@ -29,6 +29,7 @@ Generate a new token to be used in the iFrame
 import (
   "fmt"
   "encoding/json"
+  "context"
   "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
   "github.com/Celitech/CelitechSDKGo/pkg/celitech"
 

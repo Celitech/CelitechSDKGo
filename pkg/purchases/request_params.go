@@ -4,6 +4,7 @@ type ListPurchasesRequestParams struct {
 	Iccid       *string  `explode:"true" serializationStyle:"form" maxLength:"22" minLength:"18" queryParam:"iccid"`
 	AfterDate   *string  `explode:"true" serializationStyle:"form" queryParam:"afterDate"`
 	BeforeDate  *string  `explode:"true" serializationStyle:"form" queryParam:"beforeDate"`
+	Email       *string  `explode:"true" serializationStyle:"form" queryParam:"email"`
 	ReferenceId *string  `explode:"true" serializationStyle:"form" queryParam:"referenceId"`
 	AfterCursor *string  `explode:"true" serializationStyle:"form" queryParam:"afterCursor"`
 	Limit       *float64 `explode:"true" serializationStyle:"form" queryParam:"limit"`
@@ -19,6 +20,9 @@ func (params *ListPurchasesRequestParams) SetAfterDate(afterDate string) {
 }
 func (params *ListPurchasesRequestParams) SetBeforeDate(beforeDate string) {
 	params.BeforeDate = &beforeDate
+}
+func (params *ListPurchasesRequestParams) SetEmail(email string) {
+	params.Email = &email
 }
 func (params *ListPurchasesRequestParams) SetReferenceId(referenceId string) {
 	params.ReferenceId = &referenceId
