@@ -1,4 +1,4 @@
-# Celitech Go SDK 1.3.55
+# Celitech Go SDK 1.3.59
 
 Welcome to the Celitech SDK documentation. This guide will help you get started with integrating and using the Celitech SDK in your project.
 
@@ -6,8 +6,8 @@ Welcome to the Celitech SDK documentation. This guide will help you get started 
 
 ## Versions
 
-- API version: `1.3.55`
-- SDK version: `1.3.55`
+- API version: `1.3.59`
+- SDK version: `1.3.59`
 
 ## About the API
 
@@ -24,6 +24,7 @@ Useful links: [Homepage](https://www.celitech.com) | [Support email](mailto:supp
   - [OAuth Authentication](#oauth-authentication)
   - [Environment Variables](#environment-variables)
 - [Setting a Custom Timeout](#setting-a-custom-timeout)
+- [Sample Usage](#sample-usage)
 - [Services](#services)
   - [Response Wrappers](#response-wrappers)
 - [Models](#models)
@@ -34,6 +35,14 @@ Useful links: [Homepage](https://www.celitech.com) | [Support email](mailto:supp
 ## Supported Language Versions
 
 This SDK is compatible with the following versions: `Go >= 1.19.0`
+
+## Installation
+
+To get started with the SDK, we recommend installing using `go get`:
+
+```bash
+go get celitech
+```
 
 ## Authentication
 
@@ -75,6 +84,34 @@ config := celitechconfig.NewConfig()
 sdk := celitech.NewCelitech(config)
 
 sdk.SetTimeout(10 * time.Second)
+```
+
+# Sample Usage
+
+Below is a comprehensive example demonstrating how to authenticate and call a simple endpoint:
+
+```go
+import (
+  "fmt"
+  "encoding/json"
+  "context"
+  "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
+  "github.com/Celitech/CelitechSDKGo/pkg/celitech"
+
+)
+
+config := celitechconfig.NewConfig()
+config.SetClientId("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
+client := celitech.NewCelitech(config)
+
+response, err := client.Destinations.ListDestinations(context.Background())
+if err != nil {
+  panic(err)
+}
+
+fmt.Println(response)
+
 ```
 
 ## Services
@@ -157,7 +194,6 @@ The SDK includes several models that represent the data structures used in API r
 | [GetEsimOkResponse](documentation/models/get_esim_ok_response.md)                                |             |
 | [GetEsimDeviceOkResponse](documentation/models/get_esim_device_ok_response.md)                   |             |
 | [GetEsimHistoryOkResponse](documentation/models/get_esim_history_ok_response.md)                 |             |
-| [GetEsimMacOkResponse](documentation/models/get_esim_mac_ok_response.md)                         |             |
 | [TokenOkResponse](documentation/models/token_ok_response.md)                                     |             |
 
 </details>

@@ -3,7 +3,7 @@ package esim
 import "encoding/json"
 
 type GetEsimOkResponse struct {
-	Esim *GetEsimOkResponseEsim `json:"esim,omitempty"`
+	Esim *GetEsimOkResponseEsim `json:"esim,omitempty" required:"true"`
 }
 
 func (g *GetEsimOkResponse) GetEsim() *GetEsimOkResponseEsim {
@@ -27,15 +27,17 @@ func (g GetEsimOkResponse) String() string {
 
 type GetEsimOkResponseEsim struct {
 	// ID of the eSIM
-	Iccid *string `json:"iccid,omitempty" maxLength:"22" minLength:"18"`
+	Iccid *string `json:"iccid,omitempty" required:"true" maxLength:"22" minLength:"18"`
 	// SM-DP+ Address
-	SmdpAddress *string `json:"smdpAddress,omitempty"`
+	SmdpAddress *string `json:"smdpAddress,omitempty" required:"true"`
+	// QR Code of the eSIM as base64
+	ActivationCode *string `json:"activationCode,omitempty" required:"true" maxLength:"8000" minLength:"1000"`
 	// The manual activation code
-	ManualActivationCode *string `json:"manualActivationCode,omitempty"`
+	ManualActivationCode *string `json:"manualActivationCode,omitempty" required:"true"`
 	// Status of the eSIM, possible values are 'RELEASED', 'DOWNLOADED', 'INSTALLED', 'ENABLED', 'DELETED', or 'ERROR'
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status,omitempty" required:"true"`
 	// Indicates whether the eSIM is currently eligible for a top-up. This flag should be checked before attempting a top-up request.
-	IsTopUpAllowed *bool `json:"isTopUpAllowed,omitempty"`
+	IsTopUpAllowed *bool `json:"isTopUpAllowed,omitempty" required:"true"`
 }
 
 func (g *GetEsimOkResponseEsim) GetIccid() *string {
@@ -58,6 +60,17 @@ func (g *GetEsimOkResponseEsim) GetSmdpAddress() *string {
 
 func (g *GetEsimOkResponseEsim) SetSmdpAddress(smdpAddress string) {
 	g.SmdpAddress = &smdpAddress
+}
+
+func (g *GetEsimOkResponseEsim) GetActivationCode() *string {
+	if g == nil {
+		return nil
+	}
+	return g.ActivationCode
+}
+
+func (g *GetEsimOkResponseEsim) SetActivationCode(activationCode string) {
+	g.ActivationCode = &activationCode
 }
 
 func (g *GetEsimOkResponseEsim) GetManualActivationCode() *string {

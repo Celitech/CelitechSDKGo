@@ -3,7 +3,7 @@ package destinations
 import "encoding/json"
 
 type ListDestinationsOkResponse struct {
-	Destinations []Destinations `json:"destinations,omitempty"`
+	Destinations []Destinations `json:"destinations,omitempty" required:"true"`
 }
 
 func (l *ListDestinationsOkResponse) GetDestinations() []Destinations {
@@ -27,13 +27,13 @@ func (l ListDestinationsOkResponse) String() string {
 
 type Destinations struct {
 	// Name of the destination
-	Name *string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty" required:"true"`
 	// ISO3 representation of the destination
-	Destination *string `json:"destination,omitempty"`
+	Destination *string `json:"destination,omitempty" required:"true"`
 	// ISO2 representation of the destination
-	DestinationIso2 *string `json:"destinationISO2,omitempty"`
+	DestinationIso2 *string `json:"destinationISO2,omitempty" required:"true"`
 	// This array indicates the geographical area covered by a specific destination. If the destination represents a single country, the array will include that country. However, if the destination represents a broader regional scope, the array will be populated with the names of the countries belonging to that region.
-	SupportedCountries []string `json:"supportedCountries,omitempty"`
+	SupportedCountries []string `json:"supportedCountries,omitempty" required:"true"`
 }
 
 func (d *Destinations) GetName() *string {
