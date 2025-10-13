@@ -4,14 +4,13 @@ A list of all methods in the `ESimService` service. Click on the method name to 
 
 | Methods                           | Description      |
 | :-------------------------------- | :--------------- |
-| [GetEsim](#getesim)               | Get eSIM Status  |
+| [GetEsim](#getesim)               | Get eSIM         |
 | [GetEsimDevice](#getesimdevice)   | Get eSIM Device  |
 | [GetEsimHistory](#getesimhistory) | Get eSIM History |
-| [GetEsimMac](#getesimmac)         | Get eSIM MAC     |
 
 ## GetEsim
 
-Get eSIM Status
+Get eSIM
 
 - HTTP Method: `GET`
 - Endpoint: `/esim`
@@ -33,6 +32,7 @@ Get eSIM Status
 import (
   "fmt"
   "encoding/json"
+  "context"
   "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
   "github.com/Celitech/CelitechSDKGo/pkg/celitech"
 
@@ -46,7 +46,7 @@ client := celitech.NewCelitech(config)
 
 
 params := esim.GetEsimRequestParams{
-  Iccid: util.toPointer(util.ToPointer("1111222233334444555000")),
+  Iccid: util.ToPointer("1111222233334444555000"),
 }
 
 response, err := client.ESim.GetEsim(context.Background(), params)
@@ -81,6 +81,7 @@ Get eSIM Device
 import (
   "fmt"
   "encoding/json"
+  "context"
   "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
   "github.com/Celitech/CelitechSDKGo/pkg/celitech"
 
@@ -123,6 +124,7 @@ Get eSIM History
 import (
   "fmt"
   "encoding/json"
+  "context"
   "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
   "github.com/Celitech/CelitechSDKGo/pkg/celitech"
 
@@ -134,48 +136,6 @@ config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 response, err := client.ESim.GetEsimHistory(context.Background(), "1111222233334444555000")
-if err != nil {
-  panic(err)
-}
-
-fmt.Println(response)
-```
-
-## GetEsimMac
-
-Get eSIM MAC
-
-- HTTP Method: `GET`
-- Endpoint: `/esim/{iccid}/mac`
-
-**Parameters**
-
-| Name  | Type    | Required | Description                 |
-| :---- | :------ | :------- | :-------------------------- |
-| ctx   | Context | ✅       | Default go language context |
-| iccid | string  | ✅       | ID of the eSIM              |
-
-**Return Type**
-
-`GetEsimMacOkResponse`
-
-**Example Usage Code Snippet**
-
-```go
-import (
-  "fmt"
-  "encoding/json"
-  "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
-  "github.com/Celitech/CelitechSDKGo/pkg/celitech"
-
-)
-
-config := celitechconfig.NewConfig()
-config.SetClientId("CLIENT_ID")
-config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
-
-response, err := client.ESim.GetEsimMac(context.Background(), "1111222233334444555000")
 if err != nil {
   panic(err)
 }
