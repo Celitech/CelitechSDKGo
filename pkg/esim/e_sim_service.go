@@ -54,7 +54,7 @@ func (api *ESimService) SetOAuthBaseUrl(oAuthBaseUrl string) {
 	config.SetOAuthBaseUrl(oAuthBaseUrl)
 }
 
-// Get eSIM Status
+// Get eSIM
 func (api *ESimService) GetEsim(ctx context.Context, params GetEsimRequestParams) (*shared.CelitechResponse[GetEsimOkResponse], *shared.CelitechError) {
 	config := *api.getConfig()
 
@@ -121,27 +121,4 @@ func (api *ESimService) GetEsimHistory(ctx context.Context, iccid string) (*shar
 	}
 
 	return shared.NewCelitechResponse[GetEsimHistoryOkResponse](resp), nil
-}
-
-// Get eSIM MAC
-func (api *ESimService) GetEsimMac(ctx context.Context, iccid string) (*shared.CelitechResponse[GetEsimMacOkResponse], *shared.CelitechError) {
-	config := *api.getConfig()
-
-	request := httptransport.NewRequestBuilder().WithContext(ctx).
-		WithMethod("GET").
-		WithPath("/esim/{iccid}/mac").
-		WithConfig(config).
-		AddPathParam("iccid", iccid).
-		WithContentType(httptransport.ContentTypeJson).
-		WithResponseContentType(httptransport.ContentTypeJson).
-		WithScopes([]string{}).
-		Build()
-
-	client := restClient.NewRestClient[GetEsimMacOkResponse](config, api.manager)
-	resp, err := client.Call(*request)
-	if err != nil {
-		return nil, shared.NewCelitechError[GetEsimMacOkResponse](err)
-	}
-
-	return shared.NewCelitechResponse[GetEsimMacOkResponse](resp), nil
 }

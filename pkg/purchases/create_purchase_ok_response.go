@@ -1,10 +1,14 @@
 package purchases
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"github.com/Celitech/CelitechSDKGo/internal/unmarshal"
+	"github.com/Celitech/CelitechSDKGo/pkg/util"
+)
 
 type CreatePurchaseOkResponse struct {
-	Purchase *CreatePurchaseOkResponsePurchase `json:"purchase,omitempty"`
-	Profile  *CreatePurchaseOkResponseProfile  `json:"profile,omitempty"`
+	Purchase *CreatePurchaseOkResponsePurchase `json:"purchase,omitempty" required:"true"`
+	Profile  *CreatePurchaseOkResponseProfile  `json:"profile,omitempty" required:"true"`
 }
 
 func (c *CreatePurchaseOkResponse) GetPurchase() *CreatePurchaseOkResponsePurchase {
@@ -39,19 +43,19 @@ func (c CreatePurchaseOkResponse) String() string {
 
 type CreatePurchaseOkResponsePurchase struct {
 	// ID of the purchase
-	Id *string `json:"id,omitempty"`
+	Id *string `json:"id,omitempty" required:"true"`
 	// ID of the package
-	PackageId *string `json:"packageId,omitempty"`
+	PackageId *string `json:"packageId,omitempty" required:"true"`
 	// Start date of the package's validity in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	StartDate *string `json:"startDate,omitempty"`
+	StartDate *util.Nullable[string] `json:"startDate,omitempty" required:"true"`
 	// End date of the package's validity in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	EndDate *string `json:"endDate,omitempty"`
+	EndDate *util.Nullable[string] `json:"endDate,omitempty" required:"true"`
 	// Creation date of the purchase in the format 'yyyy-MM-ddThh:mm:ssZZ'
-	CreatedDate *string `json:"createdDate,omitempty"`
+	CreatedDate *string `json:"createdDate,omitempty" required:"true"`
 	// Epoch value representing the start time of the package's validity
-	StartTime *float64 `json:"startTime,omitempty"`
+	StartTime *util.Nullable[float64] `json:"startTime,omitempty"`
 	// Epoch value representing the end time of the package's validity
-	EndTime *float64 `json:"endTime,omitempty"`
+	EndTime *util.Nullable[float64] `json:"endTime,omitempty"`
 }
 
 func (c *CreatePurchaseOkResponsePurchase) GetId() *string {
@@ -76,26 +80,34 @@ func (c *CreatePurchaseOkResponsePurchase) SetPackageId(packageId string) {
 	c.PackageId = &packageId
 }
 
-func (c *CreatePurchaseOkResponsePurchase) GetStartDate() *string {
+func (c *CreatePurchaseOkResponsePurchase) GetStartDate() *util.Nullable[string] {
 	if c == nil {
 		return nil
 	}
 	return c.StartDate
 }
 
-func (c *CreatePurchaseOkResponsePurchase) SetStartDate(startDate string) {
+func (c *CreatePurchaseOkResponsePurchase) SetStartDate(startDate util.Nullable[string]) {
 	c.StartDate = &startDate
 }
 
-func (c *CreatePurchaseOkResponsePurchase) GetEndDate() *string {
+func (c *CreatePurchaseOkResponsePurchase) SetStartDateNull() {
+	c.StartDate = &util.Nullable[string]{IsNull: true}
+}
+
+func (c *CreatePurchaseOkResponsePurchase) GetEndDate() *util.Nullable[string] {
 	if c == nil {
 		return nil
 	}
 	return c.EndDate
 }
 
-func (c *CreatePurchaseOkResponsePurchase) SetEndDate(endDate string) {
+func (c *CreatePurchaseOkResponsePurchase) SetEndDate(endDate util.Nullable[string]) {
 	c.EndDate = &endDate
+}
+
+func (c *CreatePurchaseOkResponsePurchase) SetEndDateNull() {
+	c.EndDate = &util.Nullable[string]{IsNull: true}
 }
 
 func (c *CreatePurchaseOkResponsePurchase) GetCreatedDate() *string {
@@ -109,26 +121,34 @@ func (c *CreatePurchaseOkResponsePurchase) SetCreatedDate(createdDate string) {
 	c.CreatedDate = &createdDate
 }
 
-func (c *CreatePurchaseOkResponsePurchase) GetStartTime() *float64 {
+func (c *CreatePurchaseOkResponsePurchase) GetStartTime() *util.Nullable[float64] {
 	if c == nil {
 		return nil
 	}
 	return c.StartTime
 }
 
-func (c *CreatePurchaseOkResponsePurchase) SetStartTime(startTime float64) {
+func (c *CreatePurchaseOkResponsePurchase) SetStartTime(startTime util.Nullable[float64]) {
 	c.StartTime = &startTime
 }
 
-func (c *CreatePurchaseOkResponsePurchase) GetEndTime() *float64 {
+func (c *CreatePurchaseOkResponsePurchase) SetStartTimeNull() {
+	c.StartTime = &util.Nullable[float64]{IsNull: true}
+}
+
+func (c *CreatePurchaseOkResponsePurchase) GetEndTime() *util.Nullable[float64] {
 	if c == nil {
 		return nil
 	}
 	return c.EndTime
 }
 
-func (c *CreatePurchaseOkResponsePurchase) SetEndTime(endTime float64) {
+func (c *CreatePurchaseOkResponsePurchase) SetEndTime(endTime util.Nullable[float64]) {
 	c.EndTime = &endTime
+}
+
+func (c *CreatePurchaseOkResponsePurchase) SetEndTimeNull() {
+	c.EndTime = &util.Nullable[float64]{IsNull: true}
 }
 
 func (c CreatePurchaseOkResponsePurchase) String() string {
@@ -139,13 +159,17 @@ func (c CreatePurchaseOkResponsePurchase) String() string {
 	return string(jsonData)
 }
 
+func (c *CreatePurchaseOkResponsePurchase) UnmarshalJSON(data []byte) error {
+	return unmarshal.UnmarshalNullable(data, c)
+}
+
 type CreatePurchaseOkResponseProfile struct {
 	// ID of the eSIM
-	Iccid *string `json:"iccid,omitempty" maxLength:"22" minLength:"18"`
+	Iccid *string `json:"iccid,omitempty" required:"true" maxLength:"22" minLength:"18"`
 	// QR Code of the eSIM as base64
-	ActivationCode *string `json:"activationCode,omitempty" maxLength:"8000" minLength:"1000"`
+	ActivationCode *string `json:"activationCode,omitempty" required:"true" maxLength:"8000" minLength:"1000"`
 	// Manual Activation Code of the eSIM
-	ManualActivationCode *string `json:"manualActivationCode,omitempty"`
+	ManualActivationCode *string `json:"manualActivationCode,omitempty" required:"true"`
 }
 
 func (c *CreatePurchaseOkResponseProfile) GetIccid() *string {
