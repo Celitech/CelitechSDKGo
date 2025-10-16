@@ -2,11 +2,11 @@ package main
 
 import (
 	"bufio"
-	"context"
 	"fmt"
 	"os"
 	"strings"
 
+	"context"
 	"github.com/Celitech/CelitechSDKGo/pkg/celitech"
 	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
 )

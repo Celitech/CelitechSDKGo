@@ -4,7 +4,7 @@ import "encoding/json"
 
 type TokenOkResponse struct {
 	// The generated token
-	Token *string `json:"token,omitempty"`
+	Token *string `json:"token,omitempty" required:"true"`
 }
 
 func (t *TokenOkResponse) GetToken() *string {

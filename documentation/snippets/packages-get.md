@@ -2,6 +2,7 @@
 import (
   "fmt"
   "encoding/json"
+  "context"
   "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
   "github.com/Celitech/CelitechSDKGo/pkg/celitech"
 
@@ -14,9 +15,7 @@ config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 
-params := packages.ListPackagesRequestParams{
-
-}
+params := packages.ListPackagesRequestParams{}
 
 response, err := client.Packages.ListPackages(context.Background(), params)
 if err != nil {

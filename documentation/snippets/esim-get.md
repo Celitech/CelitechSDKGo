@@ -2,6 +2,7 @@
 import (
   "fmt"
   "encoding/json"
+  "context"
   "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
   "github.com/Celitech/CelitechSDKGo/pkg/celitech"
 
@@ -15,7 +16,7 @@ client := celitech.NewCelitech(config)
 
 
 params := esim.GetEsimRequestParams{
-  Iccid: util.toPointer(util.ToPointer("1111222233334444555000")),
+  Iccid: util.ToPointer("1111222233334444555000"),
 }
 
 response, err := client.ESim.GetEsim(context.Background(), params)
