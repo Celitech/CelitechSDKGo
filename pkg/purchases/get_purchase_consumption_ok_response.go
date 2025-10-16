@@ -4,9 +4,9 @@ import "encoding/json"
 
 type GetPurchaseConsumptionOkResponse struct {
 	// Remaining balance of the package in bytes
-	DataUsageRemainingInBytes *float64 `json:"dataUsageRemainingInBytes,omitempty"`
+	DataUsageRemainingInBytes *float64 `json:"dataUsageRemainingInBytes,omitempty" required:"true"`
 	// Status of the connectivity, possible values are 'ACTIVE' or 'NOT_ACTIVE'
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status,omitempty" required:"true"`
 }
 
 func (g *GetPurchaseConsumptionOkResponse) GetDataUsageRemainingInBytes() *float64 {
