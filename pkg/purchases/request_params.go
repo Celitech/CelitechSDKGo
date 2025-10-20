@@ -1,6 +1,7 @@
 package purchases
 
 type ListPurchasesRequestParams struct {
+	PurchaseId  *string  `explode:"true" serializationStyle:"form" queryParam:"purchaseId"`
 	Iccid       *string  `explode:"true" serializationStyle:"form" maxLength:"22" minLength:"18" queryParam:"iccid"`
 	AfterDate   *string  `explode:"true" serializationStyle:"form" queryParam:"afterDate"`
 	BeforeDate  *string  `explode:"true" serializationStyle:"form" queryParam:"beforeDate"`
@@ -10,9 +11,11 @@ type ListPurchasesRequestParams struct {
 	Limit       *float64 `explode:"true" serializationStyle:"form" queryParam:"limit"`
 	After       *float64 `explode:"true" serializationStyle:"form" queryParam:"after"`
 	Before      *float64 `explode:"true" serializationStyle:"form" queryParam:"before"`
-	PurchaseId  *string  `explode:"true" serializationStyle:"form" queryParam:"purchaseId"`
 }
 
+func (params *ListPurchasesRequestParams) SetPurchaseId(purchaseId string) {
+	params.PurchaseId = &purchaseId
+}
 func (params *ListPurchasesRequestParams) SetIccid(iccid string) {
 	params.Iccid = &iccid
 }
@@ -39,7 +42,4 @@ func (params *ListPurchasesRequestParams) SetAfter(after float64) {
 }
 func (params *ListPurchasesRequestParams) SetBefore(before float64) {
 	params.Before = &before
-}
-func (params *ListPurchasesRequestParams) SetPurchaseId(purchaseId string) {
-	params.PurchaseId = &purchaseId
 }
