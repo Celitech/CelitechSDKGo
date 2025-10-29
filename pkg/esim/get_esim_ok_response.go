@@ -36,6 +36,8 @@ type GetEsimOkResponseEsim struct {
 	ManualActivationCode *string `json:"manualActivationCode,omitempty" required:"true"`
 	// Status of the eSIM, possible values are 'RELEASED', 'DOWNLOADED', 'INSTALLED', 'ENABLED', 'DELETED', or 'ERROR'
 	Status *string `json:"status,omitempty" required:"true"`
+	// Status of the eSIM connectivity, possible values are 'ACTIVE' or 'NOT_ACTIVE'
+	ConnectivityStatus *string `json:"connectivityStatus,omitempty"`
 	// Indicates whether the eSIM is currently eligible for a top-up. This flag should be checked before attempting a top-up request.
 	IsTopUpAllowed *bool `json:"isTopUpAllowed,omitempty" required:"true"`
 }
@@ -93,6 +95,17 @@ func (g *GetEsimOkResponseEsim) GetStatus() *string {
 
 func (g *GetEsimOkResponseEsim) SetStatus(status string) {
 	g.Status = &status
+}
+
+func (g *GetEsimOkResponseEsim) GetConnectivityStatus() *string {
+	if g == nil {
+		return nil
+	}
+	return g.ConnectivityStatus
+}
+
+func (g *GetEsimOkResponseEsim) SetConnectivityStatus(connectivityStatus string) {
+	g.ConnectivityStatus = &connectivityStatus
 }
 
 func (g *GetEsimOkResponseEsim) GetIsTopUpAllowed() *bool {
