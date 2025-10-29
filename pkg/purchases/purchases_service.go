@@ -125,7 +125,7 @@ func (api *PurchasesService) CreatePurchase(ctx context.Context, createPurchaseR
 	return shared.NewCelitechResponse[CreatePurchaseOkResponse](resp), nil
 }
 
-// This endpoint is used to top-up an existing eSIM with the previously associated destination by providing its ICCID and package details. To determine if an eSIM can be topped up, use the Get eSIM Status endpoint, which returns the `isTopUpAllowed` flag.
+// This endpoint is used to top-up an existing eSIM with the previously associated destination by providing its ICCID and package details. To determine if an eSIM can be topped up, use the Get eSIM endpoint, which returns the `isTopUpAllowed` flag.
 func (api *PurchasesService) TopUpEsim(ctx context.Context, topUpEsimRequest TopUpEsimRequest) (*shared.CelitechResponse[TopUpEsimOkResponse], *shared.CelitechError) {
 	config := *api.getConfig()
 
