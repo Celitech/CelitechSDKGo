@@ -8,7 +8,6 @@ type ListPackagesRequestParams struct {
 	Limit       *float64 `explode:"true" serializationStyle:"form" queryParam:"limit"`
 	StartTime   *int64   `explode:"true" serializationStyle:"form" queryParam:"startTime"`
 	EndTime     *int64   `explode:"true" serializationStyle:"form" queryParam:"endTime"`
-	Duration    *float64 `explode:"true" serializationStyle:"form" queryParam:"duration"`
 }
 
 func (params *ListPackagesRequestParams) SetDestination(destination string) {
@@ -31,7 +30,4 @@ func (params *ListPackagesRequestParams) SetStartTime(startTime int64) {
 }
 func (params *ListPackagesRequestParams) SetEndTime(endTime int64) {
 	params.EndTime = &endTime
-}
-func (params *ListPackagesRequestParams) SetDuration(duration float64) {
-	params.Duration = &duration
 }
