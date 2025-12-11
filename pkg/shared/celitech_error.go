@@ -2,11 +2,13 @@ package shared
 
 import (
 	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
+	"net/http"
 )
 
 type CelitechError struct {
 	Err      error
 	Body     []byte
+	Raw      *http.Response
 	Metadata CelitechErrorMetadata
 }
 
@@ -19,6 +21,7 @@ func NewCelitechError[T any](transportError *httptransport.ErrorResponse[T]) *Ce
 	return &CelitechError{
 		Err:  transportError.GetError(),
 		Body: transportError.GetBody(),
+		Raw:  transportError.Raw,
 		Metadata: CelitechErrorMetadata{
 			StatusCode: transportError.GetStatusCode(),
 			Headers:    transportError.GetHeaders(),
