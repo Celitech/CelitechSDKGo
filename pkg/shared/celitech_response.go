@@ -2,12 +2,13 @@ package shared
 
 import (
 	"encoding/json"
-
 	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
+	"net/http"
 )
 
 type CelitechResponse[T any] struct {
 	Data     T
+	Raw      *http.Response
 	Metadata CelitechResponseMetadata
 }
 
@@ -19,6 +20,7 @@ type CelitechResponseMetadata struct {
 func NewCelitechResponse[T any](resp *httptransport.Response[T]) *CelitechResponse[T] {
 	return &CelitechResponse[T]{
 		Data: resp.Data,
+		Raw:  resp.Raw,
 		Metadata: CelitechResponseMetadata{
 			StatusCode: resp.StatusCode,
 			Headers:    resp.Headers,
