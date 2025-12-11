@@ -8,9 +8,11 @@ type CreatePurchaseV2Request struct {
 	// Size of the package in GB. The available options are 0.5, 1, 2, 3, 5, 8, 20GB
 	DataLimitInGb *float64 `json:"dataLimitInGB,omitempty" required:"true"`
 	// Start date of the package's validity in the format 'yyyy-MM-dd'. This date can be set to the current day or any day within the next 12 months.
-	StartDate *string `json:"startDate,omitempty" required:"true"`
+	StartDate *string `json:"startDate,omitempty"`
 	// End date of the package's validity in the format 'yyyy-MM-dd'. End date can be maximum 90 days after Start date.
-	EndDate *string `json:"endDate,omitempty" required:"true"`
+	EndDate *string `json:"endDate,omitempty"`
+	// Duration of the package in days. Available values are 1, 2, 7, 14, 30, or 90. Either provide startDate/endDate or duration.
+	Duration *CreatePurchaseV2RequestDuration `json:"duration,omitempty"`
 	// Number of eSIMs to purchase.
 	Quantity *float64 `json:"quantity,omitempty" required:"true" min:"1" max:"5"`
 	// Email address where the purchase confirmation email will be sent (including QR Code & activation steps)
@@ -65,6 +67,17 @@ func (c *CreatePurchaseV2Request) GetEndDate() *string {
 
 func (c *CreatePurchaseV2Request) SetEndDate(endDate string) {
 	c.EndDate = &endDate
+}
+
+func (c *CreatePurchaseV2Request) GetDuration() *CreatePurchaseV2RequestDuration {
+	if c == nil {
+		return nil
+	}
+	return c.Duration
+}
+
+func (c *CreatePurchaseV2Request) SetDuration(duration CreatePurchaseV2RequestDuration) {
+	c.Duration = &duration
 }
 
 func (c *CreatePurchaseV2Request) GetQuantity() *float64 {
@@ -129,3 +142,15 @@ func (c CreatePurchaseV2Request) String() string {
 	}
 	return string(jsonData)
 }
+
+// Duration of the package in days. Available values are 1, 2, 7, 14, 30, or 90. Either provide startDate/endDate or duration.
+type CreatePurchaseV2RequestDuration float64
+
+const (
+	CREATE_PURCHASE_V2_REQUEST_DURATION_1  CreatePurchaseV2RequestDuration = 1
+	CREATE_PURCHASE_V2_REQUEST_DURATION_2  CreatePurchaseV2RequestDuration = 2
+	CREATE_PURCHASE_V2_REQUEST_DURATION_7  CreatePurchaseV2RequestDuration = 7
+	CREATE_PURCHASE_V2_REQUEST_DURATION_14 CreatePurchaseV2RequestDuration = 14
+	CREATE_PURCHASE_V2_REQUEST_DURATION_30 CreatePurchaseV2RequestDuration = 30
+	CREATE_PURCHASE_V2_REQUEST_DURATION_90 CreatePurchaseV2RequestDuration = 90
+)

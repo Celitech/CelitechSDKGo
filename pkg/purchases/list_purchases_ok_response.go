@@ -57,6 +57,8 @@ type Purchases struct {
 	StartDate *util.Nullable[string] `json:"startDate,omitempty" required:"true"`
 	// End date of the package's validity in the format 'yyyy-MM-ddThh:mm:ssZZ'
 	EndDate *util.Nullable[string] `json:"endDate,omitempty" required:"true"`
+	// Duration of the package in days. Possible values are 1, 2, 7, 14, 30, or 90.
+	Duration *util.Nullable[float64] `json:"duration,omitempty"`
 	// Creation date of the purchase in the format 'yyyy-MM-ddThh:mm:ssZZ'
 	CreatedDate *string `json:"createdDate,omitempty" required:"true"`
 	// Epoch value representing the start time of the package's validity
@@ -114,6 +116,21 @@ func (p *Purchases) SetEndDate(endDate util.Nullable[string]) {
 
 func (p *Purchases) SetEndDateNull() {
 	p.EndDate = &util.Nullable[string]{IsNull: true}
+}
+
+func (p *Purchases) GetDuration() *util.Nullable[float64] {
+	if p == nil {
+		return nil
+	}
+	return p.Duration
+}
+
+func (p *Purchases) SetDuration(duration util.Nullable[float64]) {
+	p.Duration = &duration
+}
+
+func (p *Purchases) SetDurationNull() {
+	p.Duration = &util.Nullable[float64]{IsNull: true}
 }
 
 func (p *Purchases) GetCreatedDate() *string {

@@ -8,9 +8,11 @@ type TopUpEsimRequest struct {
 	// Size of the package in GB. The available options are 0.5, 1, 2, 3, 5, 8, 20GB
 	DataLimitInGb *float64 `json:"dataLimitInGB,omitempty" required:"true"`
 	// Start date of the package's validity in the format 'yyyy-MM-dd'. This date can be set to the current day or any day within the next 12 months.
-	StartDate *string `json:"startDate,omitempty" required:"true"`
+	StartDate *string `json:"startDate,omitempty"`
 	// End date of the package's validity in the format 'yyyy-MM-dd'. End date can be maximum 90 days after Start date.
-	EndDate *string `json:"endDate,omitempty" required:"true"`
+	EndDate *string `json:"endDate,omitempty"`
+	// Duration of the package in days. Available values are 1, 2, 7, 14, 30, or 90. Either provide startDate/endDate or duration.
+	Duration *TopUpEsimRequestDuration `json:"duration,omitempty"`
 	// Email address where the purchase confirmation email will be sent (excluding QR Code & activation steps).
 	Email *string `json:"email,omitempty"`
 	// An identifier provided by the partner to link this purchase to their booking or transaction for analytics and debugging purposes.
@@ -65,6 +67,17 @@ func (t *TopUpEsimRequest) GetEndDate() *string {
 
 func (t *TopUpEsimRequest) SetEndDate(endDate string) {
 	t.EndDate = &endDate
+}
+
+func (t *TopUpEsimRequest) GetDuration() *TopUpEsimRequestDuration {
+	if t == nil {
+		return nil
+	}
+	return t.Duration
+}
+
+func (t *TopUpEsimRequest) SetDuration(duration TopUpEsimRequestDuration) {
+	t.Duration = &duration
 }
 
 func (t *TopUpEsimRequest) GetEmail() *string {
@@ -129,3 +142,15 @@ func (t TopUpEsimRequest) String() string {
 	}
 	return string(jsonData)
 }
+
+// Duration of the package in days. Available values are 1, 2, 7, 14, 30, or 90. Either provide startDate/endDate or duration.
+type TopUpEsimRequestDuration float64
+
+const (
+	TOP_UP_ESIM_REQUEST_DURATION_1  TopUpEsimRequestDuration = 1
+	TOP_UP_ESIM_REQUEST_DURATION_2  TopUpEsimRequestDuration = 2
+	TOP_UP_ESIM_REQUEST_DURATION_7  TopUpEsimRequestDuration = 7
+	TOP_UP_ESIM_REQUEST_DURATION_14 TopUpEsimRequestDuration = 14
+	TOP_UP_ESIM_REQUEST_DURATION_30 TopUpEsimRequestDuration = 30
+	TOP_UP_ESIM_REQUEST_DURATION_90 TopUpEsimRequestDuration = 90
+)
