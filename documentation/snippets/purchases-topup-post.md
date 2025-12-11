@@ -18,8 +18,6 @@ client := celitech.NewCelitech(config)
 request := purchases.TopUpEsimRequest{
   Iccid: util.ToPointer("1111222233334444555000"),
   DataLimitInGb: util.ToPointer(float64(1)),
-  StartDate: util.ToPointer("2023-11-01"),
-  EndDate: util.ToPointer("2023-11-20"),
 }
 
 response, err := client.Purchases.TopUpEsim(context.Background(), request)
