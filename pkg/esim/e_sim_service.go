@@ -3,6 +3,7 @@ package esim
 import (
 	"context"
 	restClient "github.com/Celitech/CelitechSDKGo/internal/clients/rest"
+	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
 	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
 	"github.com/Celitech/CelitechSDKGo/internal/configmanager"
 	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
@@ -10,8 +11,11 @@ import (
 	"time"
 )
 
+// ESimService provides methods to interact with ESimService-related API endpoints.
+// It uses a configuration manager for settings and supports custom hooks for request/response interception.
 type ESimService struct {
 	manager *configmanager.ConfigManager
+	hook    hooks.Hook
 }
 
 func NewESimService() *ESimService {
@@ -20,13 +24,26 @@ func NewESimService() *ESimService {
 	}
 }
 
+// WithConfigManager sets the configuration manager for this service.
+// Returns the service instance for method chaining.
 func (api *ESimService) WithConfigManager(manager *configmanager.ConfigManager) *ESimService {
 	api.manager = manager
 	return api
 }
 
+// WithHook sets a custom hook for request/response interception.
+// Returns the service instance for method chaining.
+func (api *ESimService) WithHook(hook hooks.Hook) *ESimService {
+	api.hook = hook
+	return api
+}
+
 func (api *ESimService) getConfig() *celitechconfig.Config {
 	return api.manager.GetESim()
+}
+
+func (api *ESimService) getHook() hooks.Hook {
+	return api.hook
 }
 
 func (api *ESimService) SetBaseUrl(baseUrl string) {
@@ -55,7 +72,7 @@ func (api *ESimService) SetOAuthBaseUrl(oAuthBaseUrl string) {
 }
 
 // Get eSIM
-func (api *ESimService) GetEsim(ctx context.Context, params GetEsimRequestParams) (*shared.CelitechResponse[GetEsimOkResponse], *shared.CelitechError) {
+func (api *ESimService) GetEsim(ctx context.Context, params GetEsimRequestParams) (*shared.CelitechResponse[GetEsimOkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -68,17 +85,17 @@ func (api *ESimService) GetEsim(ctx context.Context, params GetEsimRequestParams
 		WithScopes([]string{}).
 		Build()
 
-	client := restClient.NewRestClient[GetEsimOkResponse](config, api.manager)
+	client := restClient.NewRestClient[GetEsimOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[GetEsimOkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[GetEsimOkResponse](resp), nil
 }
 
 // Get eSIM Device
-func (api *ESimService) GetEsimDevice(ctx context.Context, iccid string) (*shared.CelitechResponse[GetEsimDeviceOkResponse], *shared.CelitechError) {
+func (api *ESimService) GetEsimDevice(ctx context.Context, iccid string) (*shared.CelitechResponse[GetEsimDeviceOkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -91,17 +108,17 @@ func (api *ESimService) GetEsimDevice(ctx context.Context, iccid string) (*share
 		WithScopes([]string{}).
 		Build()
 
-	client := restClient.NewRestClient[GetEsimDeviceOkResponse](config, api.manager)
+	client := restClient.NewRestClient[GetEsimDeviceOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[GetEsimDeviceOkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[GetEsimDeviceOkResponse](resp), nil
 }
 
 // Get eSIM History
-func (api *ESimService) GetEsimHistory(ctx context.Context, iccid string) (*shared.CelitechResponse[GetEsimHistoryOkResponse], *shared.CelitechError) {
+func (api *ESimService) GetEsimHistory(ctx context.Context, iccid string) (*shared.CelitechResponse[GetEsimHistoryOkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -114,10 +131,10 @@ func (api *ESimService) GetEsimHistory(ctx context.Context, iccid string) (*shar
 		WithScopes([]string{}).
 		Build()
 
-	client := restClient.NewRestClient[GetEsimHistoryOkResponse](config, api.manager)
+	client := restClient.NewRestClient[GetEsimHistoryOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[GetEsimHistoryOkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[GetEsimHistoryOkResponse](resp), nil

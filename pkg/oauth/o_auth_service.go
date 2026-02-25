@@ -3,6 +3,7 @@ package oauth
 import (
 	"context"
 	restClient "github.com/Celitech/CelitechSDKGo/internal/clients/rest"
+	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
 	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
 	"github.com/Celitech/CelitechSDKGo/internal/configmanager"
 	"github.com/Celitech/CelitechSDKGo/internal/oauthtokenmanager"
@@ -11,8 +12,11 @@ import (
 	"time"
 )
 
+// OAuthService provides methods to interact with OAuthService-related API endpoints.
+// It uses a configuration manager for settings and supports custom hooks for request/response interception.
 type OAuthService struct {
 	manager *configmanager.ConfigManager
+	hook    hooks.Hook
 }
 
 func NewOAuthService() *OAuthService {
@@ -21,13 +25,26 @@ func NewOAuthService() *OAuthService {
 	}
 }
 
+// WithConfigManager sets the configuration manager for this service.
+// Returns the service instance for method chaining.
 func (api *OAuthService) WithConfigManager(manager *configmanager.ConfigManager) *OAuthService {
 	api.manager = manager
 	return api
 }
 
+// WithHook sets a custom hook for request/response interception.
+// Returns the service instance for method chaining.
+func (api *OAuthService) WithHook(hook hooks.Hook) *OAuthService {
+	api.hook = hook
+	return api
+}
+
 func (api *OAuthService) getConfig() *celitechconfig.Config {
 	return api.manager.GetOAuth()
+}
+
+func (api *OAuthService) getHook() hooks.Hook {
+	return api.hook
 }
 
 func (api *OAuthService) SetBaseUrl(baseUrl string) {
@@ -56,7 +73,7 @@ func (api *OAuthService) SetOAuthBaseUrl(oAuthBaseUrl string) {
 }
 
 // This endpoint was added by liblab
-func (api *OAuthService) GetAccessToken(ctx context.Context, getAccessTokenRequest GetAccessTokenRequest) (*shared.CelitechResponse[GetAccessTokenOkResponse], *shared.CelitechError) {
+func (api *OAuthService) GetAccessToken(ctx context.Context, getAccessTokenRequest GetAccessTokenRequest) (*shared.CelitechResponse[GetAccessTokenOkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -70,10 +87,10 @@ func (api *OAuthService) GetAccessToken(ctx context.Context, getAccessTokenReque
 		WithScopes(nil).
 		Build()
 
-	client := restClient.NewRestClient[GetAccessTokenOkResponse](config, api.manager)
+	client := restClient.NewRestClient[GetAccessTokenOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[GetAccessTokenOkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[GetAccessTokenOkResponse](resp), nil
