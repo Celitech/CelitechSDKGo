@@ -1,4 +1,4 @@
-# Celitech Go SDK 1.3.60
+# Celitech Go SDK 1.3.61
 
 Welcome to the Celitech SDK documentation. This guide will help you get started with integrating and using the Celitech SDK in your project.
 
@@ -6,8 +6,8 @@ Welcome to the Celitech SDK documentation. This guide will help you get started 
 
 ## Versions
 
-- API version: `1.3.60`
-- SDK version: `1.3.60`
+- API version: `1.3.61`
+- SDK version: `1.3.61`
 
 ## About the API
 
@@ -149,15 +149,16 @@ This response wrapper is used to return the response data from the API. It conta
 | Data     | `T`                        | The body of the API response                |
 | Metadata | `CelitechResponseMetadata` | Status code and headers returned by the API |
 
-#### `CelitechError`
+#### `CelitechError[T]`
 
 This response wrapper is used to return an error. It contains the following fields:
 
-| Name     | Type                       | Description                                 |
-| :------- | :------------------------- | :------------------------------------------ |
-| Err      | `error`                    | The error that occurred                     |
-| Body     | `T`                        | The body of the API response                |
-| Metadata | `CelitechResponseMetadata` | Status code and headers returned by the API |
+| Name     | Type                    | Description                                                       |
+| :------- | :---------------------- | :---------------------------------------------------------------- |
+| Err      | `error`                 | The error that occurred                                           |
+| Data     | `*T`                    | The deserialized error response data (nil if unmarshaling failed) |
+| Body     | `[]byte`                | The raw body of the API response                                  |
+| Metadata | `CelitechErrorMetadata` | Status code and headers returned by the API                       |
 
 #### `CelitechResponseMetadata`
 
@@ -181,15 +182,15 @@ The SDK includes several models that represent the data structures used in API r
 | :----------------------------------------------------------------------------------------------- | :---------- |
 | [ListDestinationsOkResponse](documentation/models/list_destinations_ok_response.md)              |             |
 | [ListPackagesOkResponse](documentation/models/list_packages_ok_response.md)                      |             |
-| [CreatePurchaseV2Request](documentation/models/create_purchase_v2_request.md)                    |             |
 | [CreatePurchaseV2OkResponse](documentation/models/create_purchase_v2_ok_response.md)             |             |
+| [CreatePurchaseV2Request](documentation/models/create_purchase_v2_request.md)                    |             |
 | [ListPurchasesOkResponse](documentation/models/list_purchases_ok_response.md)                    |             |
-| [CreatePurchaseRequest](documentation/models/create_purchase_request.md)                         |             |
 | [CreatePurchaseOkResponse](documentation/models/create_purchase_ok_response.md)                  |             |
-| [TopUpEsimRequest](documentation/models/top_up_esim_request.md)                                  |             |
+| [CreatePurchaseRequest](documentation/models/create_purchase_request.md)                         |             |
 | [TopUpEsimOkResponse](documentation/models/top_up_esim_ok_response.md)                           |             |
-| [EditPurchaseRequest](documentation/models/edit_purchase_request.md)                             |             |
+| [TopUpEsimRequest](documentation/models/top_up_esim_request.md)                                  |             |
 | [EditPurchaseOkResponse](documentation/models/edit_purchase_ok_response.md)                      |             |
+| [EditPurchaseRequest](documentation/models/edit_purchase_request.md)                             |             |
 | [GetPurchaseConsumptionOkResponse](documentation/models/get_purchase_consumption_ok_response.md) |             |
 | [GetEsimOkResponse](documentation/models/get_esim_ok_response.md)                                |             |
 | [GetEsimDeviceOkResponse](documentation/models/get_esim_device_ok_response.md)                   |             |
