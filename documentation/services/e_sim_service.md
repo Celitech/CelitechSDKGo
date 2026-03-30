@@ -35,7 +35,7 @@ import (
   "context"
   "github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
   "github.com/Celitech/CelitechSDKGo/pkg/celitech"
-
+  "github.com/Celitech/CelitechSDKGo/pkg/util"
   "github.com/Celitech/CelitechSDKGo/pkg/esim"
 )
 
