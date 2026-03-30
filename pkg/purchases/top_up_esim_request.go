@@ -5,12 +5,14 @@ import "encoding/json"
 type TopUpEsimRequest struct {
 	// ID of the eSIM
 	Iccid *string `json:"iccid,omitempty" required:"true" maxLength:"22" minLength:"18"`
-	// Size of the package in GB. The available options are 0.5, 1, 2, 3, 5, 8, 20GB
+	// Size of the package in GB. The available options are 0.5, 1, 2, 3, 5, 8, 20, 50GB
 	DataLimitInGb *float64 `json:"dataLimitInGB,omitempty" required:"true"`
 	// Start date of the package's validity in the format 'yyyy-MM-dd'. This date can be set to the current day or any day within the next 12 months.
-	StartDate *string `json:"startDate,omitempty" required:"true"`
+	StartDate *string `json:"startDate,omitempty"`
 	// End date of the package's validity in the format 'yyyy-MM-dd'. End date can be maximum 90 days after Start date.
-	EndDate *string `json:"endDate,omitempty" required:"true"`
+	EndDate *string `json:"endDate,omitempty"`
+	// Duration of the package in days. Available values are 1, 2, 7, 14, 30, or 90. Either provide startDate/endDate or duration.
+	Duration *float64 `json:"duration,omitempty"`
 	// Email address where the purchase confirmation email will be sent (excluding QR Code & activation steps).
 	Email *string `json:"email,omitempty"`
 	// An identifier provided by the partner to link this purchase to their booking or transaction for analytics and debugging purposes.
@@ -65,6 +67,17 @@ func (t *TopUpEsimRequest) GetEndDate() *string {
 
 func (t *TopUpEsimRequest) SetEndDate(endDate string) {
 	t.EndDate = &endDate
+}
+
+func (t *TopUpEsimRequest) GetDuration() *float64 {
+	if t == nil {
+		return nil
+	}
+	return t.Duration
+}
+
+func (t *TopUpEsimRequest) SetDuration(duration float64) {
+	t.Duration = &duration
 }
 
 func (t *TopUpEsimRequest) GetEmail() *string {

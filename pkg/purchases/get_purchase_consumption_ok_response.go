@@ -5,6 +5,8 @@ import "encoding/json"
 type GetPurchaseConsumptionOkResponse struct {
 	// Remaining balance of the package in bytes
 	DataUsageRemainingInBytes *float64 `json:"dataUsageRemainingInBytes,omitempty" required:"true"`
+	// Remaining balance of the package in GB
+	DataUsageRemainingInGb *float64 `json:"dataUsageRemainingInGB,omitempty" required:"true"`
 	// Status of the connectivity, possible values are 'ACTIVE' or 'NOT_ACTIVE'
 	Status *string `json:"status,omitempty" required:"true"`
 }
@@ -18,6 +20,17 @@ func (g *GetPurchaseConsumptionOkResponse) GetDataUsageRemainingInBytes() *float
 
 func (g *GetPurchaseConsumptionOkResponse) SetDataUsageRemainingInBytes(dataUsageRemainingInBytes float64) {
 	g.DataUsageRemainingInBytes = &dataUsageRemainingInBytes
+}
+
+func (g *GetPurchaseConsumptionOkResponse) GetDataUsageRemainingInGb() *float64 {
+	if g == nil {
+		return nil
+	}
+	return g.DataUsageRemainingInGb
+}
+
+func (g *GetPurchaseConsumptionOkResponse) SetDataUsageRemainingInGb(dataUsageRemainingInGb float64) {
+	g.DataUsageRemainingInGb = &dataUsageRemainingInGb
 }
 
 func (g *GetPurchaseConsumptionOkResponse) GetStatus() *string {
