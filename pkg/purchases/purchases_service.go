@@ -3,6 +3,7 @@ package purchases
 import (
 	"context"
 	restClient "github.com/Celitech/CelitechSDKGo/internal/clients/rest"
+	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
 	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
 	"github.com/Celitech/CelitechSDKGo/internal/configmanager"
 	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
@@ -10,8 +11,11 @@ import (
 	"time"
 )
 
+// PurchasesService provides methods to interact with PurchasesService-related API endpoints.
+// It uses a configuration manager for settings and supports custom hooks for request/response interception.
 type PurchasesService struct {
 	manager *configmanager.ConfigManager
+	hook    hooks.Hook
 }
 
 func NewPurchasesService() *PurchasesService {
@@ -20,13 +24,26 @@ func NewPurchasesService() *PurchasesService {
 	}
 }
 
+// WithConfigManager sets the configuration manager for this service.
+// Returns the service instance for method chaining.
 func (api *PurchasesService) WithConfigManager(manager *configmanager.ConfigManager) *PurchasesService {
 	api.manager = manager
 	return api
 }
 
+// WithHook sets a custom hook for request/response interception.
+// Returns the service instance for method chaining.
+func (api *PurchasesService) WithHook(hook hooks.Hook) *PurchasesService {
+	api.hook = hook
+	return api
+}
+
 func (api *PurchasesService) getConfig() *celitechconfig.Config {
 	return api.manager.GetPurchases()
+}
+
+func (api *PurchasesService) getHook() hooks.Hook {
+	return api.hook
 }
 
 func (api *PurchasesService) SetBaseUrl(baseUrl string) {
@@ -55,7 +72,7 @@ func (api *PurchasesService) SetOAuthBaseUrl(oAuthBaseUrl string) {
 }
 
 // This endpoint is used to purchase a new eSIM by providing the package details.
-func (api *PurchasesService) CreatePurchaseV2(ctx context.Context, createPurchaseV2Request CreatePurchaseV2Request) (*shared.CelitechResponse[[]CreatePurchaseV2OkResponse], *shared.CelitechError) {
+func (api *PurchasesService) CreatePurchaseV2(ctx context.Context, createPurchaseV2Request CreatePurchaseV2Request) (*shared.CelitechResponse[[]CreatePurchaseV2OkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -69,17 +86,17 @@ func (api *PurchasesService) CreatePurchaseV2(ctx context.Context, createPurchas
 		WithScopes([]string{}).
 		Build()
 
-	client := restClient.NewRestClient[[]CreatePurchaseV2OkResponse](config, api.manager)
+	client := restClient.NewRestClient[[]CreatePurchaseV2OkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[[]CreatePurchaseV2OkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[[]CreatePurchaseV2OkResponse](resp), nil
 }
 
 // This endpoint can be used to list all the successful purchases made between a given interval.
-func (api *PurchasesService) ListPurchases(ctx context.Context, params ListPurchasesRequestParams) (*shared.CelitechResponse[ListPurchasesOkResponse], *shared.CelitechError) {
+func (api *PurchasesService) ListPurchases(ctx context.Context, params ListPurchasesRequestParams) (*shared.CelitechResponse[ListPurchasesOkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -92,17 +109,17 @@ func (api *PurchasesService) ListPurchases(ctx context.Context, params ListPurch
 		WithScopes([]string{}).
 		Build()
 
-	client := restClient.NewRestClient[ListPurchasesOkResponse](config, api.manager)
+	client := restClient.NewRestClient[ListPurchasesOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[ListPurchasesOkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[ListPurchasesOkResponse](resp), nil
 }
 
 // This endpoint is used to purchase a new eSIM by providing the package details.
-func (api *PurchasesService) CreatePurchase(ctx context.Context, createPurchaseRequest CreatePurchaseRequest) (*shared.CelitechResponse[CreatePurchaseOkResponse], *shared.CelitechError) {
+func (api *PurchasesService) CreatePurchase(ctx context.Context, createPurchaseRequest CreatePurchaseRequest) (*shared.CelitechResponse[CreatePurchaseOkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -116,17 +133,17 @@ func (api *PurchasesService) CreatePurchase(ctx context.Context, createPurchaseR
 		WithScopes([]string{}).
 		Build()
 
-	client := restClient.NewRestClient[CreatePurchaseOkResponse](config, api.manager)
+	client := restClient.NewRestClient[CreatePurchaseOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[CreatePurchaseOkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[CreatePurchaseOkResponse](resp), nil
 }
 
-// This endpoint is used to top-up an existing eSIM with the previously associated destination by providing its ICCID and package details. To determine if an eSIM can be topped up, use the Get eSIM Status endpoint, which returns the `isTopUpAllowed` flag.
-func (api *PurchasesService) TopUpEsim(ctx context.Context, topUpEsimRequest TopUpEsimRequest) (*shared.CelitechResponse[TopUpEsimOkResponse], *shared.CelitechError) {
+// This endpoint is used to top-up an existing eSIM with the previously associated destination by providing its ICCID and package details. To determine if an eSIM can be topped up, use the Get eSIM endpoint, which returns the `isTopUpAllowed` flag.
+func (api *PurchasesService) TopUpEsim(ctx context.Context, topUpEsimRequest TopUpEsimRequest) (*shared.CelitechResponse[TopUpEsimOkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -140,10 +157,10 @@ func (api *PurchasesService) TopUpEsim(ctx context.Context, topUpEsimRequest Top
 		WithScopes([]string{}).
 		Build()
 
-	client := restClient.NewRestClient[TopUpEsimOkResponse](config, api.manager)
+	client := restClient.NewRestClient[TopUpEsimOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[TopUpEsimOkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[TopUpEsimOkResponse](resp), nil
@@ -157,7 +174,7 @@ func (api *PurchasesService) TopUpEsim(ctx context.Context, topUpEsimRequest Top
 // - Updates must comply with the same pricing structure; the modification cannot alter the package size or change its duration category.
 //
 // The end date can be extended or shortened as long as it adheres to the same pricing category and does not exceed the allowed duration limits.
-func (api *PurchasesService) EditPurchase(ctx context.Context, editPurchaseRequest EditPurchaseRequest) (*shared.CelitechResponse[EditPurchaseOkResponse], *shared.CelitechError) {
+func (api *PurchasesService) EditPurchase(ctx context.Context, editPurchaseRequest EditPurchaseRequest) (*shared.CelitechResponse[EditPurchaseOkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -171,17 +188,17 @@ func (api *PurchasesService) EditPurchase(ctx context.Context, editPurchaseReque
 		WithScopes([]string{}).
 		Build()
 
-	client := restClient.NewRestClient[EditPurchaseOkResponse](config, api.manager)
+	client := restClient.NewRestClient[EditPurchaseOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[EditPurchaseOkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[EditPurchaseOkResponse](resp), nil
 }
 
 // This endpoint can be called for consumption notifications (e.g. every 1 hour or when the user clicks a button). It returns the data balance (consumption) of purchased packages.
-func (api *PurchasesService) GetPurchaseConsumption(ctx context.Context, purchaseId string) (*shared.CelitechResponse[GetPurchaseConsumptionOkResponse], *shared.CelitechError) {
+func (api *PurchasesService) GetPurchaseConsumption(ctx context.Context, purchaseId string) (*shared.CelitechResponse[GetPurchaseConsumptionOkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -194,10 +211,10 @@ func (api *PurchasesService) GetPurchaseConsumption(ctx context.Context, purchas
 		WithScopes([]string{}).
 		Build()
 
-	client := restClient.NewRestClient[GetPurchaseConsumptionOkResponse](config, api.manager)
+	client := restClient.NewRestClient[GetPurchaseConsumptionOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[GetPurchaseConsumptionOkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[GetPurchaseConsumptionOkResponse](resp), nil
