@@ -48,9 +48,3 @@ func (g GetAccessTokenRequest) String() string {
 	}
 	return string(jsonData)
 }
-
-type GrantType string
-
-const (
-	GRANT_TYPE_CLIENT_CREDENTIALS GrantType = "client_credentials"
-)
