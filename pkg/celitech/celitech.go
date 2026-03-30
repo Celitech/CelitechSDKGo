@@ -1,6 +1,7 @@
 package celitech
 
 import (
+	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
 	"github.com/Celitech/CelitechSDKGo/internal/configmanager"
 	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
 	"github.com/Celitech/CelitechSDKGo/pkg/destinations"
@@ -12,6 +13,8 @@ import (
 	"time"
 )
 
+// Celitech is the main SDK client that provides access to all service endpoints.
+// It manages configuration, authentication, and service instances with centralized settings.
 type Celitech struct {
 	Destinations *destinations.DestinationsService
 	Packages     *packages.PackagesService
@@ -31,12 +34,19 @@ func NewCelitech(config celitechconfig.Config) *Celitech {
 	iFrame := iframe.NewIFrameService()
 
 	manager := configmanager.NewConfigManager(config, oAuth)
+	hook := hooks.NewDefaultHook()
 	oAuth.WithConfigManager(manager)
 	destinations.WithConfigManager(manager)
 	packages.WithConfigManager(manager)
 	purchases.WithConfigManager(manager)
 	eSim.WithConfigManager(manager)
 	iFrame.WithConfigManager(manager)
+	oAuth.WithHook(hook)
+	destinations.WithHook(hook)
+	packages.WithHook(hook)
+	purchases.WithHook(hook)
+	eSim.WithHook(hook)
+	iFrame.WithHook(hook)
 
 	return &Celitech{
 		Destinations: destinations,
