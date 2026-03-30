@@ -5,7 +5,7 @@ import "encoding/json"
 type CreatePurchaseRequest struct {
 	// ISO representation of the package's destination. Supports both ISO2 (e.g., 'FR') and ISO3 (e.g., 'FRA') country codes.
 	Destination *string `json:"destination,omitempty" required:"true"`
-	// Size of the package in GB. The available options are 0.5, 1, 2, 3, 5, 8, 20GB
+	// Size of the package in GB. The available options are 0.5, 1, 2, 3, 5, 8, 20, 50GB
 	DataLimitInGb *float64 `json:"dataLimitInGB,omitempty" required:"true"`
 	// Start date of the package's validity in the format 'yyyy-MM-dd'. This date can be set to the current day or any day within the next 12 months.
 	StartDate *string `json:"startDate,omitempty" required:"true"`
@@ -15,7 +15,7 @@ type CreatePurchaseRequest struct {
 	Email *string `json:"email,omitempty"`
 	// An identifier provided by the partner to link this purchase to their booking or transaction for analytics and debugging purposes.
 	ReferenceId *string `json:"referenceId,omitempty"`
-	// Customize the network brand of the issued eSIM. The `networkBrand` parameter cannot exceed 15 characters in length and must contain only letters and numbers. This feature is available to platforms with Diamond tier only.
+	// Customize the network brand of the issued eSIM. The `networkBrand` parameter cannot exceed 15 characters in length and must contain only letters, numbers, dots (.), ampersands (&), and spaces. This feature is available to platforms with Diamond tier only.
 	NetworkBrand *string `json:"networkBrand,omitempty"`
 	// Customize the email subject brand. The `emailBrand` parameter cannot exceed 25 characters in length and must contain only letters, numbers, and spaces. This feature is available to platforms with Diamond tier only.
 	EmailBrand *string `json:"emailBrand,omitempty"`

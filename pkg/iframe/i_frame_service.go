@@ -3,6 +3,7 @@ package iframe
 import (
 	"context"
 	restClient "github.com/Celitech/CelitechSDKGo/internal/clients/rest"
+	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
 	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
 	"github.com/Celitech/CelitechSDKGo/internal/configmanager"
 	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
@@ -10,8 +11,11 @@ import (
 	"time"
 )
 
+// IFrameService provides methods to interact with IFrameService-related API endpoints.
+// It uses a configuration manager for settings and supports custom hooks for request/response interception.
 type IFrameService struct {
 	manager *configmanager.ConfigManager
+	hook    hooks.Hook
 }
 
 func NewIFrameService() *IFrameService {
@@ -20,13 +24,26 @@ func NewIFrameService() *IFrameService {
 	}
 }
 
+// WithConfigManager sets the configuration manager for this service.
+// Returns the service instance for method chaining.
 func (api *IFrameService) WithConfigManager(manager *configmanager.ConfigManager) *IFrameService {
 	api.manager = manager
 	return api
 }
 
+// WithHook sets a custom hook for request/response interception.
+// Returns the service instance for method chaining.
+func (api *IFrameService) WithHook(hook hooks.Hook) *IFrameService {
+	api.hook = hook
+	return api
+}
+
 func (api *IFrameService) getConfig() *celitechconfig.Config {
 	return api.manager.GetIFrame()
+}
+
+func (api *IFrameService) getHook() hooks.Hook {
+	return api.hook
 }
 
 func (api *IFrameService) SetBaseUrl(baseUrl string) {
@@ -55,7 +72,7 @@ func (api *IFrameService) SetOAuthBaseUrl(oAuthBaseUrl string) {
 }
 
 // Generate a new token to be used in the iFrame
-func (api *IFrameService) Token(ctx context.Context) (*shared.CelitechResponse[TokenOkResponse], *shared.CelitechError) {
+func (api *IFrameService) Token(ctx context.Context) (*shared.CelitechResponse[TokenOkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -67,10 +84,10 @@ func (api *IFrameService) Token(ctx context.Context) (*shared.CelitechResponse[T
 		WithScopes([]string{}).
 		Build()
 
-	client := restClient.NewRestClient[TokenOkResponse](config, api.manager)
+	client := restClient.NewRestClient[TokenOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[TokenOkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[TokenOkResponse](resp), nil

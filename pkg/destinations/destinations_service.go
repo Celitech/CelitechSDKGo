@@ -3,6 +3,7 @@ package destinations
 import (
 	"context"
 	restClient "github.com/Celitech/CelitechSDKGo/internal/clients/rest"
+	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
 	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
 	"github.com/Celitech/CelitechSDKGo/internal/configmanager"
 	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
@@ -10,8 +11,11 @@ import (
 	"time"
 )
 
+// DestinationsService provides methods to interact with DestinationsService-related API endpoints.
+// It uses a configuration manager for settings and supports custom hooks for request/response interception.
 type DestinationsService struct {
 	manager *configmanager.ConfigManager
+	hook    hooks.Hook
 }
 
 func NewDestinationsService() *DestinationsService {
@@ -20,13 +24,26 @@ func NewDestinationsService() *DestinationsService {
 	}
 }
 
+// WithConfigManager sets the configuration manager for this service.
+// Returns the service instance for method chaining.
 func (api *DestinationsService) WithConfigManager(manager *configmanager.ConfigManager) *DestinationsService {
 	api.manager = manager
 	return api
 }
 
+// WithHook sets a custom hook for request/response interception.
+// Returns the service instance for method chaining.
+func (api *DestinationsService) WithHook(hook hooks.Hook) *DestinationsService {
+	api.hook = hook
+	return api
+}
+
 func (api *DestinationsService) getConfig() *celitechconfig.Config {
 	return api.manager.GetDestinations()
+}
+
+func (api *DestinationsService) getHook() hooks.Hook {
+	return api.hook
 }
 
 func (api *DestinationsService) SetBaseUrl(baseUrl string) {
@@ -55,7 +72,7 @@ func (api *DestinationsService) SetOAuthBaseUrl(oAuthBaseUrl string) {
 }
 
 // List Destinations
-func (api *DestinationsService) ListDestinations(ctx context.Context) (*shared.CelitechResponse[ListDestinationsOkResponse], *shared.CelitechError) {
+func (api *DestinationsService) ListDestinations(ctx context.Context) (*shared.CelitechResponse[ListDestinationsOkResponse], *shared.CelitechError[[]byte]) {
 	config := *api.getConfig()
 
 	request := httptransport.NewRequestBuilder().WithContext(ctx).
@@ -67,10 +84,10 @@ func (api *DestinationsService) ListDestinations(ctx context.Context) (*shared.C
 		WithScopes([]string{}).
 		Build()
 
-	client := restClient.NewRestClient[ListDestinationsOkResponse](config, api.manager)
+	client := restClient.NewRestClient[ListDestinationsOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := client.Call(*request)
 	if err != nil {
-		return nil, shared.NewCelitechError[ListDestinationsOkResponse](err)
+		return nil, shared.NewCelitechError[[]byte](err)
 	}
 
 	return shared.NewCelitechResponse[ListDestinationsOkResponse](resp), nil

@@ -20,6 +20,8 @@ type paramMap struct {
 	Value string
 }
 
+// Request represents an HTTP request with all necessary configuration and parameters.
+// Handles path/query/header serialization, content types, and authentication scopes.
 type Request struct {
 	Context             context.Context
 	Method              string
@@ -35,6 +37,8 @@ type Request struct {
 	Scopes              []string
 }
 
+// NewRequest creates a new Request with default settings.
+// Initializes maps for headers, query params, and path params, and sets default content types to JSON.
 func NewRequest(ctx context.Context, method string, path string, config celitechconfig.Config) Request {
 	return Request{
 		Context:             ctx,
@@ -49,6 +53,8 @@ func NewRequest(ctx context.Context, method string, path string, config celitech
 	}
 }
 
+// Clone creates a deep copy of the Request including all maps.
+// Returns a new Request with copied values to prevent mutation of the original.
 func (r *Request) Clone() Request {
 	if r == nil {
 		return Request{
