@@ -3,9 +3,10 @@ package handlers
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
+	"example.com/celitech/internal/clients/rest/httptransport"
 )
 
 // TerminatingHandler is the final handler in the chain that executes the actual HTTP request.
@@ -25,11 +26,11 @@ func (h *TerminatingHandler[T, E]) Handle(request httptransport.Request) (*httpt
 	requestClone := request.Clone()
 
 	client := http.Client{}
-	if requestClone.Config.Timeout != nil {
-		client.Timeout = *requestClone.Config.Timeout
+	if requestClone.Config.Timeout != 0 {
+		client.Timeout = requestClone.Config.Timeout
 	}
 
-	req, err := requestClone.CreateHttpRequest()
+	req, err := requestClone.CreateHTTPRequest()
 	if err != nil {
 		return nil, httptransport.NewErrorResponse[E](err, nil)
 	}
@@ -64,11 +65,11 @@ func (h *TerminatingHandler[T, E]) HandleStream(request httptransport.Request) (
 	requestClone := request.Clone()
 
 	client := http.Client{}
-	if requestClone.Config.Timeout != nil {
-		client.Timeout = *requestClone.Config.Timeout
+	if requestClone.Config.Timeout != 0 {
+		client.Timeout = requestClone.Config.Timeout
 	}
 
-	req, err := requestClone.CreateHttpRequest()
+	req, err := requestClone.CreateHTTPRequest()
 	if err != nil {
 		return nil, httptransport.NewErrorResponse[E](err, nil)
 	}
@@ -79,9 +80,22 @@ func (h *TerminatingHandler[T, E]) HandleStream(request httptransport.Request) (
 	}
 
 	if resp.StatusCode >= 400 {
+		body, _ := io.ReadAll(resp.Body)
 		resp.Body.Close()
 		err := fmt.Errorf("HTTP request failed with status code %d", resp.StatusCode)
-		return nil, httptransport.NewErrorResponse[E](err, nil)
+		headers := make(map[string]string)
+		for key, values := range resp.Header {
+			if len(values) > 0 {
+				headers[key] = values[0]
+			}
+		}
+		errorResponse := &httptransport.Response[E]{
+			StatusCode: resp.StatusCode,
+			Headers:    headers,
+			Body:       body,
+			Raw:        resp,
+		}
+		return nil, httptransport.NewErrorResponse[E](err, errorResponse)
 	}
 
 	// Get context from request, or use background if not available

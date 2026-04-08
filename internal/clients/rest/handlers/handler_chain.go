@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
+	"example.com/celitech/internal/clients/rest/httptransport"
 )
 
 // Handler defines the interface for request processing in the handler chain.

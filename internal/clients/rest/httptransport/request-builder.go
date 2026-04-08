@@ -3,7 +3,7 @@ package httptransport
 import (
 	"context"
 
-	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
+	"example.com/celitech/celitechconfig"
 )
 
 // RequestBuilder provides a fluent interface for constructing HTTP requests.
@@ -15,13 +15,15 @@ type RequestBuilder struct {
 // NewRequestBuilder creates a new request builder with default settings.
 // Initializes empty maps for headers, query params, and path params.
 func NewRequestBuilder() *RequestBuilder {
-	return &RequestBuilder{
+	rb := &RequestBuilder{
 		request: &Request{
 			Headers:     make(map[string]string),
 			QueryParams: make(map[string]string),
 			PathParams:  make(map[string]string),
 		},
 	}
+	rb.request.SetHeader("User-Agent", "postman-codegen/2.25.51 celitech/1.3.63 (go)")
+	return rb
 }
 
 // WithContext sets the request context for cancellation and timeout control.

@@ -2,8 +2,8 @@ package contenttypes
 
 import (
 	"encoding/base64"
+	"example.com/celitech/internal/unmarshal"
 	"fmt"
-	"github.com/Celitech/CelitechSDKGo/internal/unmarshal"
 	"reflect"
 )
 
@@ -20,6 +20,12 @@ func FromBinary(data any, target any) error {
 
 	if b, ok := data.([]byte); ok {
 		if targetValue.Kind() == reflect.Slice && targetValue.Type().Elem().Kind() == reflect.Uint8 {
+			targetValue.Set(reflect.ValueOf(b))
+			return nil
+		}
+
+		if targetValue.Kind() == reflect.Interface {
+			// Target is `any`/`interface{}` — store as a []byte.
 			targetValue.Set(reflect.ValueOf(b))
 			return nil
 		}

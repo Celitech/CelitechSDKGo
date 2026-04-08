@@ -3,8 +3,8 @@ package handlers
 import (
 	"errors"
 
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
+	"example.com/celitech/internal/clients/rest/hooks"
+	"example.com/celitech/internal/clients/rest/httptransport"
 )
 
 // HookHandler executes custom hook callbacks before and after request processing.
@@ -42,7 +42,7 @@ func (h *HookHandler[T, E]) Handle(request httptransport.Request) (*httptranspor
 	}
 
 	response, err := h.nextHandler.Handle(*nextRequest)
-	if err != nil && err.IsHttpError {
+	if err != nil && err.IsHTTPError {
 		clonedError := err.Clone()
 		hookError := h.hook.OnError(hookReq, &clonedError, clonedReq.Config.HookParams)
 		nextError, ok := hookError.(*httptransport.ErrorResponse[E])

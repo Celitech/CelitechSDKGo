@@ -2,8 +2,8 @@ package contenttypes
 
 import (
 	"encoding/json"
+	"example.com/celitech/internal/unmarshal"
 	"fmt"
-	"github.com/Celitech/CelitechSDKGo/internal/unmarshal"
 	"reflect"
 	"unicode/utf8"
 )
@@ -26,6 +26,10 @@ func FromText[T any](data []byte, target any) error {
 	switch targetValue.Kind() {
 	case reflect.String:
 		targetValue.SetString(string(data))
+		return nil
+	case reflect.Interface:
+		// Target is `any`/`interface{}` — store as a plain string.
+		targetValue.Set(reflect.ValueOf(string(data)))
 		return nil
 	case reflect.Struct:
 		jsonBody, err := json.Marshal(string(data))

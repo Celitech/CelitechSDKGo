@@ -1,4 +1,4 @@
-module github.com/Celitech/CelitechSDKGo
+module example.com/celitech
 
 
-go 1.18
+go 1.22

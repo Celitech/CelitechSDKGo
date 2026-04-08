@@ -1,10 +1,11 @@
 package unmarshal
 
 import (
+	"encoding/json"
 	"fmt"
 	"reflect"
 
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
+	"example.com/celitech/internal/utils"
 )
 
 // Unmarshal deserializes JSON bytes into the target based on its type.
@@ -26,6 +27,11 @@ func Unmarshal(source []byte, target any) error {
 		return ToFloat(source, targetValue)
 	} else if isBool(targetValue.Elem().Kind()) {
 		return ToBool(source, targetValue)
+	} else if targetValue.Elem().Kind() == reflect.Interface {
+		// Target is `any`/`interface{}` (no schema defined in spec).
+		// Delegate to encoding/json which can set the interface to the appropriate
+		// dynamic type (string, number, map, slice, bool, or nil for JSON null).
+		return json.Unmarshal(source, target)
 	}
 
 	return nil

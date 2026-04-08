@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
+	"example.com/celitech/internal/utils"
 )
 
 // validateArrayLength validates that an array or slice length is within 'minLength' and 'maxLength' tag constraints.
