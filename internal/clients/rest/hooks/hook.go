@@ -12,8 +12,8 @@ type Hook interface {
 type Request interface {
 	GetMethod() string
 	SetMethod(method string)
-	GetBaseUrl() string
-	SetBaseUrl(baseUrl string)
+	GetBaseURL() string
+	SetBaseURL(baseURL string)
 	GetPath() string
 	SetPath(path string)
 	GetPathParam(param string) string

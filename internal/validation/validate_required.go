@@ -3,15 +3,21 @@ package validation
 import (
 	"fmt"
 	"reflect"
+
+	"example.com/celitech/internal/utils"
 )
 
-// validateRequired checks if a required field has a non-nil value.
-// Returns an error if the field has a 'required:"true"' tag and is nil.
+// validateRequired checks if a required nilable field has been set.
+// For nilable types (pointer, interface, map, slice, etc.) it checks for nil.
+// Value types (string, int, bool, struct) are always considered set — Go initialises
+// them to their zero value, and 0 / false / "" are all legitimate required values.
 func validateRequired(fieldType reflect.StructField, fieldValue reflect.Value) error {
-	if IsRequiredField(fieldType) && fieldValue.IsNil() {
+	if !IsRequiredField(fieldType) {
+		return nil
+	}
+	if utils.IsNilable(fieldValue) && fieldValue.IsNil() {
 		return fmt.Errorf("field %s is required", fieldType.Name)
 	}
-
 	return nil
 }
 

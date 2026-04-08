@@ -2,7 +2,8 @@ package oauthtokenmanager
 
 import (
 	"errors"
-	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
+	"example.com/celitech/celitechconfig"
+	"fmt"
 	"time"
 )
 
@@ -25,6 +26,21 @@ type GetOAuthAccessTokenResponse interface {
 	GetAccessToken() *string
 }
 
+// OAuthTokenResponse is a spec-agnostic adapter that always satisfies GetOAuthAccessTokenResponse.
+// It is returned by GetOAuthAccessToken so the token manager never depends on the generated
+// model's getter signatures, which vary based on whether fields are required in the spec.
+type OAuthTokenResponse struct {
+	accessToken *string
+	expiresIn   *int64
+}
+
+func NewOAuthTokenResponse(accessToken *string, expiresIn *int64) *OAuthTokenResponse {
+	return &OAuthTokenResponse{accessToken: accessToken, expiresIn: expiresIn}
+}
+
+func (r *OAuthTokenResponse) GetAccessToken() *string { return r.accessToken }
+func (r *OAuthTokenResponse) GetExpiresIn() *int64    { return r.expiresIn }
+
 // NewOAuthTokenManager creates a new OAuth token manager with the specified token service and refresh buffer.
 // The refresh buffer determines how many seconds before expiration the token should be refreshed.
 func NewOAuthTokenManager(tokenService TokenService, refreshBuffer int64) *OAuthTokenManager {
@@ -38,7 +54,6 @@ func NewOAuthTokenManager(tokenService TokenService, refreshBuffer int64) *OAuth
 // Returns a cached token if valid and contains all requested scopes, otherwise fetches a new token.
 // Automatically refreshes tokens that are expired or within the refresh buffer window.
 func (m *OAuthTokenManager) GetToken(scopes []string, config celitechconfig.Config) (*OAuthToken, error) {
-
 	// Check if the token is expired or within the buffer window
 	// If so, return it instead of fetching a new one
 	if m.token != nil && m.token.HasAllScopes(scopes) {
@@ -70,16 +85,16 @@ func (m *OAuthTokenManager) GetToken(scopes []string, config celitechconfig.Conf
 	}
 
 	response, err := m.tokenService.GetOAuthAccessToken(config, updatedScopes)
-	if err != nil || response == nil {
-		return nil, errors.New("OAuthError: failed to fetch access token")
+	if err != nil {
+		return nil, fmt.Errorf("OAuthError: failed to fetch access token: %w", err)
 	}
 
-	if *response.GetAccessToken() == "" {
+	if response == nil || response.GetAccessToken() == nil || *response.GetAccessToken() == "" {
 		return nil, errors.New("OAuthError: token endpoint response did not return access token")
 	}
 
 	var expiresIn *time.Time
-	if *response.GetExpiresIn() > 0 {
+	if response.GetExpiresIn() != nil && *response.GetExpiresIn() > 0 {
 		exp := time.Now().Add(time.Duration(*response.GetExpiresIn()) * time.Second)
 		expiresIn = &exp
 	}

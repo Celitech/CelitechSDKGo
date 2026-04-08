@@ -9,10 +9,10 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/Celitech/CelitechSDKGo/internal/contenttypes"
-	"github.com/Celitech/CelitechSDKGo/internal/serialization"
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
-	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
+	"example.com/celitech/celitechconfig"
+	"example.com/celitech/internal/contenttypes"
+	"example.com/celitech/internal/serialization"
+	"example.com/celitech/internal/utils"
 )
 
 type paramMap struct {
@@ -48,8 +48,8 @@ func NewRequest(ctx context.Context, method string, path string, config celitech
 		QueryParams:         make(map[string]string),
 		PathParams:          make(map[string]string),
 		Config:              config,
-		ContentType:         ContentTypeJson,
-		ResponseContentType: ContentTypeJson,
+		ContentType:         ContentTypeJSON,
+		ResponseContentType: ContentTypeJSON,
 	}
 }
 
@@ -80,12 +80,12 @@ func (r *Request) SetMethod(method string) {
 	r.Method = method
 }
 
-func (r *Request) GetBaseUrl() string {
-	return *r.Config.BaseUrl
+func (r *Request) GetBaseURL() string {
+	return r.Config.BaseURL
 }
 
-func (r *Request) SetBaseUrl(baseUrl string) {
-	r.Config.SetBaseUrl(baseUrl)
+func (r *Request) SetBaseURL(baseURL string) {
+	r.Config.SetBaseURL(baseURL)
 }
 
 func (r *Request) GetPath() string {
@@ -152,7 +152,29 @@ func (r *Request) SetResponseContentType(contentType ContentType) {
 	r.ResponseContentType = contentType
 }
 
-func (r *Request) CreateHttpRequest() (*http.Request, error) {
+// validateBaseURLForHTTP checks that the configured base URL is usable for HTTP requests.
+// It rejects empty values, unresolved {{...}} placeholders (e.g. from Postman collections),
+// and non-absolute URLs.
+func validateBaseURLForHTTP(baseURL string) error {
+	s := strings.TrimSpace(baseURL)
+	if s == "" {
+		return fmt.Errorf("invalid base URL: empty; set BaseURL to a valid URL")
+	}
+	u, err := url.Parse(s)
+	if err != nil {
+		return fmt.Errorf("invalid base URL %q: could not parse as URL: %w", s, err)
+	}
+	if u.Scheme == "" || u.Host == "" {
+		return fmt.Errorf("invalid base URL %q: must be an absolute URL with scheme and host (for example https://api.example.com)", s)
+	}
+	return nil
+}
+
+func (r *Request) CreateHTTPRequest() (*http.Request, error) {
+	if err := validateBaseURLForHTTP(r.Config.BaseURL); err != nil {
+		return nil, err
+	}
+
 	requestUrl := r.getRequestUrl()
 
 	requestBody, err := r.bodyToBytesReader()
@@ -166,10 +188,13 @@ func (r *Request) CreateHttpRequest() (*http.Request, error) {
 	} else {
 		httpRequest, err = http.NewRequestWithContext(r.Context, r.Method, requestUrl, requestBody)
 	}
+	if err != nil {
+		return nil, fmt.Errorf("cannot build HTTP request for URL %q: %w", requestUrl, err)
+	}
 
 	httpRequest.Header = r.getRequestHeaders()
 
-	return httpRequest, err
+	return httpRequest, nil
 }
 
 func (r *Request) getRequestUrl() string {
@@ -185,7 +210,7 @@ func (r *Request) getRequestUrl() string {
 		requestOptions = fmt.Sprintf("?%s", params.Encode())
 	}
 
-	return *r.Config.BaseUrl + requestPath + requestOptions
+	return strings.TrimRight(r.Config.BaseURL, "/") + requestPath + requestOptions
 }
 
 func (r *Request) bodyToBytesReader() (*bytes.Reader, error) {
@@ -193,8 +218,8 @@ func (r *Request) bodyToBytesReader() (*bytes.Reader, error) {
 		return nil, nil
 	}
 
-	if r.ContentType == ContentTypeJson {
-		return contenttypes.ToJson(r.Body)
+	if r.ContentType == ContentTypeJSON {
+		return contenttypes.ToJSON(r.Body)
 	} else if r.ContentType == ContentTypeMultipartFormData {
 		bytesReader, contentTypeHeader, err := contenttypes.ToFormData(r.Body)
 		if err != nil {
@@ -235,8 +260,33 @@ func (r *Request) getRequestHeaders() http.Header {
 	}
 
 	serializeHeaderParams(headers, r.Options)
+	serializeCookieParams(headers, r.Options)
 
 	return headers
+}
+
+// serializeCookieParams reads fields tagged with `cookieParam:"name"` from obj
+// and appends them to a single Cookie header as "name=value" pairs separated by "; ".
+// Nil pointer fields (unset optional params) are skipped.
+func serializeCookieParams(headers http.Header, obj any) {
+	if obj == nil {
+		return
+	}
+
+	values := utils.GetReflectValue(reflect.ValueOf(obj))
+	var cookiePairs []string
+	for i := 0; i < values.NumField(); i++ {
+		key, found := values.Type().Field(i).Tag.Lookup("cookieParam")
+		if shouldSkipField(found, values.Field(i)) {
+			continue
+		}
+		field := utils.GetReflectValue(values.Field(i))
+		cookiePairs = append(cookiePairs, fmt.Sprintf("%s=%v", key, field))
+	}
+
+	if len(cookiePairs) > 0 {
+		headers.Add("Cookie", strings.Join(cookiePairs, "; "))
+	}
 }
 
 func serializeHeaderParams(headers http.Header, obj any) {
@@ -256,25 +306,64 @@ func serializeHeaderParams(headers http.Header, obj any) {
 		fieldKind := utils.GetReflectKind(fieldValue.Type())
 		switch fieldKind {
 		case reflect.Array, reflect.Slice:
-			for i := 0; i < field.Len(); i++ {
-				headers.Add(key, fmt.Sprint(field.Index(i)))
+			fieldInfo := values.Type().Field(i)
+			explode, explodeFound := fieldInfo.Tag.Lookup("explode")
+			if !explodeFound || explode == "true" {
+				for i := 0; i < field.Len(); i++ {
+					headers.Add(key, fmt.Sprint(field.Index(i)))
+				}
+			} else {
+				var serializedValues []string
+				for i := 0; i < field.Len(); i++ {
+					serializedValues = append(serializedValues, fmt.Sprint(field.Index(i)))
+				}
+				if len(serializedValues) > 0 {
+					headers.Add(key, strings.Join(serializedValues, ","))
+				}
 			}
 		case reflect.Struct:
-			var serializedValue []string
-			subValues := utils.GetReflectValue(fieldValue)
-			for j := 0; j < subValues.NumField(); j++ {
-				subKey, found := subValues.Type().Field(j).Tag.Lookup("headerParam")
-				if !found {
-					continue
+			if isNullableType(fieldValue.Type()) {
+				if !fieldValue.FieldByName("IsNull").Bool() {
+					innerValue := fieldValue.FieldByName("Value")
+					innerKind := innerValue.Kind()
+					innerFieldInfo := values.Type().Field(i)
+					innerExplode, innerExplodeFound := innerFieldInfo.Tag.Lookup("explode")
+					if innerKind == reflect.Slice || innerKind == reflect.Array {
+						if !innerExplodeFound || innerExplode == "true" {
+							for j := 0; j < innerValue.Len(); j++ {
+								headers.Add(key, fmt.Sprint(innerValue.Index(j)))
+							}
+						} else {
+							var serializedValues []string
+							for j := 0; j < innerValue.Len(); j++ {
+								serializedValues = append(serializedValues, fmt.Sprint(innerValue.Index(j)))
+							}
+							if len(serializedValues) > 0 {
+								headers.Add(key, strings.Join(serializedValues, ","))
+							}
+						}
+					} else {
+						headers.Add(key, fmt.Sprint(innerValue))
+					}
 				}
-				if subKey == "" {
-					subKey = subValues.Type().Field(j).Name // Default to field name if no tag
+				// null → omit the header entirely
+			} else {
+				var serializedValue []string
+				subValues := utils.GetReflectValue(fieldValue)
+				for j := 0; j < subValues.NumField(); j++ {
+					subKey, found := subValues.Type().Field(j).Tag.Lookup("headerParam")
+					if !found {
+						continue
+					}
+					if subKey == "" {
+						subKey = subValues.Type().Field(j).Name // Default to field name if no tag
+					}
+					subField := subValues.Field(j)
+					subFieldValue := utils.GetReflectValue(subField)
+					serializedValue = append(serializedValue, subKey, fmt.Sprint(subFieldValue))
 				}
-				subField := subValues.Field(j)
-				subFieldValue := utils.GetReflectValue(subField)
-				serializedValue = append(serializedValue, subKey, fmt.Sprint(subFieldValue))
+				headers.Add(key, strings.Join(serializedValue, ","))
 			}
-			headers.Add(key, strings.Join(serializedValue, ","))
 		default:
 			headers.Add(key, fmt.Sprint(fieldValue))
 		}
@@ -300,9 +389,13 @@ func serializeQueryParams(obj any) []paramMap {
 		if fieldKind == reflect.Array || fieldKind == reflect.Slice {
 			queryParams = append(queryParams, serializeArrayFieldToQueryParams(key, field, values.Type().Field(i))...)
 		} else if fieldKind == reflect.Struct {
-			objectParams := serialization.SerializeObject(key, field.Interface())
-			for _, p := range objectParams {
-				queryParams = append(queryParams, paramMap{Key: p.Key, Value: p.Value})
+			if isNullableType(field.Type()) {
+				queryParams = append(queryParams, serializeNullableAsQueryParams(key, field, values.Type().Field(i))...)
+			} else {
+				objectParams := serialization.SerializeObject(key, field.Interface())
+				for _, p := range objectParams {
+					queryParams = append(queryParams, paramMap{Key: p.Key, Value: p.Value})
+				}
 			}
 		} else {
 			queryParams = append(queryParams, paramMap{Key: key, Value: fmt.Sprint(field)})
@@ -310,6 +403,34 @@ func serializeQueryParams(obj any) []paramMap {
 	}
 
 	return queryParams
+}
+
+// isNullableType reports whether t is a param.Nullable[T] — a struct with exactly
+// two exported fields named "Value" and "IsNull".
+func isNullableType(t reflect.Type) bool {
+	if t.Kind() != reflect.Struct || t.NumField() != 2 {
+		return false
+	}
+	_, hasValue := t.FieldByName("Value")
+	_, hasIsNull := t.FieldByName("IsNull")
+	return hasValue && hasIsNull
+}
+
+// serializeNullableAsQueryParams serializes a param.Nullable[T] value as query params.
+// Returns nil when the value is null or the inner slice is nil/empty (param omitted).
+func serializeNullableAsQueryParams(key string, field reflect.Value, fieldInfo reflect.StructField) []paramMap {
+	if field.FieldByName("IsNull").Bool() {
+		return nil
+	}
+	innerValue := field.FieldByName("Value")
+	innerKind := innerValue.Kind()
+	if innerKind == reflect.Slice || innerKind == reflect.Array {
+		if innerValue.IsNil() {
+			return nil // nil slice = zero value / not set, omit
+		}
+		return serializeArrayFieldToQueryParams(key, innerValue, fieldInfo)
+	}
+	return []paramMap{{Key: key, Value: fmt.Sprint(innerValue)}}
 }
 
 func serializeArrayFieldToQueryParams(key string, field reflect.Value, fieldInfo reflect.StructField) []paramMap {

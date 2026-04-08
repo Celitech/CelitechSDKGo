@@ -63,3 +63,14 @@ func GetReflectKind(fieldType reflect.Type) reflect.Kind {
 		return fieldType.Kind()
 	}
 }
+
+// IsNilable reports whether v is a kind that can be nil (pointer, interface, map, slice, chan, or func).
+// Use this before calling v.IsNil() to avoid a reflect panic on value types.
+func IsNilable(v reflect.Value) bool {
+	switch v.Kind() {
+	case reflect.Ptr, reflect.Interface, reflect.Map, reflect.Slice, reflect.Chan, reflect.Func:
+		return true
+	default:
+		return false
+	}
+}

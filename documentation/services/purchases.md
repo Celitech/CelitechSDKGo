@@ -1,0 +1,328 @@
+# Purchases
+
+A list of all methods in the `Purchases` service. Click on the method name to view detailed information about that method.
+
+| Methods                                           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| :------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [CreatePurchaseV2](#createpurchasev2)             | This endpoint is used to purchase a new eSIM by providing the package details.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| [ListPurchases](#listpurchases)                   | This endpoint can be used to list all the successful purchases made between a given interval.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| [CreatePurchase](#createpurchase)                 | This endpoint is used to purchase a new eSIM by providing the package details.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| [TopUpEsim](#topupesim)                           | This endpoint is used to top-up an existing eSIM with the previously associated destination by providing its ICCID and package details. To determine if an eSIM can be topped up, use the Get eSIM endpoint, which returns the `isTopUpAllowed` flag.                                                                                                                                                                                                                                                                                                                                                                                                    |
+| [EditPurchase](#editpurchase)                     | This endpoint allows you to modify the validity dates of an existing purchase. **Behavior:** - If the purchase has **not yet been activated**, both the start and end dates can be updated. - If the purchase is **already active**, only the **end date** can be updated, while the **start date must remain unchanged** (and should be passed as originally set). - Updates must comply with the same pricing structure; the modification cannot alter the package size or change its duration category. The end date can be extended or shortened as long as it adheres to the same pricing category and does not exceed the allowed duration limits. |
+| [GetPurchaseConsumption](#getpurchaseconsumption) | This endpoint can be called for consumption notifications (e.g. every 1 hour or when the user clicks a button). It returns the data balance (consumption) of purchased packages.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+
+## CreatePurchaseV2
+
+This endpoint is used to purchase a new eSIM by providing the package details.
+
+- HTTP Method: `POST`
+- Endpoint: `/purchases/v2`
+
+**Parameters**
+
+| Name                    | Type                    | Required | Description                 |
+| :---------------------- | :---------------------- | :------- | :-------------------------- |
+| ctx                     | Context                 | ✅       | Default go language context |
+| createPurchaseV2Request | CreatePurchaseV2Request | ✅       |                             |
+
+**Return Type**
+
+`[]CreatePurchaseV2OkResponse`
+
+**Example Usage Code Snippet**
+
+```go
+import (
+  "fmt"
+  "encoding/json"
+  "context"
+  "example.com/celitech"
+  "example.com/celitech/purchases"
+)
+
+config := celitech.NewConfig()
+config.SetClientID("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
+client := celitech.NewCelitech(config)
+
+
+request := purchases.CreatePurchaseV2Request{
+  Destination: "FRA",
+  DataLimitInGb: float64(1),
+  StartDate: celitech.Ptr("2023-11-01"),
+  EndDate: celitech.Ptr("2023-11-20"),
+  Duration: celitech.Ptr(float64(30)),
+  Quantity: float64(1),
+  Email: celitech.Ptr("example@domain.com"),
+  ReferenceID: celitech.Ptr("abc111222333444"),
+  NetworkBrand: celitech.Ptr("CELITECH"),
+  EmailBrand: celitech.Ptr("CELITECH"),
+}
+
+response, err := client.Purchases.CreatePurchaseV2(context.Background(), request)
+if err != nil {
+  panic(err)
+}
+
+fmt.Println(response)
+```
+
+## ListPurchases
+
+This endpoint can be used to list all the successful purchases made between a given interval.
+
+- HTTP Method: `GET`
+- Endpoint: `/purchases`
+
+**Parameters**
+
+| Name   | Type                       | Required | Description                   |
+| :----- | :------------------------- | :------- | :---------------------------- |
+| ctx    | Context                    | ✅       | Default go language context   |
+| params | ListPurchasesRequestParams | ✅       | Additional request parameters |
+
+**Return Type**
+
+`ListPurchasesOkResponse`
+
+**Example Usage Code Snippet**
+
+```go
+import (
+  "fmt"
+  "encoding/json"
+  "context"
+  "example.com/celitech"
+  "example.com/celitech/purchases"
+)
+
+config := celitech.NewConfig()
+config.SetClientID("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
+client := celitech.NewCelitech(config)
+
+
+params := purchases.ListPurchasesRequestParams{
+  PurchaseID: celitech.Ptr("4973fa15-6979-4daa-9cf3-672620df819c"),
+  Iccid: celitech.Ptr("1111222233334444555000"),
+  AfterDate: celitech.Ptr("2023-11-01"),
+  BeforeDate: celitech.Ptr("2023-11-20"),
+  Email: celitech.Ptr("example@gmail.com"),
+  ReferenceID: celitech.Ptr("abc111222333444"),
+  AfterCursor: celitech.Ptr("Y3JlYXRlZEF0OjE1OTk0OTMwOTgsZGVzdGluYXRpb246QVVTLG1pbkRheXM6MCxkYXRhTGltaXRJbkJ5dGVzOjUzNjg3MDkxMjA"),
+  Limit: celitech.Ptr(float64(20)),
+  After: celitech.Ptr(float64(1.35)),
+  Before: celitech.Ptr(float64(7.72)),
+}
+
+response, err := client.Purchases.ListPurchases(context.Background(), params)
+if err != nil {
+  panic(err)
+}
+
+fmt.Println(response)
+```
+
+## CreatePurchase
+
+This endpoint is used to purchase a new eSIM by providing the package details.
+
+- HTTP Method: `POST`
+- Endpoint: `/purchases`
+
+**Parameters**
+
+| Name                  | Type                  | Required | Description                 |
+| :-------------------- | :-------------------- | :------- | :-------------------------- |
+| ctx                   | Context               | ✅       | Default go language context |
+| createPurchaseRequest | CreatePurchaseRequest | ✅       |                             |
+
+**Return Type**
+
+`CreatePurchaseOkResponse`
+
+**Example Usage Code Snippet**
+
+```go
+import (
+  "fmt"
+  "encoding/json"
+  "context"
+  "example.com/celitech"
+  "example.com/celitech/purchases"
+)
+
+config := celitech.NewConfig()
+config.SetClientID("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
+client := celitech.NewCelitech(config)
+
+
+request := purchases.CreatePurchaseRequest{
+  Destination: "FRA",
+  DataLimitInGb: float64(1),
+  StartDate: "2023-11-01",
+  EndDate: "2023-11-20",
+  Email: celitech.Ptr("example@domain.com"),
+  ReferenceID: celitech.Ptr("abc111222333444"),
+  NetworkBrand: celitech.Ptr("CELITECH"),
+  EmailBrand: celitech.Ptr("CELITECH"),
+  StartTime: celitech.Ptr(float64(7.3)),
+  EndTime: celitech.Ptr(float64(0.8)),
+}
+
+response, err := client.Purchases.CreatePurchase(context.Background(), request)
+if err != nil {
+  panic(err)
+}
+
+fmt.Println(response)
+```
+
+## TopUpEsim
+
+This endpoint is used to top-up an existing eSIM with the previously associated destination by providing its ICCID and package details. To determine if an eSIM can be topped up, use the Get eSIM endpoint, which returns the `isTopUpAllowed` flag.
+
+- HTTP Method: `POST`
+- Endpoint: `/purchases/topup`
+
+**Parameters**
+
+| Name             | Type             | Required | Description                 |
+| :--------------- | :--------------- | :------- | :-------------------------- |
+| ctx              | Context          | ✅       | Default go language context |
+| topUpEsimRequest | TopUpEsimRequest | ✅       |                             |
+
+**Return Type**
+
+`TopUpEsimOkResponse`
+
+**Example Usage Code Snippet**
+
+```go
+import (
+  "fmt"
+  "encoding/json"
+  "context"
+  "example.com/celitech"
+  "example.com/celitech/purchases"
+)
+
+config := celitech.NewConfig()
+config.SetClientID("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
+client := celitech.NewCelitech(config)
+
+
+request := purchases.TopUpEsimRequest{
+  Iccid: "1111222233334444555000",
+  DataLimitInGb: float64(1),
+  StartDate: celitech.Ptr("2023-11-01"),
+  EndDate: celitech.Ptr("2023-11-20"),
+  Duration: celitech.Ptr(float64(30)),
+  Email: celitech.Ptr("example@domain.com"),
+  ReferenceID: celitech.Ptr("abc111222333444"),
+  EmailBrand: celitech.Ptr("CELITECH"),
+  StartTime: celitech.Ptr(float64(6.48)),
+  EndTime: celitech.Ptr(float64(9.44)),
+}
+
+response, err := client.Purchases.TopUpEsim(context.Background(), request)
+if err != nil {
+  panic(err)
+}
+
+fmt.Println(response)
+```
+
+## EditPurchase
+
+This endpoint allows you to modify the validity dates of an existing purchase. **Behavior:** - If the purchase has **not yet been activated**, both the start and end dates can be updated. - If the purchase is **already active**, only the **end date** can be updated, while the **start date must remain unchanged** (and should be passed as originally set). - Updates must comply with the same pricing structure; the modification cannot alter the package size or change its duration category. The end date can be extended or shortened as long as it adheres to the same pricing category and does not exceed the allowed duration limits.
+
+- HTTP Method: `POST`
+- Endpoint: `/purchases/edit`
+
+**Parameters**
+
+| Name                | Type                | Required | Description                 |
+| :------------------ | :------------------ | :------- | :-------------------------- |
+| ctx                 | Context             | ✅       | Default go language context |
+| editPurchaseRequest | EditPurchaseRequest | ✅       |                             |
+
+**Return Type**
+
+`EditPurchaseOkResponse`
+
+**Example Usage Code Snippet**
+
+```go
+import (
+  "fmt"
+  "encoding/json"
+  "context"
+  "example.com/celitech"
+  "example.com/celitech/purchases"
+)
+
+config := celitech.NewConfig()
+config.SetClientID("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
+client := celitech.NewCelitech(config)
+
+
+request := purchases.EditPurchaseRequest{
+  PurchaseID: "ae471106-c8b4-42cf-b83a-b061291f2922",
+  StartDate: "2023-11-01",
+  EndDate: "2023-11-20",
+  StartTime: celitech.Ptr(float64(0.21)),
+  EndTime: celitech.Ptr(float64(9.22)),
+}
+
+response, err := client.Purchases.EditPurchase(context.Background(), request)
+if err != nil {
+  panic(err)
+}
+
+fmt.Println(response)
+```
+
+## GetPurchaseConsumption
+
+This endpoint can be called for consumption notifications (e.g. every 1 hour or when the user clicks a button). It returns the data balance (consumption) of purchased packages.
+
+- HTTP Method: `GET`
+- Endpoint: `/purchases/{purchaseId}/consumption`
+
+**Parameters**
+
+| Name       | Type    | Required | Description                 |
+| :--------- | :------ | :------- | :-------------------------- |
+| ctx        | Context | ✅       | Default go language context |
+| purchaseID | string  | ✅       | ID of the purchase          |
+
+**Return Type**
+
+`GetPurchaseConsumptionOkResponse`
+
+**Example Usage Code Snippet**
+
+```go
+import (
+  "fmt"
+  "encoding/json"
+  "context"
+  "example.com/celitech"
+)
+
+config := celitech.NewConfig()
+config.SetClientID("CLIENT_ID")
+config.SetClientSecret("CLIENT_SECRET")
+client := celitech.NewCelitech(config)
+
+response, err := client.Purchases.GetPurchaseConsumption(context.Background(), "4973fa15-6979-4daa-9cf3-672620df819c")
+if err != nil {
+  panic(err)
+}
+
+fmt.Println(response)
+```

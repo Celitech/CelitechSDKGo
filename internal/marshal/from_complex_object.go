@@ -5,7 +5,7 @@ import (
 	"errors"
 	"reflect"
 
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
+	"example.com/celitech/internal/utils"
 )
 
 // FromComplexObject marshals a discriminated union (oneOf) struct to JSON.

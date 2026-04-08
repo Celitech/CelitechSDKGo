@@ -3,7 +3,7 @@ package validation
 import (
 	"reflect"
 
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
+	"example.com/celitech/internal/utils"
 )
 
 // validatorFunc defines the signature for field validation functions.
@@ -12,6 +12,8 @@ type validatorFunc = func(fieldType reflect.StructField, fieldValue reflect.Valu
 // ValidateData validates data structures recursively according to struct field tags.
 // Supports required, pattern, min, max, multipleOf, unique array, and array length validations.
 // Handles Nullable wrappers and nested structs/arrays.
+// Note: required validation only applies to nilable types (pointers, slices, maps).
+// Value types (string, int, bool, struct) are always considered set regardless of their value.
 func ValidateData(data any) error {
 	if data == nil {
 		return nil
