@@ -2,16 +2,29 @@ package oauthtokenmanager
 
 import (
 	"errors"
-	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
+	"fmt"
+	"github.com/Celitech/CelitechSDKGo/celitechconfig"
 	"time"
 )
 
+// TokenCache defines the interface for persisting OAuth tokens across process restarts.
+// Implementations should be safe for concurrent use.
+type TokenCache interface {
+	// Load returns the previously persisted token, or nil if none exists or the cache
+	// cannot be read. Errors are non-fatal — a nil return falls back to fetching a fresh token.
+	Load() *OAuthToken
+	// Save persists the token for future process restarts. Errors should be logged but
+	// must not prevent normal operation.
+	Save(token *OAuthToken)
+}
+
 // OAuthTokenManager manages OAuth access tokens with caching and automatic refresh.
-// It caches tokens and refreshes them before expiration using a configurable buffer window.
+// It caches tokens in memory and, when a TokenCache is provided, persists them to disk.
 type OAuthTokenManager struct {
 	token         *OAuthToken
 	tokenService  TokenService
 	refreshBuffer int64
+	cache         TokenCache
 }
 
 // TokenService defines the interface for fetching OAuth access tokens from the API.
@@ -25,6 +38,21 @@ type GetOAuthAccessTokenResponse interface {
 	GetAccessToken() *string
 }
 
+// OAuthTokenResponse is a spec-agnostic adapter that always satisfies GetOAuthAccessTokenResponse.
+// It is returned by GetOAuthAccessToken so the token manager never depends on the generated
+// model's getter signatures, which vary based on whether fields are required in the spec.
+type OAuthTokenResponse struct {
+	accessToken *string
+	expiresIn   *int64
+}
+
+func NewOAuthTokenResponse(accessToken *string, expiresIn *int64) *OAuthTokenResponse {
+	return &OAuthTokenResponse{accessToken: accessToken, expiresIn: expiresIn}
+}
+
+func (r *OAuthTokenResponse) GetAccessToken() *string { return r.accessToken }
+func (r *OAuthTokenResponse) GetExpiresIn() *int64    { return r.expiresIn }
+
 // NewOAuthTokenManager creates a new OAuth token manager with the specified token service and refresh buffer.
 // The refresh buffer determines how many seconds before expiration the token should be refreshed.
 func NewOAuthTokenManager(tokenService TokenService, refreshBuffer int64) *OAuthTokenManager {
@@ -34,11 +62,28 @@ func NewOAuthTokenManager(tokenService TokenService, refreshBuffer int64) *OAuth
 	}
 }
 
+// SetTokenCache attaches a persistent cache to the token manager.
+// If a valid token exists in the cache it is loaded immediately, so that the very
+// first GetToken call within a new process can skip the token-endpoint round-trip.
+func (m *OAuthTokenManager) SetTokenCache(cache TokenCache) {
+	m.cache = cache
+	if cached := cache.Load(); cached != nil {
+		// Only restore the cached token if it won't immediately require a refresh.
+		if cached.ExpiresAt == nil {
+			m.token = cached
+		} else {
+			bufferedExpiry := cached.ExpiresAt.Add(-time.Duration(m.refreshBuffer) * time.Second)
+			if bufferedExpiry.After(time.Now()) {
+				m.token = cached
+			}
+		}
+	}
+}
+
 // GetToken retrieves a valid OAuth access token for the requested scopes.
 // Returns a cached token if valid and contains all requested scopes, otherwise fetches a new token.
 // Automatically refreshes tokens that are expired or within the refresh buffer window.
 func (m *OAuthTokenManager) GetToken(scopes []string, config celitechconfig.Config) (*OAuthToken, error) {
-
 	// Check if the token is expired or within the buffer window
 	// If so, return it instead of fetching a new one
 	if m.token != nil && m.token.HasAllScopes(scopes) {
@@ -70,21 +115,25 @@ func (m *OAuthTokenManager) GetToken(scopes []string, config celitechconfig.Conf
 	}
 
 	response, err := m.tokenService.GetOAuthAccessToken(config, updatedScopes)
-	if err != nil || response == nil {
-		return nil, errors.New("OAuthError: failed to fetch access token")
+	if err != nil {
+		return nil, fmt.Errorf("OAuthError: failed to fetch access token: %w", err)
 	}
 
-	if *response.GetAccessToken() == "" {
+	if response == nil || response.GetAccessToken() == nil || *response.GetAccessToken() == "" {
 		return nil, errors.New("OAuthError: token endpoint response did not return access token")
 	}
 
 	var expiresIn *time.Time
-	if *response.GetExpiresIn() > 0 {
+	if response.GetExpiresIn() != nil && *response.GetExpiresIn() > 0 {
 		exp := time.Now().Add(time.Duration(*response.GetExpiresIn()) * time.Second)
 		expiresIn = &exp
 	}
 
 	m.token = NewOAuthToken(*response.GetAccessToken(), updatedScopes, expiresIn)
+
+	if m.cache != nil {
+		m.cache.Save(m.token)
+	}
 
 	return m.token, nil
 }

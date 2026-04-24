@@ -1,20 +1,20 @@
 package configmanager
 
 import (
+	"github.com/Celitech/CelitechSDKGo/celitechconfig"
 	"github.com/Celitech/CelitechSDKGo/internal/oauthtokenmanager"
-	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
 	"time"
 )
 
 // ConfigManager manages configuration across all services with synchronized updates.
 // Provides centralized configuration management and OAuth token handling for multiple services.
 type ConfigManager struct {
-	OAuth             celitechconfig.Config
-	Destinations      celitechconfig.Config
-	Packages          celitechconfig.Config
-	Purchases         celitechconfig.Config
-	ESim              celitechconfig.Config
-	IFrame            celitechconfig.Config
+	oAuth             celitechconfig.Config
+	destinations      celitechconfig.Config
+	packages          celitechconfig.Config
+	purchases         celitechconfig.Config
+	eSim              celitechconfig.Config
+	iFrame            celitechconfig.Config
 	oAuthTokenManager *oauthtokenmanager.OAuthTokenManager
 }
 
@@ -22,69 +22,80 @@ type ConfigManager struct {
 // Initializes service-specific configs and sets up OAuth token management if enabled.
 func NewConfigManager(config celitechconfig.Config, tokenService oauthtokenmanager.TokenService) *ConfigManager {
 	return &ConfigManager{
-		OAuth:             config,
-		Destinations:      config,
-		Packages:          config,
-		Purchases:         config,
-		ESim:              config,
-		IFrame:            config,
+		oAuth:             config,
+		destinations:      config,
+		packages:          config,
+		purchases:         config,
+		eSim:              config,
+		iFrame:            config,
 		oAuthTokenManager: oauthtokenmanager.NewOAuthTokenManager(tokenService, 5000),
 	}
 }
 
-// SetBaseUrl updates the BaseUrl configuration parameter across all services.
+// SetBaseURL updates the BaseURL configuration parameter across all services.
 // Changes are applied synchronously to all registered service configurations.
-func (c *ConfigManager) SetBaseUrl(baseUrl string) {
-	c.OAuth.SetBaseUrl(baseUrl)
-	c.Destinations.SetBaseUrl(baseUrl)
-	c.Packages.SetBaseUrl(baseUrl)
-	c.Purchases.SetBaseUrl(baseUrl)
-	c.ESim.SetBaseUrl(baseUrl)
-	c.IFrame.SetBaseUrl(baseUrl)
+func (c *ConfigManager) SetBaseURL(baseURL string) {
+	c.oAuth.SetBaseURL(baseURL)
+	c.destinations.SetBaseURL(baseURL)
+	c.packages.SetBaseURL(baseURL)
+	c.purchases.SetBaseURL(baseURL)
+	c.eSim.SetBaseURL(baseURL)
+	c.iFrame.SetBaseURL(baseURL)
 }
 
 // SetTimeout updates the Timeout configuration parameter across all services.
 // Changes are applied synchronously to all registered service configurations.
 func (c *ConfigManager) SetTimeout(timeout time.Duration) {
-	c.OAuth.SetTimeout(timeout)
-	c.Destinations.SetTimeout(timeout)
-	c.Packages.SetTimeout(timeout)
-	c.Purchases.SetTimeout(timeout)
-	c.ESim.SetTimeout(timeout)
-	c.IFrame.SetTimeout(timeout)
+	c.oAuth.SetTimeout(timeout)
+	c.destinations.SetTimeout(timeout)
+	c.packages.SetTimeout(timeout)
+	c.purchases.SetTimeout(timeout)
+	c.eSim.SetTimeout(timeout)
+	c.iFrame.SetTimeout(timeout)
 }
 
-// SetClientId updates the ClientId configuration parameter across all services.
+// SetClientID updates the ClientID configuration parameter across all services.
 // Changes are applied synchronously to all registered service configurations.
-func (c *ConfigManager) SetClientId(clientId string) {
-	c.OAuth.SetClientId(clientId)
-	c.Destinations.SetClientId(clientId)
-	c.Packages.SetClientId(clientId)
-	c.Purchases.SetClientId(clientId)
-	c.ESim.SetClientId(clientId)
-	c.IFrame.SetClientId(clientId)
+func (c *ConfigManager) SetClientID(clientID string) {
+	c.oAuth.SetClientID(clientID)
+	c.destinations.SetClientID(clientID)
+	c.packages.SetClientID(clientID)
+	c.purchases.SetClientID(clientID)
+	c.eSim.SetClientID(clientID)
+	c.iFrame.SetClientID(clientID)
 }
 
 // SetClientSecret updates the ClientSecret configuration parameter across all services.
 // Changes are applied synchronously to all registered service configurations.
 func (c *ConfigManager) SetClientSecret(clientSecret string) {
-	c.OAuth.SetClientSecret(clientSecret)
-	c.Destinations.SetClientSecret(clientSecret)
-	c.Packages.SetClientSecret(clientSecret)
-	c.Purchases.SetClientSecret(clientSecret)
-	c.ESim.SetClientSecret(clientSecret)
-	c.IFrame.SetClientSecret(clientSecret)
+	c.oAuth.SetClientSecret(clientSecret)
+	c.destinations.SetClientSecret(clientSecret)
+	c.packages.SetClientSecret(clientSecret)
+	c.purchases.SetClientSecret(clientSecret)
+	c.eSim.SetClientSecret(clientSecret)
+	c.iFrame.SetClientSecret(clientSecret)
 }
 
-// SetOAuthBaseUrl updates the OAuthBaseUrl configuration parameter across all services.
+// SetOAuthBaseURL updates the OAuthBaseURL configuration parameter across all services.
 // Changes are applied synchronously to all registered service configurations.
-func (c *ConfigManager) SetOAuthBaseUrl(oAuthBaseUrl string) {
-	c.OAuth.SetOAuthBaseUrl(oAuthBaseUrl)
-	c.Destinations.SetOAuthBaseUrl(oAuthBaseUrl)
-	c.Packages.SetOAuthBaseUrl(oAuthBaseUrl)
-	c.Purchases.SetOAuthBaseUrl(oAuthBaseUrl)
-	c.ESim.SetOAuthBaseUrl(oAuthBaseUrl)
-	c.IFrame.SetOAuthBaseUrl(oAuthBaseUrl)
+func (c *ConfigManager) SetOAuthBaseURL(oAuthBaseURL string) {
+	c.oAuth.SetOAuthBaseURL(oAuthBaseURL)
+	c.destinations.SetOAuthBaseURL(oAuthBaseURL)
+	c.packages.SetOAuthBaseURL(oAuthBaseURL)
+	c.purchases.SetOAuthBaseURL(oAuthBaseURL)
+	c.eSim.SetOAuthBaseURL(oAuthBaseURL)
+	c.iFrame.SetOAuthBaseURL(oAuthBaseURL)
+}
+
+// SetRetryConfig updates the retry configuration across all services.
+// Changes are applied synchronously to all registered service configurations.
+func (c *ConfigManager) SetRetryConfig(retry celitechconfig.RetryConfig) {
+	c.oAuth.SetRetryConfig(retry)
+	c.destinations.SetRetryConfig(retry)
+	c.packages.SetRetryConfig(retry)
+	c.purchases.SetRetryConfig(retry)
+	c.eSim.SetRetryConfig(retry)
+	c.iFrame.SetRetryConfig(retry)
 }
 
 // GetTokenManager returns the OAuth token manager for handling access token operations.
@@ -93,38 +104,51 @@ func (c *ConfigManager) GetTokenManager() *oauthtokenmanager.OAuthTokenManager {
 	return c.oAuthTokenManager
 }
 
+// SetTokenCache attaches a persistent token cache to the OAuth token manager.
+// The cache is loaded immediately so that a valid persisted token is available
+// before the first API call, avoiding an unnecessary token-endpoint round-trip.
+func (c *ConfigManager) SetTokenCache(cache oauthtokenmanager.TokenCache) {
+	c.oAuthTokenManager.SetTokenCache(cache)
+}
+
 // GetOAuth returns the configuration for the OAuth service.
 // Returns a pointer to the service-specific config for use in API calls.
 func (c *ConfigManager) GetOAuth() *celitechconfig.Config {
-	return &c.OAuth
+	return &c.oAuth
 }
 
 // GetDestinations returns the configuration for the Destinations service.
 // Returns a pointer to the service-specific config for use in API calls.
 func (c *ConfigManager) GetDestinations() *celitechconfig.Config {
-	return &c.Destinations
+	return &c.destinations
 }
 
 // GetPackages returns the configuration for the Packages service.
 // Returns a pointer to the service-specific config for use in API calls.
 func (c *ConfigManager) GetPackages() *celitechconfig.Config {
-	return &c.Packages
+	return &c.packages
 }
 
 // GetPurchases returns the configuration for the Purchases service.
 // Returns a pointer to the service-specific config for use in API calls.
 func (c *ConfigManager) GetPurchases() *celitechconfig.Config {
-	return &c.Purchases
+	return &c.purchases
 }
 
 // GetESim returns the configuration for the ESim service.
 // Returns a pointer to the service-specific config for use in API calls.
 func (c *ConfigManager) GetESim() *celitechconfig.Config {
-	return &c.ESim
+	return &c.eSim
 }
 
 // GetIFrame returns the configuration for the IFrame service.
 // Returns a pointer to the service-specific config for use in API calls.
 func (c *ConfigManager) GetIFrame() *celitechconfig.Config {
-	return &c.IFrame
+	return &c.iFrame
+}
+
+// GetBaseURL returns the currently configured base URL.
+// All services share the same base URL; this reads it from the first service's config.
+func (c *ConfigManager) GetBaseURL() string {
+	return c.oAuth.BaseURL
 }

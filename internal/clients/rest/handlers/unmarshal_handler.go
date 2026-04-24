@@ -35,7 +35,7 @@ func (h *UnmarshalHandler[T, E]) Handle(request httptransport.Request) (*httptra
 	resp, handlerError := h.nextHandler.Handle(request)
 	if handlerError != nil {
 		// Try to unmarshal error response body into the error type E
-		if handlerError.IsHttpError && len(handlerError.Body) > 0 {
+		if handlerError.IsHTTPError && len(handlerError.Body) > 0 {
 			unmarshaledError := h.tryUnmarshalErrorBody(handlerError)
 			if unmarshaledError != nil {
 				return nil, unmarshaledError
@@ -51,14 +51,15 @@ func (h *UnmarshalHandler[T, E]) Handle(request httptransport.Request) (*httptra
 	}
 
 	contentTypesToTry := []httptransport.ContentType{
-		httptransport.ContentTypeJson,
+		httptransport.ContentTypeJSON,
+		httptransport.ContentTypeXML,
 		httptransport.ContentTypeMultipartFormData,
 		httptransport.ContentTypeFormUrlEncoded,
 		httptransport.ContentTypeText,
 		httptransport.ContentTypeBinary,
 	}
 
-	var lastErr error
+	var firstErr error
 	for _, contentType := range contentTypesToTry {
 		tempTarget := new(T)
 		err := unmarshalWithContentType(resp.Body, tempTarget, contentType)
@@ -66,14 +67,17 @@ func (h *UnmarshalHandler[T, E]) Handle(request httptransport.Request) (*httptra
 			resp.Data = *tempTarget
 			return resp, nil
 		}
-		lastErr = err
+		// Keep the first error — JSON is tried first and gives the most meaningful message.
+		if firstErr == nil {
+			firstErr = err
+		}
 	}
 
-	if lastErr == nil {
-		lastErr = fmt.Errorf("failed to unmarshal response with any content type")
+	if firstErr == nil {
+		firstErr = fmt.Errorf("failed to unmarshal response with any content type")
 	}
 
-	return nil, httptransport.NewErrorResponse[E](lastErr, nil)
+	return nil, httptransport.NewErrorResponse[E](firstErr, nil)
 }
 
 // tryUnmarshalErrorBody attempts to unmarshal the error response body into the error type E.
@@ -87,7 +91,8 @@ func (h *UnmarshalHandler[T, E]) tryUnmarshalErrorBody(err *httptransport.ErrorR
 	}
 
 	contentTypesToTry := []httptransport.ContentType{
-		httptransport.ContentTypeJson,
+		httptransport.ContentTypeJSON,
+		httptransport.ContentTypeXML,
 		httptransport.ContentTypeMultipartFormData,
 		httptransport.ContentTypeFormUrlEncoded,
 		httptransport.ContentTypeText,
@@ -136,8 +141,10 @@ func isEmptyValue[T any](v T) bool {
 }
 
 func unmarshalWithContentType[T any](body []byte, target *T, contentType httptransport.ContentType) error {
-	if contentType == httptransport.ContentTypeJson {
-		return contenttypes.FromJson(body, target)
+	if contentType == httptransport.ContentTypeJSON {
+		return contenttypes.FromJSON(body, target)
+	} else if contentType == httptransport.ContentTypeXML {
+		return contenttypes.FromXML(body, target)
 	} else if contentType == httptransport.ContentTypeFormUrlEncoded {
 		return contenttypes.FromFormUrlEncoded(body, target)
 	} else if contentType == httptransport.ContentTypeMultipartFormData {

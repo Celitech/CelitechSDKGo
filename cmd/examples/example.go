@@ -7,15 +7,14 @@ import (
 	"strings"
 
 	"context"
-	"github.com/Celitech/CelitechSDKGo/pkg/celitech"
-	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
+	"github.com/Celitech/CelitechSDKGo"
 )
 
 func main() {
 	loadEnv()
 
-	config := celitechconfig.NewConfig()
-	config.SetClientId("CLIENT_ID")
+	config := celitech.NewConfig()
+	config.SetClientID("CLIENT_ID")
 	config.SetClientSecret("CLIENT_SECRET")
 	client := celitech.NewCelitech(config)
 

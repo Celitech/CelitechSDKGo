@@ -162,11 +162,11 @@ func HandleStream[T any](request Request) (*Stream[T], *ErrorResponse[T]) {
 	requestClone := request.Clone()
 
 	client := http.Client{}
-	if requestClone.Config.Timeout != nil {
-		client.Timeout = *requestClone.Config.Timeout
+	if requestClone.Config.Timeout != 0 {
+		client.Timeout = requestClone.Config.Timeout
 	}
 
-	req, err := requestClone.CreateHttpRequest()
+	req, err := requestClone.CreateHTTPRequest()
 	if err != nil {
 		return nil, NewErrorResponse[T](err, nil)
 	}
