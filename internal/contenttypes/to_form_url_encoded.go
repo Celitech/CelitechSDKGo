@@ -22,7 +22,13 @@ func ToFormUrlEncoded(data any) (*bytes.Reader, error) {
 
 	for i := 0; i < val.NumField(); i++ {
 		field := dataType.Field(i)
-		fieldValue := utils.GetReflectValue(val.Field(i))
+		rawField := val.Field(i)
+
+		if utils.IsNilable(rawField) && rawField.IsNil() {
+			continue
+		}
+
+		fieldValue := utils.GetReflectValue(rawField)
 
 		if !fieldValue.CanInterface() {
 			continue

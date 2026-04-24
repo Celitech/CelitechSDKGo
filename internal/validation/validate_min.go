@@ -12,8 +12,22 @@ import (
 // Supports int and float types. Nil values are skipped.
 func validateMin(field reflect.StructField, value reflect.Value) error {
 	minValue, found := field.Tag.Lookup("min")
-	if !found || minValue == "" || value.IsNil() {
+	if !found || minValue == "" {
 		return nil
+	}
+
+	// Unwrap pointers and nullable wrappers; skip null values.
+	for value.Kind() == reflect.Ptr {
+		if value.IsNil() {
+			return nil
+		}
+		value = value.Elem()
+	}
+	if isNullableType(value.Type()) {
+		if value.FieldByName("IsNull").Bool() {
+			return nil
+		}
+		value = value.FieldByName("Value")
 	}
 
 	min, err := strconv.Atoi(minValue)

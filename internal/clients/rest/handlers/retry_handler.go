@@ -2,89 +2,137 @@ package handlers
 
 import (
 	"errors"
+	"math"
+	"math/rand"
 	"time"
 
 	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
 )
 
-const (
-	maxRetries = 3
-	retryDelay = 150 * time.Millisecond
-)
+// rng is seeded at package init to ensure non-deterministic jitter across Go versions.
+// The global math/rand source is only auto-seeded from Go 1.20 onward.
+var rng = rand.New(rand.NewSource(time.Now().UnixNano()))
 
-// RetryHandler automatically retries failed requests with exponential backoff.
-// It retries requests that fail or return 4xx/5xx status codes up to maxRetries times.
-// T is the response type, E is the error type.
+// calculateDelay returns the backoff duration before the next retry attempt.
+// Uses exponential backoff capped at maxDelay, plus optional random jitter.
+func calculateDelay(attempt int, base, max, jitter time.Duration, factor float64) time.Duration {
+	delay := float64(base) * math.Pow(factor, float64(attempt))
+	if delay > float64(max) {
+		delay = float64(max)
+	}
+	if jitter > 0 {
+		delay += float64(rng.Int63n(int64(jitter)))
+	}
+	return time.Duration(delay)
+}
+
+// RetryHandler automatically retries failed requests with configurable backoff.
+// Retries HTTP 5xx errors and 408/429 by default; specific status codes can be configured.
+// Non-HTTP errors (network, serialization) are not retried. T is the response type, E is the error type.
 type RetryHandler[T any, E any] struct {
 	nextHandler Handler[T, E]
 }
 
-// NewRetryHandler creates a new retry handler with configured max retries and delay.
-// Returns a handler that will automatically retry failed requests with backoff.
+// NewRetryHandler creates a new retry handler. Retry configuration is read from the
+// request's Config on each call, allowing per-call overrides via RequestOption.
 func NewRetryHandler[T any, E any]() *RetryHandler[T, E] {
-	return &RetryHandler[T, E]{
-		nextHandler: nil,
-	}
+	return &RetryHandler[T, E]{}
 }
 
-// Handle processes a request with automatic retry logic on failures or error status codes.
-// Implements exponential backoff between retry attempts. Returns the first successful response or the final error.
-func (h *RetryHandler[T, E]) Handle(request httptransport.Request) (*httptransport.Response[T], *httptransport.ErrorResponse[E]) {
-	if h.nextHandler == nil {
-		err := errors.New("Handler chain terminated without terminating handler")
-		return nil, httptransport.NewErrorResponse[E](err, nil)
+// shouldRetry determines if a failed request should be retried.
+// Only HTTP errors on retryable methods with retryable status codes trigger a retry.
+// Non-HTTP errors (network failures, serialization errors) are not retried.
+func (h *RetryHandler[T, E]) shouldRetry(errResp *httptransport.ErrorResponse[E], method string, httpMethods []string, statusCodes []int) bool {
+	if !errResp.IsHTTPError {
+		return false
 	}
 
-	var err *httptransport.ErrorResponse[E]
-	for tryCount := 0; tryCount < maxRetries; tryCount++ {
-		nextRequest := request.Clone()
-
-		var resp *httptransport.Response[T]
-		resp, err = h.nextHandler.Handle(nextRequest)
-		if err != nil {
-			return nil, err
+	methodAllowed := false
+	for _, m := range httpMethods {
+		if m == method {
+			methodAllowed = true
+			break
 		}
+	}
+	if !methodAllowed {
+		return false
+	}
 
-		if resp.StatusCode < 400 {
+	if len(statusCodes) > 0 {
+		for _, code := range statusCodes {
+			if code == errResp.StatusCode {
+				return true
+			}
+		}
+		return false
+	}
+	return errResp.StatusCode >= 500 || errResp.StatusCode == 408 || errResp.StatusCode == 429
+}
+
+// Handle processes a request with automatic retry logic on retryable HTTP failures.
+// Uses exponential backoff with jitter between attempts. Returns the first successful response
+// or the final error after all attempts are exhausted.
+func (h *RetryHandler[T, E]) Handle(request httptransport.Request) (*httptransport.Response[T], *httptransport.ErrorResponse[E]) {
+	if h.nextHandler == nil {
+		return nil, httptransport.NewErrorResponse[E](errors.New("Handler chain terminated without terminating handler"), nil)
+	}
+
+	retryConfig := request.Config.Retry
+	if retryConfig.MaxAttempts <= 0 {
+		retryConfig.MaxAttempts = 1
+	}
+	for attempt := 0; attempt < retryConfig.MaxAttempts; attempt++ {
+		resp, err := h.nextHandler.Handle(request.Clone())
+		if err == nil {
 			return resp, nil
 		}
 
-		backoffDuration := time.Duration(tryCount) * retryDelay
-		time.Sleep(backoffDuration)
+		if !h.shouldRetry(err, request.Method, retryConfig.HTTPMethodsToRetry, retryConfig.HTTPCodesToRetry) {
+			return nil, err
+		}
+
+		if attempt == retryConfig.MaxAttempts-1 {
+			return nil, err
+		}
+
+		time.Sleep(calculateDelay(attempt, retryConfig.RetryDelay, retryConfig.MaxDelay, retryConfig.RetryDelayJitter, retryConfig.BackOffFactor))
 	}
-	if err != nil {
-		return nil, err
-	}
+
 	return nil, httptransport.NewErrorResponse[E](errors.New("max retries exceeded"), nil)
 }
 
-// HandleStream processes a streaming request with automatic retry logic on failures.
-// Retries failed stream connections with exponential backoff. Returns the first successful stream or the final error.
+// HandleStream processes a streaming request with automatic retry logic on retryable HTTP failures.
+// Retries failed stream connections with exponential backoff.
 func (h *RetryHandler[T, E]) HandleStream(request httptransport.Request) (*httptransport.Stream[T], *httptransport.ErrorResponse[E]) {
 	if h.nextHandler == nil {
-		err := errors.New("Handler chain terminated without terminating handler")
-		return nil, httptransport.NewErrorResponse[E](err, nil)
+		return nil, httptransport.NewErrorResponse[E](errors.New("Handler chain terminated without terminating handler"), nil)
 	}
 
-	var errResp *httptransport.ErrorResponse[E]
-	for tryCount := 0; tryCount < maxRetries; tryCount++ {
-		nextRequest := request.Clone()
-
-		stream, err := h.nextHandler.HandleStream(nextRequest)
+	retryConfig := request.Config.Retry
+	if retryConfig.MaxAttempts <= 0 {
+		retryConfig.MaxAttempts = 1
+	}
+	for attempt := 0; attempt < retryConfig.MaxAttempts; attempt++ {
+		stream, err := h.nextHandler.HandleStream(request.Clone())
 		if err == nil {
 			return stream, nil
 		}
 
-		errResp = err
+		if !h.shouldRetry(err, request.Method, retryConfig.HTTPMethodsToRetry, retryConfig.HTTPCodesToRetry) {
+			return nil, err
+		}
 
-		backoffDuration := time.Duration(tryCount) * retryDelay
-		time.Sleep(backoffDuration)
+		if attempt == retryConfig.MaxAttempts-1 {
+			return nil, err
+		}
+
+		time.Sleep(calculateDelay(attempt, retryConfig.RetryDelay, retryConfig.MaxDelay, retryConfig.RetryDelayJitter, retryConfig.BackOffFactor))
 	}
-	return nil, errResp
+
+	return nil, httptransport.NewErrorResponse[E](errors.New("max retries exceeded"), nil)
 }
 
 // SetNext sets the next handler in the chain.
-// This method is called during chain construction to link handlers together.
 func (h *RetryHandler[T, E]) SetNext(handler Handler[T, E]) {
 	h.nextHandler = handler
 }

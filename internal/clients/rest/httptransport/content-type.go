@@ -5,8 +5,8 @@ package httptransport
 type ContentType string
 
 const (
-	ContentTypeJson              ContentType = "json"
-	ContentTypeXml               ContentType = "xml"
+	ContentTypeJSON              ContentType = "json"
+	ContentTypeXML               ContentType = "xml"
 	ContentTypePdf               ContentType = "pdf"
 	ContentTypeImage             ContentType = "image"
 	ContentTypeFile              ContentType = "file"

@@ -10,7 +10,7 @@ import (
 // Data is a pointer to allow nil when unmarshaling fails.
 type ErrorResponse[T any] struct {
 	Err         error
-	IsHttpError bool
+	IsHTTPError bool
 	StatusCode  int
 	Headers     map[string]string
 	Body        []byte
@@ -19,18 +19,18 @@ type ErrorResponse[T any] struct {
 }
 
 // NewErrorResponse creates an ErrorResponse from an error and an optional response.
-// If response is provided, sets IsHttpError to true and includes response metadata.
+// If response is provided, sets IsHTTPError to true and includes response metadata.
 func NewErrorResponse[T any](err error, resp *Response[T]) *ErrorResponse[T] {
 	if resp == nil {
 		return &ErrorResponse[T]{
 			Err:         err,
-			IsHttpError: false,
+			IsHTTPError: false,
 		}
 	}
 
 	return &ErrorResponse[T]{
 		Err:         err,
-		IsHttpError: true,
+		IsHTTPError: true,
 		StatusCode:  resp.StatusCode,
 		Headers:     resp.Headers,
 		Body:        resp.Body,
