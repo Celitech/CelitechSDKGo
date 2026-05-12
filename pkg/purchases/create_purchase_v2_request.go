@@ -23,6 +23,8 @@ type CreatePurchaseV2Request struct {
 	NetworkBrand *string `json:"networkBrand,omitempty"`
 	// Customize the email subject brand. The `emailBrand` parameter cannot exceed 25 characters in length and must contain only letters, numbers, and spaces. This feature is available to platforms with Diamond tier only.
 	EmailBrand *string `json:"emailBrand,omitempty"`
+	// Language of the confirmation email sent to the customer.
+	Language *CreatePurchaseV2RequestLanguage `json:"language,omitempty"`
 }
 
 func (c *CreatePurchaseV2Request) GetDestination() *string {
@@ -133,6 +135,17 @@ func (c *CreatePurchaseV2Request) GetEmailBrand() *string {
 
 func (c *CreatePurchaseV2Request) SetEmailBrand(emailBrand string) {
 	c.EmailBrand = &emailBrand
+}
+
+func (c *CreatePurchaseV2Request) GetLanguage() *CreatePurchaseV2RequestLanguage {
+	if c == nil {
+		return nil
+	}
+	return c.Language
+}
+
+func (c *CreatePurchaseV2Request) SetLanguage(language CreatePurchaseV2RequestLanguage) {
+	c.Language = &language
 }
 
 func (c CreatePurchaseV2Request) String() string {
