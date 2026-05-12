@@ -19,6 +19,8 @@ type CreatePurchaseRequest struct {
 	NetworkBrand *string `json:"networkBrand,omitempty"`
 	// Customize the email subject brand. The `emailBrand` parameter cannot exceed 25 characters in length and must contain only letters, numbers, and spaces. This feature is available to platforms with Diamond tier only.
 	EmailBrand *string `json:"emailBrand,omitempty"`
+	// Language of the confirmation email sent to the customer.
+	Language *CreatePurchaseRequestLanguage `json:"language,omitempty"`
 	// Epoch value representing the start time of the package's validity. This timestamp can be set to the current time or any time within the next 12 months.
 	StartTime *float64 `json:"startTime,omitempty"`
 	// Epoch value representing the end time of the package's validity. End time can be maximum 90 days after Start time.
@@ -111,6 +113,17 @@ func (c *CreatePurchaseRequest) GetEmailBrand() *string {
 
 func (c *CreatePurchaseRequest) SetEmailBrand(emailBrand string) {
 	c.EmailBrand = &emailBrand
+}
+
+func (c *CreatePurchaseRequest) GetLanguage() *CreatePurchaseRequestLanguage {
+	if c == nil {
+		return nil
+	}
+	return c.Language
+}
+
+func (c *CreatePurchaseRequest) SetLanguage(language CreatePurchaseRequestLanguage) {
+	c.Language = &language
 }
 
 func (c *CreatePurchaseRequest) GetStartTime() *float64 {
