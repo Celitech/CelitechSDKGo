@@ -24,6 +24,12 @@ func FromBinary(data any, target any) error {
 			return nil
 		}
 
+		if targetValue.Kind() == reflect.Interface {
+			// Target is `any`/`interface{}` — store as a []byte.
+			targetValue.Set(reflect.ValueOf(b))
+			return nil
+		}
+
 		if targetValue.Kind() == reflect.Struct {
 			base64Str := base64.StdEncoding.EncodeToString(b)
 			jsonBody := []byte(`"` + base64Str + `"`)
