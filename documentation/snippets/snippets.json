@@ -1,0 +1,40 @@
+{
+  "endpoints": {
+    "/destinations": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\nresponse, err := client.Destinations.ListDestinations(context.Background())\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/packages": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/packages\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := packages.ListPackagesRequestParams{}\n\nresponse, err := client.Packages.ListPackages(context.Background(), params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/purchases/v2": {
+      "post": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/purchases\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nrequest := purchases.CreatePurchaseV2Request{\n  Destination: \"FRA\",\n  DataLimitInGb: float64(1),\n  Quantity: float64(1),\n}\n\nresponse, err := client.Purchases.CreatePurchaseV2(context.Background(), request)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/purchases": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/purchases\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := purchases.ListPurchasesRequestParams{}\n\nresponse, err := client.Purchases.ListPurchases(context.Background(), params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n",
+      "post": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/purchases\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nrequest := purchases.CreatePurchaseRequest{\n  Destination: \"FRA\",\n  DataLimitInGb: float64(1),\n  StartDate: \"2023-11-01\",\n  EndDate: \"2023-11-20\",\n}\n\nresponse, err := client.Purchases.CreatePurchase(context.Background(), request)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/purchases/topup": {
+      "post": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/purchases\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nrequest := purchases.TopUpEsimRequest{\n  Iccid: \"1111222233334444555000\",\n  DataLimitInGb: float64(1),\n}\n\nresponse, err := client.Purchases.TopUpEsim(context.Background(), request)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/purchases/edit": {
+      "post": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/purchases\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nrequest := purchases.EditPurchaseRequest{\n  PurchaseID: \"ae471106-c8b4-42cf-b83a-b061291f2922\",\n  StartDate: \"2023-11-01\",\n  EndDate: \"2023-11-20\",\n}\n\nresponse, err := client.Purchases.EditPurchase(context.Background(), request)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/purchases/{purchaseId}/consumption": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\nresponse, err := client.Purchases.GetPurchaseConsumption(context.Background(), \"4973fa15-6979-4daa-9cf3-672620df819c\")\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/esim": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/esim\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := esim.GetEsimRequestParams{\n  Iccid: celitech.Ptr(\"1111222233334444555000\"),\n}\n\nresponse, err := client.ESim.GetEsim(context.Background(), params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/esim/{iccid}/device": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\nresponse, err := client.ESim.GetEsimDevice(context.Background(), \"1111222233334444555000\")\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/esim/{iccid}/history": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\nresponse, err := client.ESim.GetEsimHistory(context.Background(), \"1111222233334444555000\")\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/iframe/token": {
+      "post": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\nresponse, err := client.IFrame.Token(context.Background())\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    }
+  },
+  "example": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\nresponse, err := client.Destinations.ListDestinations(context.Background())\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n",
+  "authentication": {}
+}
