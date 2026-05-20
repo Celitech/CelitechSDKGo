@@ -1,11 +1,11 @@
 package rest
 
 import (
+	"github.com/Celitech/CelitechSDKGo/celitechconfig"
 	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/handlers"
 	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
 	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
 	"github.com/Celitech/CelitechSDKGo/internal/configmanager"
-	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
 )
 
 // RestClient is a generic HTTP client that handles API requests through a chain of handlers.
