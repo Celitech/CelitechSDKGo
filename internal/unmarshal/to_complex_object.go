@@ -30,11 +30,12 @@ func ToComplexObject[T any](data []byte, result *T) error {
 		return err
 	}
 
-	candidates := createCandidatesFromProps(result)
+	candidates := createCandidatesFromProps(data, result)
 	chosenCandidateIndex := chooseCandidateIndex(candidates)
 	if chosenCandidateIndex == -1 {
 		return errors.New("cannot unmarshal response, no valid candidate found")
 	}
+
 	removeOtherCandidates(result, chosenCandidateIndex)
 
 	return nil
@@ -88,7 +89,8 @@ func unmarshalIntoProps(data []byte, obj any) error {
 
 // createCandidatesFromProps creates a candidate entry for each non-nil field in the oneOf struct.
 // Validates each candidate and counts required/optional fields for ranking.
-func createCandidatesFromProps(obj any) []candidate {
+// Struct candidates that are missing required JSON keys are marked invalid and excluded from selection.
+func createCandidatesFromProps(data []byte, obj any) []candidate {
 	values := utils.GetReflectValue(reflect.ValueOf(obj))
 	types := utils.GetReflectType(reflect.TypeOf(obj))
 
@@ -98,7 +100,8 @@ func createCandidatesFromProps(obj any) []candidate {
 		kind := utils.GetReflectKind(types.Field(i).Type)
 
 		var c candidate
-		if fieldValue.IsNil() {
+		isNilable := utils.IsNilable(fieldValue)
+		if isNilable && fieldValue.IsNil() {
 			c = candidate{
 				obj:           nil,
 				valid:         false,
@@ -110,7 +113,7 @@ func createCandidatesFromProps(obj any) []candidate {
 			value := fieldValue.Interface()
 			c = candidate{
 				obj:           value,
-				valid:         isValid(value),
+				valid:         isValid(value) && ValidateRequiredJSONKeys(data, value) == nil,
 				requiredCount: countFields(value, validation.IsRequiredField),
 				optionalCount: countFields(value, validation.IsOptionalField),
 				kind:          kind,
@@ -156,7 +159,8 @@ func countFields(c any, isFieldRequiredOrOptional func(reflect.StructField) bool
 		fieldValue := values.Field(i)
 		fieldType := types.Field(i)
 
-		if fieldValue.IsNil() {
+		isNilable := utils.IsNilable(fieldValue)
+		if isNilable && fieldValue.IsNil() {
 			continue
 		}
 
