@@ -7,19 +7,23 @@ import (
 	"strings"
 
 	"context"
-	"github.com/Celitech/CelitechSDKGo/pkg/celitech"
-	"github.com/Celitech/CelitechSDKGo/pkg/celitechconfig"
+	"github.com/Celitech/CelitechSDKGo"
+	"github.com/Celitech/CelitechSDKGo/destinations"
 )
 
 func main() {
 	loadEnv()
 
-	config := celitechconfig.NewConfig()
-	config.SetClientId("CLIENT_ID")
+	config := celitech.NewConfig()
+	config.SetClientID("CLIENT_ID")
 	config.SetClientSecret("CLIENT_SECRET")
 	client := celitech.NewCelitech(config)
 
-	response, err := client.Destinations.ListDestinations(context.Background())
+	params := destinations.ListDestinationsRequestParams{
+		Accept: celitech.Nullable[string]("application/json"),
+	}
+
+	response, err := client.Destinations.ListDestinations(context.Background(), params)
 	if err != nil {
 		panic(err)
 	}

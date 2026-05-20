@@ -1,0 +1,40 @@
+{
+  "endpoints": {
+    "/destinations": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/destinations\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := destinations.ListDestinationsRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\nresponse, err := client.Destinations.ListDestinations(context.Background(), params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/packages": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/packages\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := packages.ListPackagesRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\nresponse, err := client.Packages.ListPackages(context.Background(), params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/purchases/v2": {
+      "post": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/v2\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := v2.CreatePurchaseV2RequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\n\nrequest := v2.CreatePurchaseV2Request{}\n\nresponse, err := client.V2.CreatePurchaseV2(context.Background(), request, params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/purchases/topup": {
+      "post": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/topup\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := topup.TopUpESimRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\n\nrequest := topup.TopUpESimRequest{}\n\nresponse, err := client.Topup.TopUpESim(context.Background(), request, params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/purchases/edit": {
+      "post": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/edit\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := edit.EditPurchaseRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\n\nrequest := edit.EditPurchaseRequest{}\n\nresponse, err := client.Edit.EditPurchase(context.Background(), request, params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/purchases/{purchaseId}/consumption": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/consumption\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := consumption.GetPurchaseConsumptionRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\nresponse, err := client.Consumption.GetPurchaseConsumption(context.Background(), \"purchaseId\", params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/purchases": {
+      "post": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/purchases\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := purchases.CreatePurchaseRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\n\nrequest := purchases.CreatePurchaseRequest{}\n\nresponse, err := client.Purchases.CreatePurchase(context.Background(), request, params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n",
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/purchases\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := purchases.ListPurchasesRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\nresponse, err := client.Purchases.ListPurchases(context.Background(), params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/esim/{iccid}/device": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/device\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := device.GetESimDeviceRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\nresponse, err := client.Device.GetESimDevice(context.Background(), \"iccid\", params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/esim/{iccid}/history": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/history\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := history.GetESimHistoryRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\nresponse, err := client.History.GetESimHistory(context.Background(), \"iccid\", params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/esim": {
+      "get": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/esim\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := esim.GetESimRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\nresponse, err := client.Esim.GetESim(context.Background(), params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    },
+    "/iframe/token": {
+      "post": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/token\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := token.GenerateTokenRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\nresponse, err := client.Token.GenerateToken(context.Background(), params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n"
+    }
+  },
+  "example": "import (\n  \"fmt\"\n  \"encoding/json\"\n  \"context\"\n  \"github.com/Celitech/CelitechSDKGo\"\n  \"github.com/Celitech/CelitechSDKGo/destinations\"\n)\n\nconfig := celitech.NewConfig()\nconfig.SetClientID(\"CLIENT_ID\")\nconfig.SetClientSecret(\"CLIENT_SECRET\")\nclient := celitech.NewCelitech(config)\n\n\nparams := destinations.ListDestinationsRequestParams{\n  Accept: celitech.Nullable[string](\"application/json\"),\n}\n\nresponse, err := client.Destinations.ListDestinations(context.Background(), params)\nif err != nil {\n  panic(err)\n}\n\nfmt.Println(response)\n",
+  "authentication": {}
+}
