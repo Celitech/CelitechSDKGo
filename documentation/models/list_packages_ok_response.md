@@ -13,7 +13,7 @@
 
 | Name             | Type    | Required | Description                                       |
 | :--------------- | :------ | :------- | :------------------------------------------------ |
-| Id               | string  | ✅       | ID of the package                                 |
+| ID               | string  | ✅       | ID of the package                                 |
 | Destination      | string  | ✅       | ISO3 representation of the package's destination. |
 | DestinationIso2  | string  | ✅       | ISO2 representation of the package's destination. |
 | DataLimitInBytes | float64 | ✅       | Size of the package in Bytes                      |
