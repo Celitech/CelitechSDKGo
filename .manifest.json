@@ -1,6 +1,6 @@
 {
-  "sdkGenVersion": "1.1.2",
-  "date": "2026-05-20T14:57:25.104Z",
+  "sdkGenVersion": "1.3.3",
+  "date": "2026-06-01T09:18:28.258Z",
   "config": {
     "languages": [
       "go"
@@ -10,7 +10,7 @@
     ],
     "languageOptions": {
       "java": {
-        "sdkVersion": "2.0.0",
+        "sdkVersion": "2.0.1",
         "githubRepoName": "CelitechSDKJava",
         "retry": {
           "enabled": true,
@@ -58,7 +58,7 @@
         ]
       },
       "typescript": {
-        "sdkVersion": "2.0.0",
+        "sdkVersion": "2.0.1",
         "githubRepoName": "CelitechSDKTypeScript",
         "retry": {
           "enabled": true,
@@ -96,7 +96,7 @@
         "npmName": "celitech-sdk"
       },
       "python": {
-        "sdkVersion": "2.0.0",
+        "sdkVersion": "2.0.1",
         "githubRepoName": "CelitechSDKPython",
         "retry": {
           "enabled": true,
@@ -134,7 +134,7 @@
         "pypiPackageName": "celitech-sdk"
       },
       "go": {
-        "sdkVersion": "2.0.0",
+        "sdkVersion": "2.0.1",
         "githubRepoName": "CelitechSDKGo",
         "retry": {
           "enabled": true,
@@ -172,7 +172,7 @@
         "goModuleName": "github.com/Celitech/CelitechSDKGo"
       },
       "csharp": {
-        "sdkVersion": "2.0.0",
+        "sdkVersion": "2.0.1",
         "githubRepoName": "CelitechSDKCSharp",
         "retry": {
           "enabled": true,
@@ -211,7 +211,7 @@
         "useOptionalWrapper": false
       },
       "php": {
-        "sdkVersion": "2.0.0",
+        "sdkVersion": "2.0.1",
         "githubRepoName": "CelitechSDKPHP",
         "retry": {
           "enabled": true,
@@ -252,11 +252,11 @@
     "includeWatermark": false,
     "responseHeaders": false,
     "sdkName": "Celitech",
-    "sdkVersion": "2.0.0",
+    "sdkVersion": "2.0.1",
     "auth": [
       "oauth"
     ],
-    "apiVersion": "2.0.0",
+    "apiVersion": "2.0.1",
     "publishing": {
       "githubOrg": "Celitech"
     },
@@ -479,11 +479,11 @@
     ".env.example": "69a3ee82f15d8bcc221e9c34c99e5a851d8b318ac2ac7e78f97ef32b743b303e",
     ".gitignore": "180c3eb119b9e17a0a3d319d5dc7f86a8232c9a61404f647310dd489d3c1805c",
     "LICENSE": "3ec558dc6e9c9355ab4b28c942caa92bf90b0b82c12d7838d2ef92467ad135c1",
-    "README.md": "4e2782210427e1a18dd7b4364c2dda0fd9faa32a3ebdc80a355e038d0ab6af1b",
+    "README.md": "f76429eb10cdb5c2d36031f5f41f180ac31e9a963edcd57f503e260a7aee468b",
     "celitech.go": "1e6f41acbdf4acbfa6bf9a07702de849b19df9795313d59aea2493e8a07c6c8b",
     "celitechconfig/config.go": "926e69768c26077ae6cda68ab465a76c8ec95a853dd0797588f3b5b07515a31c",
     "celitechconfig/environments.go": "636035fffddb6927a2a96a520a71159a407f6a2bcf815138b98b885c65f818d2",
-    "celitechconfig/version.go": "63be8454734f6e27f3e83dd0fc36260ef94d5f85d090e209ad1fcb60fb7c6aac",
+    "celitechconfig/version.go": "798e0b50303103c20483aa6493e186f300c4246351b90b915c9a00e952af933f",
     "cmd/examples/example.go": "b9c7c497404fc5350747d7e60c7da799edb4a97bb3f0337d4ea51f75bf571c22",
     "config.go": "0377956e8d00e87ffbcfa8f1bd1eee075ce3566e56165b4395cc532ae6ec61d6",
     "destinations/destinations.go": "197a923842b18751970fb6955a0b2871cef1ce5cbc88c2965765cd8f357317c6",
@@ -521,7 +521,7 @@
     "esim/history.go": "18ed9d5d063e7bccd2fa17f76b811cb294304a5cd604af85c776adadbff86e09",
     "esim/request_params.go": "6893efd96909351332a9a26917d155351e90938ce45354f274b5d3f96f7d938f",
     "esim/service.go": "69f1f8c4cc91bdd80802cf37388b0707a5ef74e74223e5582cac0397664ec062",
-    "go.mod": "003ec7f724ccf5269d1236bcf4a21c39f2c85e8564b6b174a6efa6f462f514ac",
+    "go.mod": "b2843b8a137dd7c2d5b8c5420fe9681a1dfcc2310424425afc25ff0f43dad21a",
     "iframe/service.go": "e4f69e6c5531958a89cf1680abfda8d5fc6c12bfcd69905632ee5b1a4b3b0053",
     "iframe/token_ok_response.go": "8f1df47503611be10e2abb0bacbcd248ac10416da8c493aa64a99213c6997765",
     "internal/clients/rest/client.go": "061ad6174dc0298ad7e149043538a9c507378bc709c3e39aa63ac3ffb9075baa",
@@ -537,7 +537,7 @@
     "internal/clients/rest/hooks/hook.go": "08b261862e8dc59f464e5bc7e3f63f3c7bbcd4896ba72c7fc74aaf448d8a5dc5",
     "internal/clients/rest/httptransport/content-type.go": "bf9b150892f991bee60287cb70b0aef16aeac2dcbdbd7c273b71645ced107e4f",
     "internal/clients/rest/httptransport/error_response.go": "1476bf7f8e3f10d76e9e593406088586fbdc52426b931dc77f3eeec3e2723714",
-    "internal/clients/rest/httptransport/request-builder.go": "7ef973340e7ac43002118c3efe27326707cfd61f815e4bc4360900c20705bc93",
+    "internal/clients/rest/httptransport/request-builder.go": "d242b9656f51786596159035cfc398907a905429382ba766d1f8fa1ef6ae05ed",
     "internal/clients/rest/httptransport/request.go": "83da8c0320db47e547ae06539c9b9fd6cfbae241dd66f72c17551ba7c9b36ce7",
     "internal/clients/rest/httptransport/response.go": "3e857e91b61c254ab28782b7ef5f725be107c1b18bbab0ee35911689fff18be0",
     "internal/clients/rest/httptransport/stream.go": "78846eaf98bfb461a26bd892c7f34805a6716cb0376423c5bf0abec183b54204",
