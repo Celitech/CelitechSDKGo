@@ -1,8 +1,8 @@
 package configmanager
 
 import (
-	"github.com/Celitech/CelitechSDKGo/celitechconfig"
-	"github.com/Celitech/CelitechSDKGo/internal/oauthtokenmanager"
+	"github.com/Celitech/CelitechSDKGo/v2/celitechconfig"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/oauthtokenmanager"
 	"time"
 )
 

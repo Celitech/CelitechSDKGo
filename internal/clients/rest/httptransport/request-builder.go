@@ -3,7 +3,7 @@ package httptransport
 import (
 	"context"
 
-	"github.com/Celitech/CelitechSDKGo/celitechconfig"
+	"github.com/Celitech/CelitechSDKGo/v2/celitechconfig"
 )
 
 // RequestBuilder provides a fluent interface for constructing HTTP requests.
@@ -22,7 +22,7 @@ func NewRequestBuilder() *RequestBuilder {
 			PathParams:  make(map[string]string),
 		},
 	}
-	rb.request.SetHeader("User-Agent", "postman-codegen/1.3.3 celitech/2.0.1 (go)")
+	rb.request.SetHeader("User-Agent", "postman-codegen/1.4.0 celitech/2.0.2 (go)")
 	return rb
 }
 

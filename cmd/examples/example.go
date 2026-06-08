@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"context"
-	"github.com/Celitech/CelitechSDKGo"
+	"github.com/Celitech/CelitechSDKGo/v2"
 )
 
 func main() {

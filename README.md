@@ -1,11 +1,11 @@
-# Celitech Go SDK 2.0.1
+# Celitech Go SDK 2.0.2
 
 Welcome to the Celitech SDK documentation. This guide will help you get started with integrating and using the Celitech SDK in your project.
 
 ## Versions
 
-- API version: `2.0.1`
-- SDK version: `2.0.1`
+- API version: `2.0.2`
+- SDK version: `2.0.2`
 
 ## About the API
 
@@ -84,7 +84,7 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo"
+  "github.com/Celitech/CelitechSDKGo/v2"
 )
 
 config := celitech.NewConfig()

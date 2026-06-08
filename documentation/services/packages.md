@@ -31,8 +31,8 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo"
-  "github.com/Celitech/CelitechSDKGo/packages"
+  "github.com/Celitech/CelitechSDKGo/v2"
+  "github.com/Celitech/CelitechSDKGo/v2/packages"
 )
 
 config := celitech.NewConfig()

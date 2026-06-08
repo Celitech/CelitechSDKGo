@@ -1,7 +1,7 @@
 package sharedmodels
 
 import (
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/httptransport"
 	"net/http"
 )
 

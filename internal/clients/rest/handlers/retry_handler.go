@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/httptransport"
 )
 
 // rng is seeded at package init to ensure non-deterministic jitter across Go versions.

@@ -2,7 +2,7 @@ package contenttypes
 
 import (
 	"fmt"
-	"github.com/Celitech/CelitechSDKGo/internal/unmarshal"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/unmarshal"
 )
 
 // FromJSON deserializes JSON data from HTTP response bodies into the target struct.

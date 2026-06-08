@@ -2,7 +2,7 @@ package iframe
 
 import (
 	"encoding/json"
-	"github.com/Celitech/CelitechSDKGo/internal/unmarshal"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/unmarshal"
 )
 
 type TokenOkResponse struct {

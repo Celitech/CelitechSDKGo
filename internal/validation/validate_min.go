@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/utils"
 )
 
 // validateMin validates that a numeric field value is greater than or equal to the 'min' tag value.

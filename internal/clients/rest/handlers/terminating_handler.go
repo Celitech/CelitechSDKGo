@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/httptransport"
 )
 
 // TerminatingHandler is the final handler in the chain that executes the actual HTTP request.

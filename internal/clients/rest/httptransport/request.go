@@ -9,10 +9,10 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/Celitech/CelitechSDKGo/celitechconfig"
-	"github.com/Celitech/CelitechSDKGo/internal/contenttypes"
-	"github.com/Celitech/CelitechSDKGo/internal/serialization"
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
+	"github.com/Celitech/CelitechSDKGo/v2/celitechconfig"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/contenttypes"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/serialization"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/utils"
 )
 
 type paramMap struct {

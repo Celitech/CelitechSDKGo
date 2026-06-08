@@ -2,8 +2,8 @@ package packages
 
 import (
 	"encoding/json"
-	"github.com/Celitech/CelitechSDKGo/internal/unmarshal"
-	"github.com/Celitech/CelitechSDKGo/param"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/unmarshal"
+	"github.com/Celitech/CelitechSDKGo/v2/param"
 )
 
 type ListPackagesOkResponse struct {

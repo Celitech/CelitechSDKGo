@@ -3,7 +3,7 @@ package validation
 import (
 	"reflect"
 
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/utils"
 )
 
 // validatorFunc defines the signature for field validation functions.

@@ -1,14 +1,14 @@
 package celitech
 
 import (
-	"github.com/Celitech/CelitechSDKGo/destinations"
-	"github.com/Celitech/CelitechSDKGo/esim"
-	"github.com/Celitech/CelitechSDKGo/iframe"
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
-	"github.com/Celitech/CelitechSDKGo/internal/configmanager"
-	"github.com/Celitech/CelitechSDKGo/oauth"
-	"github.com/Celitech/CelitechSDKGo/packages"
-	"github.com/Celitech/CelitechSDKGo/purchases"
+	"github.com/Celitech/CelitechSDKGo/v2/destinations"
+	"github.com/Celitech/CelitechSDKGo/v2/esim"
+	"github.com/Celitech/CelitechSDKGo/v2/iframe"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/hooks"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/configmanager"
+	"github.com/Celitech/CelitechSDKGo/v2/oauth"
+	"github.com/Celitech/CelitechSDKGo/v2/packages"
+	"github.com/Celitech/CelitechSDKGo/v2/purchases"
 	"time"
 )
 
