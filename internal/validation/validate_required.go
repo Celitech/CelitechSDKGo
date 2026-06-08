@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/utils"
 )
 
 // validateRequired checks if a required nilable field has been set.

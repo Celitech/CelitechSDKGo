@@ -1,9 +1,9 @@
 package celitech
 
 import (
-	"github.com/Celitech/CelitechSDKGo/celitechconfig"
-	"github.com/Celitech/CelitechSDKGo/internal/oauthtokenmanager"
-	"github.com/Celitech/CelitechSDKGo/param"
+	"github.com/Celitech/CelitechSDKGo/v2/celitechconfig"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/oauthtokenmanager"
+	"github.com/Celitech/CelitechSDKGo/v2/param"
 )
 
 // The type aliases below let consumers use a single import path for the entire SDK.

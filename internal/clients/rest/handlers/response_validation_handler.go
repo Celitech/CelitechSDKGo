@@ -3,8 +3,8 @@ package handlers
 import (
 	"errors"
 
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
-	"github.com/Celitech/CelitechSDKGo/internal/validation"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/httptransport"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/validation"
 )
 
 // ResponseValidationHandler validates response data after deserialization.

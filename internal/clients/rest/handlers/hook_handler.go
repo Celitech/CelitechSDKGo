@@ -3,8 +3,8 @@ package handlers
 import (
 	"errors"
 
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/hooks"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/httptransport"
 )
 
 // HookHandler executes custom hook callbacks before and after request processing.

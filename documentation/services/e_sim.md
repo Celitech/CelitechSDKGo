@@ -33,8 +33,8 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo"
-  "github.com/Celitech/CelitechSDKGo/esim"
+  "github.com/Celitech/CelitechSDKGo/v2"
+  "github.com/Celitech/CelitechSDKGo/v2/esim"
 )
 
 config := celitech.NewConfig()
@@ -80,7 +80,7 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo"
+  "github.com/Celitech/CelitechSDKGo/v2"
 )
 
 config := celitech.NewConfig()
@@ -121,7 +121,7 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo"
+  "github.com/Celitech/CelitechSDKGo/v2"
 )
 
 config := celitech.NewConfig()

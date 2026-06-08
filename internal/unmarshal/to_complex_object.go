@@ -7,8 +7,8 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
-	"github.com/Celitech/CelitechSDKGo/internal/validation"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/utils"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/validation"
 )
 
 // candidate represents a potential type match when deserializing a oneOf discriminated union.

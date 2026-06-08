@@ -3,7 +3,7 @@ package contenttypes
 import (
 	"bytes"
 	"fmt"
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/utils"
 	"net/url"
 	"reflect"
 )

@@ -2,12 +2,12 @@ package iframe
 
 import (
 	"context"
-	"github.com/Celitech/CelitechSDKGo/celitechconfig"
-	restClient "github.com/Celitech/CelitechSDKGo/internal/clients/rest"
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/httptransport"
-	"github.com/Celitech/CelitechSDKGo/internal/configmanager"
-	"github.com/Celitech/CelitechSDKGo/sharedmodels"
+	"github.com/Celitech/CelitechSDKGo/v2/celitechconfig"
+	restClient "github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/hooks"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/httptransport"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/configmanager"
+	"github.com/Celitech/CelitechSDKGo/v2/sharedmodels"
 	"time"
 )
 

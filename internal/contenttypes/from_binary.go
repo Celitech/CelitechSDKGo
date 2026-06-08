@@ -3,7 +3,7 @@ package contenttypes
 import (
 	"encoding/base64"
 	"fmt"
-	"github.com/Celitech/CelitechSDKGo/internal/unmarshal"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/unmarshal"
 	"reflect"
 )
 

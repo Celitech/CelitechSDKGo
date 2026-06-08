@@ -3,7 +3,7 @@ package celitechconfig
 import (
 	"time"
 
-	"github.com/Celitech/CelitechSDKGo/internal/clients/rest/hooks"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/hooks"
 )
 
 // RetryConfig holds all runtime-configurable retry parameters for the SDK client.

@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/Celitech/CelitechSDKGo/internal/utils"
+	"github.com/Celitech/CelitechSDKGo/v2/internal/utils"
 )
 
 // validateMultipleOf validates that a numeric field value is a multiple of the 'multipleOf' tag value.
