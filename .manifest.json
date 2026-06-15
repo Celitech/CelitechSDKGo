@@ -1,6 +1,6 @@
 {
   "sdkGenVersion": "1.4.0",
-  "date": "2026-06-08T09:39:30.392Z",
+  "date": "2026-06-15T08:44:16.650Z",
   "config": {
     "languages": [
       "go"
@@ -10,7 +10,7 @@
     ],
     "languageOptions": {
       "java": {
-        "sdkVersion": "2.0.2",
+        "sdkVersion": "2.0.3",
         "githubRepoName": "CelitechSDKJava",
         "retry": {
           "enabled": true,
@@ -58,7 +58,7 @@
         ]
       },
       "typescript": {
-        "sdkVersion": "2.0.2",
+        "sdkVersion": "2.0.3",
         "githubRepoName": "CelitechSDKTypeScript",
         "retry": {
           "enabled": true,
@@ -96,7 +96,7 @@
         "npmName": "celitech-sdk"
       },
       "python": {
-        "sdkVersion": "2.0.2",
+        "sdkVersion": "2.0.3",
         "githubRepoName": "CelitechSDKPython",
         "retry": {
           "enabled": true,
@@ -134,7 +134,7 @@
         "pypiPackageName": "celitech-sdk"
       },
       "go": {
-        "sdkVersion": "2.0.2",
+        "sdkVersion": "2.0.3",
         "githubRepoName": "CelitechSDKGo",
         "retry": {
           "enabled": true,
@@ -172,7 +172,7 @@
         "goModuleName": "github.com/Celitech/CelitechSDKGo/v2"
       },
       "csharp": {
-        "sdkVersion": "2.0.2",
+        "sdkVersion": "2.0.3",
         "githubRepoName": "CelitechSDKCSharp",
         "retry": {
           "enabled": true,
@@ -211,7 +211,7 @@
         "useOptionalWrapper": false
       },
       "php": {
-        "sdkVersion": "2.0.2",
+        "sdkVersion": "2.0.3",
         "githubRepoName": "CelitechSDKPHP",
         "retry": {
           "enabled": true,
@@ -252,11 +252,11 @@
     "includeWatermark": false,
     "responseHeaders": false,
     "sdkName": "Celitech",
-    "sdkVersion": "2.0.2",
+    "sdkVersion": "2.0.3",
     "auth": [
       "oauth"
     ],
-    "apiVersion": "2.0.2",
+    "apiVersion": "2.0.3",
     "publishing": {
       "githubOrg": "Celitech"
     },
@@ -479,11 +479,11 @@
     ".env.example": "69a3ee82f15d8bcc221e9c34c99e5a851d8b318ac2ac7e78f97ef32b743b303e",
     ".gitignore": "180c3eb119b9e17a0a3d319d5dc7f86a8232c9a61404f647310dd489d3c1805c",
     "LICENSE": "3ec558dc6e9c9355ab4b28c942caa92bf90b0b82c12d7838d2ef92467ad135c1",
-    "README.md": "0ebf4ce2a1f544e62dd234d4abe131e8e2dd6454e2a9904a8f67982a103f00f7",
+    "README.md": "c66936fbc12b2340333bb57395a0925c1db976a7396a73ee45cffdb8eafe616d",
     "celitech.go": "9c2a740315abcf527a9ccbc0945766701c76782eb86a82ebff3f90c8e9facc08",
     "celitechconfig/config.go": "08e8a523ea305bd20d27f21b1621ae164d6dae3bd576c9808e8c16a12d736d13",
     "celitechconfig/environments.go": "636035fffddb6927a2a96a520a71159a407f6a2bcf815138b98b885c65f818d2",
-    "celitechconfig/version.go": "b2fe55320f2f78ac0c79650b3c6b48eb6a5acd4d83144ffe9362857de78f5e11",
+    "celitechconfig/version.go": "67c376cfaca4f563e3050e5cce75a27126f902f5f4a5b77f2cd51fa457c0c649",
     "cmd/examples/example.go": "3cf5fd7b99a718695245698597d1e2834ebd9de92dad696fce0622d07e10114f",
     "config.go": "34f3ce3aeb658acae73007d925171438ea30b8709bab0355336aaa95142eeeef",
     "destinations/destinations.go": "0c576dcef05a85a007888b5b97bd4c199114bec3f9402be9b62eabbafdba0c0b",
@@ -537,7 +537,7 @@
     "internal/clients/rest/hooks/hook.go": "08b261862e8dc59f464e5bc7e3f63f3c7bbcd4896ba72c7fc74aaf448d8a5dc5",
     "internal/clients/rest/httptransport/content-type.go": "bf9b150892f991bee60287cb70b0aef16aeac2dcbdbd7c273b71645ced107e4f",
     "internal/clients/rest/httptransport/error_response.go": "1476bf7f8e3f10d76e9e593406088586fbdc52426b931dc77f3eeec3e2723714",
-    "internal/clients/rest/httptransport/request-builder.go": "164e2e1e168663b130da062438eb17c8dff2157f68f7d5c7eb729720046f63f2",
+    "internal/clients/rest/httptransport/request-builder.go": "6f38bc0cf0ad8a07af46a247124f073060d3d8d39fa244022e49906994430841",
     "internal/clients/rest/httptransport/request.go": "d2dfb713947cdb27d1d72547327818df61fe811546fcef6b4f10eac4f8c8e405",
     "internal/clients/rest/httptransport/response.go": "3e857e91b61c254ab28782b7ef5f725be107c1b18bbab0ee35911689fff18be0",
     "internal/clients/rest/httptransport/stream.go": "78846eaf98bfb461a26bd892c7f34805a6716cb0376423c5bf0abec183b54204",
