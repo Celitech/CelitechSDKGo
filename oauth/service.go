@@ -101,6 +101,7 @@ func (api *Service) GetAccessToken(ctx context.Context, oAuthTokenRequest OAuthT
 		WithContentType(httptransport.ContentTypeFormUrlEncoded).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes(nil).
+		WithSecuritySchemes(nil).
 		Build()
 
 	httpClient := restClient.NewRestClient[OAuthTokenResponse, []byte](config, api.manager, api.getHook())

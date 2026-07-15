@@ -144,6 +144,7 @@ func (api *Service) CreatePurchaseV2(ctx context.Context, createPurchaseV2Reques
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[[]CreatePurchaseV2OkResponse, []byte](config, api.manager, api.getHook())
@@ -173,6 +174,7 @@ func (api *Service) ListPurchases(ctx context.Context, params ListPurchasesReque
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[ListPurchasesOkResponse, []byte](config, api.manager, api.getHook())
@@ -203,6 +205,7 @@ func (api *Service) CreatePurchase(ctx context.Context, createPurchaseRequest Cr
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[CreatePurchaseOkResponse, []byte](config, api.manager, api.getHook())
@@ -233,6 +236,7 @@ func (api *Service) TopUpEsim(ctx context.Context, topUpEsimRequest TopUpEsimReq
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[TopUpEsimOkResponse, []byte](config, api.manager, api.getHook())
@@ -270,6 +274,7 @@ func (api *Service) EditPurchase(ctx context.Context, editPurchaseRequest EditPu
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[EditPurchaseOkResponse, []byte](config, api.manager, api.getHook())
@@ -299,6 +304,7 @@ func (api *Service) GetPurchaseConsumption(ctx context.Context, purchaseID strin
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[GetPurchaseConsumptionOkResponse, []byte](config, api.manager, api.getHook())

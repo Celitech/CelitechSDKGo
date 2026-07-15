@@ -98,6 +98,7 @@ func (api *Service) ListPackages(ctx context.Context, params ListPackagesRequest
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[ListPackagesOkResponse, []byte](config, api.manager, api.getHook())

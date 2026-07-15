@@ -8,7 +8,7 @@ import (
 type CreatePurchaseRequest struct {
 	// ISO representation of the package's destination. Supports both ISO2 (e.g., 'FR') and ISO3 (e.g., 'FRA') country codes.
 	Destination string `json:"destination" xml:"destination" required:"true"`
-	// Size of the package in GB. The available options are 0.5, 1, 2, 3, 5, 8, 20, 50GB
+	// Size of the package in GB. The available options are 0.5, 1, 2, 3, 5, 8, 20, 50GB. Use `-1` to purchase an unlimited (date-based) package — provide `startDate`/`endDate` spanning 3 to 30 days.
 	DataLimitInGb float64 `json:"dataLimitInGB" xml:"dataLimitInGB" required:"true"`
 	// Start date of the package's validity in the format 'yyyy-MM-dd'. This date can be set to the current day or any day within the next 12 months.
 	StartDate string `json:"startDate" xml:"startDate" required:"true"`

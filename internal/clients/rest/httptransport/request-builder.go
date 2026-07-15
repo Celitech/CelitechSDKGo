@@ -22,7 +22,7 @@ func NewRequestBuilder() *RequestBuilder {
 			PathParams:  make(map[string]string),
 		},
 	}
-	rb.request.SetHeader("User-Agent", "postman-codegen/1.5.0 celitech/2.0.4 (go)")
+	rb.request.SetHeader("User-Agent", "postman-codegen/1.6.0 celitech/2.0.5 (go)")
 	return rb
 }
 
@@ -100,6 +100,18 @@ func (rb *RequestBuilder) WithResponseContentType(contentType ContentType) *Requ
 // Returns the builder for method chaining.
 func (rb *RequestBuilder) WithScopes(scopes []string) *RequestBuilder {
 	rb.request.Scopes = scopes
+	return rb
+}
+
+// WithSecuritySchemes records the auth schemes the operation accepts.
+// Each request-chain auth handler consults this list via
+// ShouldApplyAuthScheme to decide whether to apply its credentials —
+// preventing the SDK from sending an apiKey header on an OAuth-only
+// operation (and vice-versa) when multiple credentials are configured.
+// Passing nil opts out of per-operation gating: every configured
+// handler runs (backward-compat for hand-constructed requests).
+func (rb *RequestBuilder) WithSecuritySchemes(schemes []AuthScheme) *RequestBuilder {
+	rb.request.SecuritySchemes = schemes
 	return rb
 }
 

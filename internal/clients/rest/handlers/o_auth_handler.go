@@ -42,6 +42,9 @@ func (h *OAuthHandler[T, E]) Handle(request httptransport.Request) (*httptranspo
 // addToken retrieves an OAuth token for the requested scopes and adds it to the request.
 // Fetches the token from the token manager and sets the Authorization header with the Bearer token.
 func (h *OAuthHandler[T, E]) addToken(request httptransport.Request) error {
+	if !httptransport.ShouldApplyAuthScheme(request.SecuritySchemes, httptransport.AuthSchemeOAuth2) {
+		return nil
+	}
 	if request.Scopes == nil {
 		return nil
 	}

@@ -8,13 +8,13 @@ import (
 type TopUpEsimRequest struct {
 	// ID of the eSIM
 	Iccid string `json:"iccid" xml:"iccid" required:"true" maxLength:"22" minLength:"18"`
-	// Size of the package in GB. The available options are 0.5, 1, 2, 3, 5, 8, 20, 50GB
+	// Size of the package in GB. The available options are 0.5, 1, 2, 3, 5, 8, 20, 50GB. Use `-1` to top up with an unlimited (date-based) package — provide `startDate`/`endDate` spanning 3 to 30 days (`duration` is not supported for unlimited packages).
 	DataLimitInGb float64 `json:"dataLimitInGB" xml:"dataLimitInGB" required:"true"`
 	// Start date of the package's validity in the format 'yyyy-MM-dd'. This date can be set to the current day or any day within the next 12 months.
 	StartDate *string `json:"startDate,omitempty" xml:"startDate,omitempty"`
 	// End date of the package's validity in the format 'yyyy-MM-dd'. End date can be maximum 90 days after Start date.
 	EndDate *string `json:"endDate,omitempty" xml:"endDate,omitempty"`
-	// Duration of the package in days. Available values are 1, 2, 7, 14, 30, or 90. Either provide startDate/endDate or duration.
+	// Duration of the package in days. Available values are 1, 2, 7, 14, 30, or 90. Either provide startDate/endDate or duration. Not supported for unlimited packages (`dataLimitInGB` = -1), which are date-based — provide startDate/endDate instead.
 	Duration *float64 `json:"duration,omitempty" xml:"duration,omitempty"`
 	// Email address where the purchase confirmation email will be sent (excluding QR Code & activation steps).
 	Email *string `json:"email,omitempty" xml:"email,omitempty"`

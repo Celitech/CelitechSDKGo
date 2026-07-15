@@ -97,6 +97,7 @@ func (api *Service) ListDestinations(ctx context.Context, opts ...celitechconfig
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[ListDestinationsOkResponse, []byte](config, api.manager, api.getHook())

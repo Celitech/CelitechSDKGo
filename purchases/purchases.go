@@ -13,7 +13,7 @@ type Purchases struct {
 	StartDate *param.Nullable[string] `json:"startDate" xml:"startDate" required:"true"`
 	// End date of the package's validity in the format 'yyyy-MM-ddThh:mm:ssZZ'
 	EndDate *param.Nullable[string] `json:"endDate" xml:"endDate" required:"true"`
-	// Duration of the package in days. Possible values are 1, 2, 7, 14, 30, or 90.
+	// Duration of the package in days. Possible values are 1, 2, 7, 14, 30, or 90. `null` for unlimited (date-based) packages.
 	Duration *param.Nullable[float64] `json:"duration,omitempty" xml:"duration,omitempty"`
 	// Creation date of the purchase in the format 'yyyy-MM-ddThh:mm:ssZZ'
 	CreatedDate string `json:"createdDate" xml:"createdDate" required:"true"`
