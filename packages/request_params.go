@@ -2,11 +2,13 @@ package packages
 
 // ListPackagesRequestParams holds the optional parameters for the API request.
 type ListPackagesRequestParams struct {
-	Destination *string  `explode:"true" serializationStyle:"form" queryParam:"destination"`
-	StartDate   *string  `explode:"true" serializationStyle:"form" queryParam:"startDate"`
-	EndDate     *string  `explode:"true" serializationStyle:"form" queryParam:"endDate"`
-	AfterCursor *string  `explode:"true" serializationStyle:"form" queryParam:"afterCursor"`
-	Limit       *float64 `explode:"true" serializationStyle:"form" queryParam:"limit"`
-	StartTime   *int64   `explode:"true" serializationStyle:"form" queryParam:"startTime"`
-	EndTime     *int64   `explode:"true" serializationStyle:"form" queryParam:"endTime"`
+	Destination      *string  `explode:"true" serializationStyle:"form" queryParam:"destination"`
+	DataLimitInGb    *float64 `explode:"true" serializationStyle:"form" queryParam:"dataLimitInGB"`
+	StartDate        *string  `explode:"true" serializationStyle:"form" queryParam:"startDate"`
+	EndDate          *string  `explode:"true" serializationStyle:"form" queryParam:"endDate"`
+	AfterCursor      *string  `explode:"true" serializationStyle:"form" queryParam:"afterCursor"`
+	Limit            *float64 `explode:"true" serializationStyle:"form" queryParam:"limit"`
+	StartTime        *int64   `explode:"true" serializationStyle:"form" queryParam:"startTime"`
+	EndTime          *int64   `explode:"true" serializationStyle:"form" queryParam:"endTime"`
+	IncludeUnlimited *bool    `explode:"true" serializationStyle:"form" queryParam:"includeUnlimited"`
 }

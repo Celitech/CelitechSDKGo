@@ -12,9 +12,9 @@ type Packages struct {
 	Destination string `json:"destination" xml:"destination" required:"true"`
 	// ISO2 representation of the package's destination.
 	DestinationIso2 string `json:"destinationISO2" xml:"destinationISO2" required:"true"`
-	// Size of the package in Bytes
+	// Size of the package in Bytes. A value of `-1` indicates an unlimited package.
 	DataLimitInBytes float64 `json:"dataLimitInBytes" xml:"dataLimitInBytes" required:"true"`
-	// Size of the package in GB
+	// Size of the package in GB. A value of `-1` indicates an unlimited (date-based) package.
 	DataLimitInGb float64 `json:"dataLimitInGB" xml:"dataLimitInGB" required:"true"`
 	// Min number of days for the package
 	MinDays float64 `json:"minDays" xml:"minDays" required:"true"`

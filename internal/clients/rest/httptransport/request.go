@@ -20,6 +20,42 @@ type paramMap struct {
 	Value string
 }
 
+// AuthScheme identifies which security scheme an operation requires.
+// Used by auth handlers in the request chain to decide whether to apply
+// their credentials on a per-operation basis: an operation that only
+// declares apiKey security should not also receive Basic or Bearer
+// headers just because those credentials happen to be configured.
+type AuthScheme string
+
+const (
+	AuthSchemeAPIKey AuthScheme = "apiKey"
+	AuthSchemeBasic  AuthScheme = "basic"
+	AuthSchemeBearer AuthScheme = "bearer"
+	AuthSchemeOAuth2 AuthScheme = "oauth2"
+)
+
+// ShouldApplyAuthScheme returns true when the given scheme should be
+// applied for a request whose accepted schemes list is `schemes`.
+//
+//   - schemes == nil  → no per-operation preference recorded (e.g. caller
+//     hand-constructed the Request); apply every configured credential
+//     for backward compatibility with non-generated callers.
+//   - schemes == []   → operation declared `security: []` (explicit
+//     no-auth); apply nothing.
+//   - schemes == [a, b] → operation accepts either scheme; the matching
+//     handlers run.
+func ShouldApplyAuthScheme(schemes []AuthScheme, scheme AuthScheme) bool {
+	if schemes == nil {
+		return true
+	}
+	for _, s := range schemes {
+		if s == scheme {
+			return true
+		}
+	}
+	return false
+}
+
 // Request represents an HTTP request with all necessary configuration and parameters.
 // Handles path/query/header serialization, content types, and authentication scopes.
 type Request struct {
@@ -35,6 +71,12 @@ type Request struct {
 	ContentType         ContentType
 	ResponseContentType ContentType
 	Scopes              []string
+	// SecuritySchemes lists the auth schemes the operation accepts.
+	// Per-handler dispatch uses ShouldApplyAuthScheme to decide whether
+	// to apply its credentials. Defaults to nil for hand-built Requests,
+	// which preserves the legacy "apply every configured credential"
+	// behaviour.
+	SecuritySchemes []AuthScheme
 }
 
 // NewRequest creates a new Request with default settings.
@@ -138,6 +180,10 @@ func (r *Request) SetBody(body any) {
 
 func (r *Request) SetScopes(scopes []string) {
 	r.Scopes = scopes
+}
+
+func (r *Request) SetSecuritySchemes(schemes []AuthScheme) {
+	r.SecuritySchemes = schemes
 }
 
 func (r *Request) GetContext() context.Context {

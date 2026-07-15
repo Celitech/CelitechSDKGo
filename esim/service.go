@@ -116,6 +116,7 @@ func (api *Service) GetEsim(ctx context.Context, params GetEsimRequestParams, op
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[GetEsimOkResponse, []byte](config, api.manager, api.getHook())
@@ -145,6 +146,7 @@ func (api *Service) GetEsimDevice(ctx context.Context, iccid string, opts ...cel
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[GetEsimDeviceOkResponse, []byte](config, api.manager, api.getHook())
@@ -174,6 +176,7 @@ func (api *Service) GetEsimHistory(ctx context.Context, iccid string, opts ...ce
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[GetEsimHistoryOkResponse, []byte](config, api.manager, api.getHook())

@@ -8,9 +8,9 @@ import (
 type Package_ struct {
 	// ID of the package
 	ID string `json:"id" xml:"id" required:"true"`
-	// Size of the package in Bytes
+	// Size of the package in Bytes. A value of `-1` indicates an unlimited package.
 	DataLimitInBytes float64 `json:"dataLimitInBytes" xml:"dataLimitInBytes" required:"true"`
-	// Size of the package in GB
+	// Size of the package in GB. A value of `-1` indicates an unlimited (date-based) package.
 	DataLimitInGb float64 `json:"dataLimitInGB" xml:"dataLimitInGB" required:"true"`
 	// ISO3 representation of the package's destination.
 	Destination string `json:"destination" xml:"destination" required:"true"`

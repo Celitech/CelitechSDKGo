@@ -97,6 +97,7 @@ func (api *Service) Token(ctx context.Context, opts ...celitechconfig.RequestOpt
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
 		Build()
 
 	httpClient := restClient.NewRestClient[TokenOkResponse, []byte](config, api.manager, api.getHook())
