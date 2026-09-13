@@ -1,344 +1,99 @@
 {
-  "sdkGenVersion": "1.7.0",
-  "date": "2026-07-20T09:14:38.396Z",
+  "sdkGenVersion": "2.6.0",
+  "resolvedGeneratorVersion": "2.6.0",
+  "date": "2026-09-13T18:22:48.360Z",
   "config": {
-    "languages": [
-      "go"
-    ],
-    "deliveryMethods": [
-      "zip"
-    ],
-    "languageOptions": {
-      "java": {
-        "sdkVersion": "2.0.6",
-        "githubRepoName": "CelitechSDKJava",
-        "retry": {
-          "enabled": true,
-          "maxAttempts": 3,
-          "retryDelay": 150
-        },
-        "license": {
-          "type": "MIT"
-        },
-        "authentication": {
-          "oauth": {
-            "enabled": true,
-            "refreshBuffer": 5000
-          }
-        },
-        "environmentVariables": [
-          {
-            "name": "CLIENT_ID",
-            "description": "Client ID parameter"
-          },
-          {
-            "name": "CLIENT_SECRET",
-            "description": "Client Secret parameter"
-          }
-        ],
-        "devContainer": true,
-        "generateEnv": true,
-        "responseHeaders": false,
-        "includeOptionalSnippetParameters": false,
-        "injectedModels": [],
-        "inferServiceNames": false,
-        "deprecatedOperations": {
-          "include": true
-        },
-        "groupId": "io.github.celitech",
-        "artifactId": "celitech-sdk",
-        "homepage": "https://docs.celitech.com/",
-        "developers": [
-          {
-            "name": "CELITECH",
-            "email": "info@celitech.com",
-            "organization": "Celitech",
-            "organizationUrl": "https://www.celitech.com"
-          }
-        ]
-      },
-      "typescript": {
-        "sdkVersion": "2.0.6",
-        "githubRepoName": "CelitechSDKTypeScript",
-        "retry": {
-          "enabled": true,
-          "maxAttempts": 3,
-          "retryDelay": 150
-        },
-        "license": {
-          "type": "MIT"
-        },
-        "authentication": {
-          "oauth": {
-            "enabled": true,
-            "refreshBuffer": 5000
-          }
-        },
-        "environmentVariables": [
-          {
-            "name": "CLIENT_ID",
-            "description": "Client ID parameter"
-          },
-          {
-            "name": "CLIENT_SECRET",
-            "description": "Client Secret parameter"
-          }
-        ],
-        "devContainer": true,
-        "generateEnv": true,
-        "responseHeaders": false,
-        "includeOptionalSnippetParameters": false,
-        "injectedModels": [],
-        "inferServiceNames": false,
-        "deprecatedOperations": {
-          "include": true
-        },
-        "npmName": "celitech-sdk"
-      },
-      "python": {
-        "sdkVersion": "2.0.6",
-        "githubRepoName": "CelitechSDKPython",
-        "retry": {
-          "enabled": true,
-          "maxAttempts": 3,
-          "retryDelay": 150
-        },
-        "license": {
-          "type": "MIT"
-        },
-        "authentication": {
-          "oauth": {
-            "enabled": true,
-            "refreshBuffer": 5000
-          }
-        },
-        "environmentVariables": [
-          {
-            "name": "CLIENT_ID",
-            "description": "Client ID parameter"
-          },
-          {
-            "name": "CLIENT_SECRET",
-            "description": "Client Secret parameter"
-          }
-        ],
-        "devContainer": true,
-        "generateEnv": true,
-        "responseHeaders": false,
-        "includeOptionalSnippetParameters": false,
-        "injectedModels": [],
-        "inferServiceNames": false,
-        "deprecatedOperations": {
-          "include": true
-        },
-        "pypiPackageName": "celitech-sdk"
-      },
-      "go": {
-        "sdkVersion": "2.0.6",
-        "githubRepoName": "CelitechSDKGo",
-        "retry": {
-          "enabled": true,
-          "maxAttempts": 3,
-          "retryDelay": 150
-        },
-        "license": {
-          "type": "MIT"
-        },
-        "authentication": {
-          "oauth": {
-            "enabled": true,
-            "refreshBuffer": 5000
-          }
-        },
-        "environmentVariables": [
-          {
-            "name": "CLIENT_ID",
-            "description": "Client ID parameter"
-          },
-          {
-            "name": "CLIENT_SECRET",
-            "description": "Client Secret parameter"
-          }
-        ],
-        "devContainer": true,
-        "generateEnv": true,
-        "responseHeaders": false,
-        "includeOptionalSnippetParameters": false,
-        "injectedModels": [],
-        "inferServiceNames": false,
-        "deprecatedOperations": {
-          "include": true
-        },
-        "goModuleName": "github.com/Celitech/CelitechSDKGo/v2"
-      },
-      "csharp": {
-        "sdkVersion": "2.0.6",
-        "githubRepoName": "CelitechSDKCSharp",
-        "retry": {
-          "enabled": true,
-          "maxAttempts": 3,
-          "retryDelay": 150
-        },
-        "license": {
-          "type": "MIT"
-        },
-        "authentication": {
-          "oauth": {
-            "enabled": true,
-            "refreshBuffer": 5000
-          }
-        },
-        "environmentVariables": [
-          {
-            "name": "CLIENT_ID",
-            "description": "Client ID parameter"
-          },
-          {
-            "name": "CLIENT_SECRET",
-            "description": "Client Secret parameter"
-          }
-        ],
-        "devContainer": true,
-        "generateEnv": true,
-        "responseHeaders": false,
-        "includeOptionalSnippetParameters": false,
-        "injectedModels": [],
-        "inferServiceNames": false,
-        "deprecatedOperations": {
-          "include": true
-        },
-        "packageId": "Celitech.SDK",
-        "useOptionalWrapper": false
-      },
-      "php": {
-        "sdkVersion": "2.0.6",
-        "githubRepoName": "CelitechSDKPHP",
-        "retry": {
-          "enabled": true,
-          "maxAttempts": 3,
-          "retryDelay": 150
-        },
-        "license": {
-          "type": "MIT"
-        },
-        "authentication": {
-          "oauth": {
-            "enabled": true,
-            "refreshBuffer": 5000
-          }
-        },
-        "environmentVariables": [
-          {
-            "name": "CLIENT_ID",
-            "description": "Client ID parameter"
-          },
-          {
-            "name": "CLIENT_SECRET",
-            "description": "Client Secret parameter"
-          }
-        ],
-        "devContainer": true,
-        "generateEnv": true,
-        "responseHeaders": false,
-        "includeOptionalSnippetParameters": false,
-        "injectedModels": [],
-        "inferServiceNames": false,
-        "deprecatedOperations": {
-          "include": true
-        },
-        "packageName": "celitech-sdk/sdk"
-      }
-    },
-    "includeWatermark": false,
-    "responseHeaders": false,
-    "sdkName": "Celitech",
-    "sdkVersion": "2.0.6",
-    "auth": [
-      "oauth"
-    ],
-    "apiVersion": "2.0.6",
-    "publishing": {
-      "githubOrg": "Celitech"
-    },
-    "customCode": {
-      "trackChanges": true
-    },
-    "retry": {
-      "enabled": true,
-      "maxAttempts": 3,
-      "retryDelay": 150,
-      "maxDelay": 5000,
-      "retryDelayJitter": 50,
-      "backOffFactor": 2,
-      "httpMethodsToRetry": [
-        "GET",
-        "POST",
-        "PUT",
-        "DELETE",
-        "PATCH",
-        "HEAD",
-        "OPTIONS"
-      ],
-      "maxRetryAfterDelay": 60000
-    },
-    "license": {
-      "type": "MIT",
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT",
-      "path": "MIT.ejs"
-    },
-    "authentication": {
-      "oauth": {
-        "enabled": true,
-        "refreshBuffer": 5000
-      }
-    },
-    "environmentVariables": [
-      {
-        "name": "CLIENT_ID",
-        "description": "Client ID parameter"
-      },
-      {
-        "name": "CLIENT_SECRET",
-        "description": "Client Secret parameter"
-      }
-    ],
-    "devContainer": true,
-    "generateEnv": true,
-    "includeOptionalSnippetParameters": false,
-    "injectedModels": [],
-    "inferServiceNames": false,
-    "deprecatedOperations": {
-      "include": true
-    },
-    "githubRepoName": "CelitechSDKGo",
-    "goModuleName": "github.com/Celitech/CelitechSDKGo/v2",
-    "language": "go",
-    "deliveryMethod": "zip",
-    "hooks": {
-      "enabled": false,
-      "sourceDir": ""
-    },
-    "validateResponses": true,
-    "usesFormData": false,
-    "fileOutput": "/tmp",
-    "httpLibrary": {
-      "name": "axios",
-      "packages": {},
-      "languages": [
-        "typescript"
+    "schemaVersion": "sdk-config-ir/v1",
+    "source": {
+      "specs": [
+        {
+          "specUrl": "https://us-prod-sdk-gen-api-specs.s3.us-east-1.amazonaws.com/specification-snapshots/384c4a61-72fc-4d28-ba6b-2691f6d6ec91/1789323767705.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LJBU7PSDQA5EC%2F20260913%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260913T182248Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEAoaCXVzLWVhc3QtMSJGMEQCIDz46grgdLjCZ9ML83n%2F1v7ZzSqUK068H1HEEg6xYvtoAiB5naL2EjJpDMOvTMjnTejguLAp%2BRdqSF%2BtPd4t9i4tqiqcBQjS%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzY1MjE1OCIMwFMt4%2BSvg%2BxRyEWzKvAEJ3DaWx6rK%2B%2BANWIox%2BwbQbfMfU3sXXOjiYDKNNFh2TzjfTv6DEPgzO7GxqtEIJDiffjxy7t%2B5PwAWtCJucETa3KvKHENALC2DIstdx4xRswnBWjSqMFW5Z8V9c1Lo0hz1%2BKQYV7XINptE1SbyNJSccp3idbybO5ynhls0TMQXCLoVmEE0YaE%2F3UEqhlGkQlTjL0o0w1AI5WwNd4k9xLoaroUEqsuNPjAgQSHZ37OlDaNaLpUOxIMzoGKmRKdo4ufn7yc8o20H0agoSBcTcAE%2Fi5WozDEyr%2F%2BPFuRXAmUTMi3AoYHOD5BJHXaIHojRGmTgSRTri42O%2Ben4D7ijhB8VyF07dqCO21kGLjxr8ATzx9Z5n47dOO9Hf%2BBD6uXtGJbSmom3DGxX2B0NbIkAyIny2GpBqTeRkUv8sfrD0sIhsMzYlvbXiMRDXNcSHqw%2FlA%2FQBU98li5Beay9yDU8NDccIfOQylyeQ5LAtknk82gFrKzgyJX8kJPygpz5TXjWFvnG7hjfbkjtKPpLc6fdiLf%2Bkpm30RZrpNBoyaaw77CtdT2rvpcp735NVfoQ%2BTpR8URpvyz2poj2a7Vipd79IspcD8Tbc1cBL1fxmTNYvjCueAo8MQhToCWNpESfBJFIkQw8%2BVMtv5rc%2FRdBvHlXetbtNktez%2BtPFq%2ByvtSnFlLLCzDjcQW03Rmz%2B2BSQbWFJk8A4%2FhH8KlzBN4x%2B7oia3tfY6LItw39XaEnQ2jx6nkCE%2BzZzCofeeyxEhURtX4vUzK6N1TmjZww8rirIFjJ49cnKGoITgI%2FRM0AJW1lt%2BQ91l3jbiVUC6vxirNHFpJ0p1cMMXBm9UGOpoBqmLoqbaVOslYfLZik%2ByPWkawWEG%2FzAFoQ1YKxaa%2FZxFR2TgPcSjqvDx3fhSaHkeQ5DQchXcEAmuh5D94qC5Qx8W4AMSzB1q3hmnYp0AgHkbMjYW2pXHSGFR3UDG4MvBYFE6IC6nXMHooPQJmGrz25J%2BePk435mA%2FNgfg6IDUNef9kY%2F8uZBkZhp%2BN%2B0I%2FXKXpE6YQ78i5%2BytdQ%3D%3D&X-Amz-Signature=448c2a8df72a443ffdcd0b07150345e7ea1e8212d710a935f1dfcdbc3a36b8ff&X-Amz-SignedHeaders=host&x-id=GetObject",
+          "specType": "openapi"
+        }
       ]
     },
-    "multiTenant": false,
-    "customQueries": {
-      "paths": [],
-      "rawQueries": [],
-      "queriesData": []
+    "target": {
+      "language": "go",
+      "sourceOrigin": "postman",
+      "sdkName": "Celitech",
+      "sdkVersion": "2.0.6",
+      "apiVersion": "2.0.6"
     },
-    "ai": false,
-    "specType": "openapi",
-    "multipleResponses": {
-      "enabled": false
+    "api": {
+      "baseUrl": "",
+      "environments": [],
+      "environmentVariables": [
+        {
+          "name": "CLIENT_ID",
+          "description": "Client ID parameter"
+        },
+        {
+          "name": "CLIENT_SECRET",
+          "description": "Client Secret parameter"
+        }
+      ],
+      "auth": {
+        "schemes": [
+          {
+            "id": "oauth",
+            "type": "oauth2",
+            "flows": [
+              {
+                "type": "client-credentials",
+                "tokenUrl": "https://example.com/oauth/token"
+              }
+            ],
+            "refreshBufferSeconds": 5
+          }
+        ]
+      }
+    },
+    "client": {
+      "retry": {
+        "enabled": true,
+        "maxAttempts": 3,
+        "retryDelayMs": 150,
+        "maxDelayMs": 5000,
+        "jitterMs": 50,
+        "backoffFactor": 2,
+        "methods": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH",
+          "HEAD",
+          "OPTIONS"
+        ],
+        "maxRetryAfterDelayMs": 60000
+      },
+      "responseHeaders": false,
+      "multiTenant": false,
+      "additionalConstructorParameters": []
+    },
+    "package": {
+      "modulePath": "github.com/Celitech/CelitechSDKGo/v2",
+      "repository": "https://github.com/Celitech/CelitechSDKGo",
+      "license": {
+        "type": "MIT"
+      }
+    },
+    "output": {
+      "delivery": "zip",
+      "credentialResolution": "refs-only"
+    },
+    "docs": {},
+    "generation": {
+      "includeWatermark": false,
+      "ai": false,
+      "includeOptionalSnippetParameters": false,
+      "buildAllModels": false,
+      "inferServiceNames": false,
+      "includeDeprecatedOperations": true,
+      "multipleResponses": false,
+      "devContainer": true,
+      "allowMockClient": false,
+      "serialization": {}
     }
   },
   "files": [
@@ -484,7 +239,7 @@
     "LICENSE": "3ec558dc6e9c9355ab4b28c942caa92bf90b0b82c12d7838d2ef92467ad135c1",
     "README.md": "9b96f7f01ee048f48a257e42d33cf4fe35246b646588ed2cec1ae604a9f386e0",
     "celitech.go": "9c2a740315abcf527a9ccbc0945766701c76782eb86a82ebff3f90c8e9facc08",
-    "celitechconfig/config.go": "08e8a523ea305bd20d27f21b1621ae164d6dae3bd576c9808e8c16a12d736d13",
+    "celitechconfig/config.go": "075289334a44a676b197cfd2773d91c852ade0548aad9e6ec82c35521effc44e",
     "celitechconfig/environments.go": "636035fffddb6927a2a96a520a71159a407f6a2bcf815138b98b885c65f818d2",
     "celitechconfig/version.go": "f1ed475a1e567ab7fd8ade4b4631ed712876a8ed6dca73ac71cded6a0c8ceb36",
     "cmd/examples/example.go": "3cf5fd7b99a718695245698597d1e2834ebd9de92dad696fce0622d07e10114f",
@@ -533,14 +288,14 @@
     "internal/clients/rest/handlers/o_auth_handler.go": "7581ac1036cdb440a9a16f8bfcab2271e4c2aaa690da7d8381d8125cabc02e32",
     "internal/clients/rest/handlers/request_validation_handler.go": "09354baf638159aa77791aa7a092dbb0a3979e9d5721793a38d1634510d49aba",
     "internal/clients/rest/handlers/response_validation_handler.go": "1a1ca048da30967421c1ac6bfa4053a76c7bea2f17ae24b62eb24dfa2009aa34",
-    "internal/clients/rest/handlers/retry_handler.go": "477e4adcd641c38bfd436cc94eebd7abf9075829b63e56044361a8490186927d",
+    "internal/clients/rest/handlers/retry_handler.go": "5b866e893af0167ab1cc4ac76c6d7be4bcfe9f76d0a6adf36a086ca426180930",
     "internal/clients/rest/handlers/terminating_handler.go": "93bf28b0254a2de420f3747e51cfcdaeb1886c95e9a13f030054f604a8f115a0",
     "internal/clients/rest/handlers/unmarshal_handler.go": "63d544e30d4757ff53cc33a9e57653e006c2ffd3a8edf4ee19010eefcd520efe",
     "internal/clients/rest/hooks/default_hook.go": "9c93998393b2f0d9bf09e07d70337061b484b943b42e3bcbef79b26dc0a58024",
     "internal/clients/rest/hooks/hook.go": "08b261862e8dc59f464e5bc7e3f63f3c7bbcd4896ba72c7fc74aaf448d8a5dc5",
     "internal/clients/rest/httptransport/content-type.go": "bf9b150892f991bee60287cb70b0aef16aeac2dcbdbd7c273b71645ced107e4f",
     "internal/clients/rest/httptransport/error_response.go": "1476bf7f8e3f10d76e9e593406088586fbdc52426b931dc77f3eeec3e2723714",
-    "internal/clients/rest/httptransport/request-builder.go": "e006ffc93d3109b3a9ed5609523b3d29d494fd1ff8f0e726d6ab07a7effb36dd",
+    "internal/clients/rest/httptransport/request-builder.go": "768ad557b7b1612c0540274146fa5e1888c9835118c095c022579db9c1b8018e",
     "internal/clients/rest/httptransport/request.go": "5936815ccd81d03caa7af1c9ed13ac91de16c692604c00a5451389fef4133078",
     "internal/clients/rest/httptransport/response.go": "3e857e91b61c254ab28782b7ef5f725be107c1b18bbab0ee35911689fff18be0",
     "internal/clients/rest/httptransport/stream.go": "78846eaf98bfb461a26bd892c7f34805a6716cb0376423c5bf0abec183b54204",
@@ -585,7 +340,7 @@
     "packages/service.go": "9b37e25b7281e846a7694fad802b35e76e00f0eb2dd02eb527da63990dbabc58",
     "param/nullable.go": "adb58c419544f785a9e3147bf7599d091319c4654e145a9a4a48dd7ee8639675",
     "param/to_pointer.go": "280f89a77398ce6384bdead43a8a6bae37e02f59bf565c8759bd9073a83a5e3e",
-    "prettier.config.js": "2fe33fda52344779fcf235afa8152cfd356880dc3161da09403dc26231bc72d9",
+    "prettier.config.js": "b3f990b4c84640a705ded29e3343d8e3d70ddc4b88431d10d47c23f568470cfd",
     "purchases/create_purchase_ok_response.go": "f944104c9523037edc4cb130f25fb0ac15017173f8ce9641e9146195688c6a47",
     "purchases/create_purchase_ok_response_profile.go": "5cb7e913143af90f2f5115f6bf3173e72d88d400b0cd9aa549fb54cc614d8933",
     "purchases/create_purchase_ok_response_purchase.go": "f992f1c15c82fb62103551efc5d491d7e06d9ade11fccef3831e76556805be3e",

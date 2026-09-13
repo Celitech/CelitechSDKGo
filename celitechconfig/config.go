@@ -15,6 +15,7 @@ type RetryConfig struct {
 	MaxDelay           time.Duration
 	RetryDelayJitter   time.Duration
 	BackOffFactor      float64
+	MaxRetryAfterDelay time.Duration
 	HTTPMethodsToRetry []string
 	HTTPCodesToRetry   []int
 }
@@ -27,6 +28,7 @@ func NewRetryConfig() RetryConfig {
 		MaxDelay:           5000 * time.Millisecond,
 		RetryDelayJitter:   50 * time.Millisecond,
 		BackOffFactor:      2,
+		MaxRetryAfterDelay: 60000 * time.Millisecond,
 		HTTPMethodsToRetry: []string{"GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"},
 	}
 }
