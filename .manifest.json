@@ -1,13 +1,13 @@
 {
   "sdkGenVersion": "2.6.0",
   "resolvedGeneratorVersion": "2.6.0",
-  "date": "2026-09-13T18:22:48.360Z",
+  "date": "2026-09-13T19:12:56.792Z",
   "config": {
     "schemaVersion": "sdk-config-ir/v1",
     "source": {
       "specs": [
         {
-          "specUrl": "https://us-prod-sdk-gen-api-specs.s3.us-east-1.amazonaws.com/specification-snapshots/384c4a61-72fc-4d28-ba6b-2691f6d6ec91/1789323767705.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LJBU7PSDQA5EC%2F20260913%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260913T182248Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEAoaCXVzLWVhc3QtMSJGMEQCIDz46grgdLjCZ9ML83n%2F1v7ZzSqUK068H1HEEg6xYvtoAiB5naL2EjJpDMOvTMjnTejguLAp%2BRdqSF%2BtPd4t9i4tqiqcBQjS%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzY1MjE1OCIMwFMt4%2BSvg%2BxRyEWzKvAEJ3DaWx6rK%2B%2BANWIox%2BwbQbfMfU3sXXOjiYDKNNFh2TzjfTv6DEPgzO7GxqtEIJDiffjxy7t%2B5PwAWtCJucETa3KvKHENALC2DIstdx4xRswnBWjSqMFW5Z8V9c1Lo0hz1%2BKQYV7XINptE1SbyNJSccp3idbybO5ynhls0TMQXCLoVmEE0YaE%2F3UEqhlGkQlTjL0o0w1AI5WwNd4k9xLoaroUEqsuNPjAgQSHZ37OlDaNaLpUOxIMzoGKmRKdo4ufn7yc8o20H0agoSBcTcAE%2Fi5WozDEyr%2F%2BPFuRXAmUTMi3AoYHOD5BJHXaIHojRGmTgSRTri42O%2Ben4D7ijhB8VyF07dqCO21kGLjxr8ATzx9Z5n47dOO9Hf%2BBD6uXtGJbSmom3DGxX2B0NbIkAyIny2GpBqTeRkUv8sfrD0sIhsMzYlvbXiMRDXNcSHqw%2FlA%2FQBU98li5Beay9yDU8NDccIfOQylyeQ5LAtknk82gFrKzgyJX8kJPygpz5TXjWFvnG7hjfbkjtKPpLc6fdiLf%2Bkpm30RZrpNBoyaaw77CtdT2rvpcp735NVfoQ%2BTpR8URpvyz2poj2a7Vipd79IspcD8Tbc1cBL1fxmTNYvjCueAo8MQhToCWNpESfBJFIkQw8%2BVMtv5rc%2FRdBvHlXetbtNktez%2BtPFq%2ByvtSnFlLLCzDjcQW03Rmz%2B2BSQbWFJk8A4%2FhH8KlzBN4x%2B7oia3tfY6LItw39XaEnQ2jx6nkCE%2BzZzCofeeyxEhURtX4vUzK6N1TmjZww8rirIFjJ49cnKGoITgI%2FRM0AJW1lt%2BQ91l3jbiVUC6vxirNHFpJ0p1cMMXBm9UGOpoBqmLoqbaVOslYfLZik%2ByPWkawWEG%2FzAFoQ1YKxaa%2FZxFR2TgPcSjqvDx3fhSaHkeQ5DQchXcEAmuh5D94qC5Qx8W4AMSzB1q3hmnYp0AgHkbMjYW2pXHSGFR3UDG4MvBYFE6IC6nXMHooPQJmGrz25J%2BePk435mA%2FNgfg6IDUNef9kY%2F8uZBkZhp%2BN%2B0I%2FXKXpE6YQ78i5%2BytdQ%3D%3D&X-Amz-Signature=448c2a8df72a443ffdcd0b07150345e7ea1e8212d710a935f1dfcdbc3a36b8ff&X-Amz-SignedHeaders=host&x-id=GetObject",
+          "specUrl": "https://us-prod-sdk-gen-api-specs.s3.us-east-1.amazonaws.com/specification-snapshots/384c4a61-72fc-4d28-ba6b-2691f6d6ec91/1789326775473.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LJBU7FAMOMRBY%2F20260913%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260913T191255Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEAsaCXVzLWVhc3QtMSJHMEUCIGy7qJVyHC5ejaN23cMdBOCXLyEafqj5328xN9Ht2otVAiEAyVNCZJduQlXdMGTw2pHYsiUCwVK8d61V2Fh6k9bul7MqnAUI0%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjM2NTIxNTgiDAuMqgMp14WDwISUmSrwBFELTq1HgDZet5Djoift5WpoD9ph0KbJUPBQUkPTc7hBqXYfjl16B4HWykObQA%2BVWBw3RjR%2BS5%2BsSAtt7P5hmkQJB588Xvlf7AhqdgNcT%2FsiLtMs%2FFYNpT%2BgeuY4%2FBgxtJqLVu9cJxvCo8TMBHIWf%2Fb7JyiBXyM%2BmvMFwnGkGDeloGayt4KfQtLcdBSjhw35%2B4%2BEMROHUkmMzAMw4JvY%2FNa%2FKThIaSnw7jUSKI%2F1zTNhjlXvSQ8I%2BgVmHrdaCb6nCp8hFX%2FXWvccJReHsKYJ2bG%2BCv1hc2OL5JK9OkTeqz1GmQ%2F0HoRzcSHF97K9BsmSDqfdB6vaGaST5jZsQ5DuicKBc0F4jmmRnEUeEbqzUI8%2FLEBW4LOORY33ldwOjq0OApo3kppMaJd%2FX2s%2FjzPpu5xr283ROLUxAN68O36hr2zZbyrrLGE4ahmCe9a5o2BnePpccwY6qAiXnfmGWua7kU8uhwdV3upaqQPOOy3P7iwB0rO34GQMUAmQetm6CGOb4YqZqHo0Ao8mIo2I8SZ4SyyZl1BqeT37IZKSpODovL5jMg2abyRZsF07d1LQ64rccRtfJXwvx0nDvQOERgMxV8OETbnyV0aB2XPVpBsiOr1e6O0CK9alkrnZe8WGj4GtkQ4AWQsdRt%2BMTl5eNtwrGKgNZx24kKdE0kDZWSNxctn0pdhqzAPHYF12jt38PhQAARdjYC%2Fd3BKPCoktXRS3P910qVYM4MX0qTj3rfVwKyyoo51JIRcGJ1VYT87OrOBbfShtsdL7%2BhMpzBjJZlwP%2FQzVxnz9i30Np0Kn6oP0xvC0VPBsUHVx%2FbtwLU4PVVBsHDC%2F1ZvVBjqZAT7MToTaFZtHUj7xtHXsbBCFCpTzYYwYvLJBDMkm3d2XfQkx8n7xyN69Lz6lxdsnbIV1vX8TSVKRUPgiF%2FAxwfK6389vWK0E1mHK72AaBSct6lZ%2BjNmE7AN9k7Tsa4G4Y%2F42DkglSZ2gDpBEeD4JXDWupSQms3x5JV196a8n199s8ldHvA2fmoUaNl8b%2BoQ9XUtpoqZgPossgg%3D%3D&X-Amz-Signature=711e3548f8703d65f9a63bf134e6c03ca01ff745ac1ed3bbb19e866c4d2f2fae&X-Amz-SignedHeaders=host&x-id=GetObject",
           "specType": "openapi"
         }
       ]
@@ -16,8 +16,8 @@
       "language": "go",
       "sourceOrigin": "postman",
       "sdkName": "Celitech",
-      "sdkVersion": "2.0.6",
-      "apiVersion": "2.0.6"
+      "sdkVersion": "2.0.7",
+      "apiVersion": "2.0.7"
     },
     "api": {
       "baseUrl": "",
@@ -234,14 +234,14 @@
   "fileHashes": {
     ".devcontainer/devcontainer.json": "7018c8458ca3183f37ce0188bf0f51e25cd3c82318014edec372681cd42dab70",
     ".env.example": "69a3ee82f15d8bcc221e9c34c99e5a851d8b318ac2ac7e78f97ef32b743b303e",
-    ".github/workflows/release.yml": "741e945c108e1c0c8ad7c0a855f6ee8359f0bf852f552f8d576af9703587a42a",
+    ".github/workflows/release.yml": "216a181e007479fc4e88a3d316aa807e1dc8b0e8933d24198168eb46edf8ac0f",
     ".gitignore": "180c3eb119b9e17a0a3d319d5dc7f86a8232c9a61404f647310dd489d3c1805c",
     "LICENSE": "3ec558dc6e9c9355ab4b28c942caa92bf90b0b82c12d7838d2ef92467ad135c1",
-    "README.md": "9b96f7f01ee048f48a257e42d33cf4fe35246b646588ed2cec1ae604a9f386e0",
+    "README.md": "16a8fb3473d6fb989bc69c9ce4a53a56cbc194659d50caf1dfca955fbd8ab273",
     "celitech.go": "9c2a740315abcf527a9ccbc0945766701c76782eb86a82ebff3f90c8e9facc08",
     "celitechconfig/config.go": "075289334a44a676b197cfd2773d91c852ade0548aad9e6ec82c35521effc44e",
     "celitechconfig/environments.go": "636035fffddb6927a2a96a520a71159a407f6a2bcf815138b98b885c65f818d2",
-    "celitechconfig/version.go": "f1ed475a1e567ab7fd8ade4b4631ed712876a8ed6dca73ac71cded6a0c8ceb36",
+    "celitechconfig/version.go": "cc236fef081a694f60538cc3c98d129452637641160fad28453ee63f68df95b2",
     "cmd/examples/example.go": "3cf5fd7b99a718695245698597d1e2834ebd9de92dad696fce0622d07e10114f",
     "config.go": "34f3ce3aeb658acae73007d925171438ea30b8709bab0355336aaa95142eeeef",
     "destinations/destinations.go": "0c576dcef05a85a007888b5b97bd4c199114bec3f9402be9b62eabbafdba0c0b",
@@ -295,7 +295,7 @@
     "internal/clients/rest/hooks/hook.go": "08b261862e8dc59f464e5bc7e3f63f3c7bbcd4896ba72c7fc74aaf448d8a5dc5",
     "internal/clients/rest/httptransport/content-type.go": "bf9b150892f991bee60287cb70b0aef16aeac2dcbdbd7c273b71645ced107e4f",
     "internal/clients/rest/httptransport/error_response.go": "1476bf7f8e3f10d76e9e593406088586fbdc52426b931dc77f3eeec3e2723714",
-    "internal/clients/rest/httptransport/request-builder.go": "768ad557b7b1612c0540274146fa5e1888c9835118c095c022579db9c1b8018e",
+    "internal/clients/rest/httptransport/request-builder.go": "270644b4054176ca46504519103806fe4e793532b23b2c6769b262c37cabe940",
     "internal/clients/rest/httptransport/request.go": "5936815ccd81d03caa7af1c9ed13ac91de16c692604c00a5451389fef4133078",
     "internal/clients/rest/httptransport/response.go": "3e857e91b61c254ab28782b7ef5f725be107c1b18bbab0ee35911689fff18be0",
     "internal/clients/rest/httptransport/stream.go": "78846eaf98bfb461a26bd892c7f34805a6716cb0376423c5bf0abec183b54204",
