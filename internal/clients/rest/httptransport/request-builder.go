@@ -22,7 +22,7 @@ func NewRequestBuilder() *RequestBuilder {
 			PathParams:  make(map[string]string),
 		},
 	}
-	rb.request.SetHeader("User-Agent", "postman-codegen/2.6.0 celitech/2.0.7 (go)")
+	rb.request.SetHeader("User-Agent", "postman-codegen/2.10.0 celitech/2.0.7 (go)")
 	return rb
 }
 
