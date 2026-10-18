@@ -29,7 +29,7 @@ func NewRetryConfig() RetryConfig {
 		RetryDelayJitter:   50 * time.Millisecond,
 		BackOffFactor:      2,
 		MaxRetryAfterDelay: 60000 * time.Millisecond,
-		HTTPMethodsToRetry: []string{"GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"},
+		HTTPMethodsToRetry: []string{"GET", "PUT", "DELETE", "HEAD", "OPTIONS"},
 	}
 }
 

@@ -19,6 +19,7 @@ type Service struct {
 	getEsimConfig        []celitechconfig.RequestOption
 	getEsimDeviceConfig  []celitechconfig.RequestOption
 	getEsimHistoryConfig []celitechconfig.RequestOption
+	suspendEsimConfig    []celitechconfig.RequestOption
 }
 
 func NewService() *Service {
@@ -95,6 +96,14 @@ func (api *Service) SetGetEsimDeviceConfig(opts ...celitechconfig.RequestOption)
 // precedence over service-level config. Per-call options still take highest precedence.
 func (api *Service) SetGetEsimHistoryConfig(opts ...celitechconfig.RequestOption) *Service {
 	api.getEsimHistoryConfig = opts
+	return api
+}
+
+// SetSuspendEsimConfig sets method-level configuration for SuspendEsim.
+// Options are applied to every future call to SuspendEsim and take
+// precedence over service-level config. Per-call options still take highest precedence.
+func (api *Service) SetSuspendEsimConfig(opts ...celitechconfig.RequestOption) *Service {
+	api.suspendEsimConfig = opts
 	return api
 }
 
@@ -180,6 +189,37 @@ func (api *Service) GetEsimHistory(ctx context.Context, iccid string, opts ...ce
 		Build()
 
 	httpClient := restClient.NewRestClient[GetEsimHistoryOkResponse, []byte](config, api.manager, api.getHook())
+	resp, err := httpClient.Call(*httpRequest)
+	if err != nil {
+		return nil, sharedmodels.NewCelitechError[[]byte](err)
+	}
+
+	return &resp.Data, nil
+}
+
+// Suspends an eSIM to prevent abuse. All of the eSIM's packages are terminated and its connectivity is switched off. The eSIM is not refunded: the charge stays.
+func (api *Service) SuspendEsim(ctx context.Context, iccid string, params SuspendEsimRequestParams, opts ...celitechconfig.RequestOption) (*SuspendEsimOkResponse, error) {
+	config := *api.config()
+	for _, opt := range api.suspendEsimConfig {
+		opt(&config)
+	}
+	for _, opt := range opts {
+		opt(&config)
+	}
+
+	httpRequest := httptransport.NewRequestBuilder().WithContext(ctx).
+		WithMethod("POST").
+		WithPath("/esim/{iccid}/suspend").
+		WithConfig(config).
+		AddPathParam("iccid", iccid).
+		WithOptions(params).
+		WithContentType(httptransport.ContentTypeJSON).
+		WithResponseContentType(httptransport.ContentTypeJSON).
+		WithScopes([]string{}).
+		WithSecuritySchemes([]httptransport.AuthScheme{httptransport.AuthSchemeOAuth2}).
+		Build()
+
+	httpClient := restClient.NewRestClient[SuspendEsimOkResponse, []byte](config, api.manager, api.getHook())
 	resp, err := httpClient.Call(*httpRequest)
 	if err != nil {
 		return nil, sharedmodels.NewCelitechError[[]byte](err)
