@@ -1,5 +1,10 @@
 package purchases
 
+// CreatePurchaseV2RequestParams holds the optional parameters for the API request.
+type CreatePurchaseV2RequestParams struct {
+	IdempotencyKey *string `explode:"false" serializationStyle:"simple" maxLength:"255" minLength:"1" headerParam:"Idempotency-Key"`
+}
+
 // ListPurchasesRequestParams holds the optional parameters for the API request.
 type ListPurchasesRequestParams struct {
 	PurchaseID  *string  `explode:"true" serializationStyle:"form" queryParam:"purchaseId"`
@@ -12,4 +17,19 @@ type ListPurchasesRequestParams struct {
 	Limit       *float64 `explode:"true" serializationStyle:"form" queryParam:"limit"`
 	After       *float64 `explode:"true" serializationStyle:"form" queryParam:"after"`
 	Before      *float64 `explode:"true" serializationStyle:"form" queryParam:"before"`
+}
+
+// CreatePurchaseRequestParams holds the optional parameters for the API request.
+type CreatePurchaseRequestParams struct {
+	IdempotencyKey *string `explode:"false" serializationStyle:"simple" maxLength:"255" minLength:"1" headerParam:"Idempotency-Key"`
+}
+
+// TopUpEsimRequestParams holds the optional parameters for the API request.
+type TopUpEsimRequestParams struct {
+	IdempotencyKey *string `explode:"false" serializationStyle:"simple" maxLength:"255" minLength:"1" headerParam:"Idempotency-Key"`
+}
+
+// EditPurchaseRequestParams holds the optional parameters for the API request.
+type EditPurchaseRequestParams struct {
+	IdempotencyKey *string `explode:"false" serializationStyle:"simple" maxLength:"255" minLength:"1" headerParam:"Idempotency-Key"`
 }

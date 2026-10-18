@@ -126,7 +126,7 @@ func (api *Service) SetGetPurchaseConsumptionConfig(opts ...celitechconfig.Reque
 }
 
 // This endpoint is used to purchase a new eSIM by providing the package details.
-func (api *Service) CreatePurchaseV2(ctx context.Context, createPurchaseV2Request CreatePurchaseV2Request, opts ...celitechconfig.RequestOption) ([]CreatePurchaseV2OkResponse, error) {
+func (api *Service) CreatePurchaseV2(ctx context.Context, createPurchaseV2Request CreatePurchaseV2Request, params CreatePurchaseV2RequestParams, opts ...celitechconfig.RequestOption) ([]CreatePurchaseV2OkResponse, error) {
 	config := *api.config()
 	for _, opt := range api.createPurchaseV2Config {
 		opt(&config)
@@ -141,6 +141,7 @@ func (api *Service) CreatePurchaseV2(ctx context.Context, createPurchaseV2Reques
 		WithConfig(config).
 		WithBody(createPurchaseV2Request).
 		AddHeader("CONTENT-TYPE", "application/json").
+		WithOptions(params).
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
@@ -187,7 +188,7 @@ func (api *Service) ListPurchases(ctx context.Context, params ListPurchasesReque
 }
 
 // This endpoint is used to purchase a new eSIM by providing the package details.
-func (api *Service) CreatePurchase(ctx context.Context, createPurchaseRequest CreatePurchaseRequest, opts ...celitechconfig.RequestOption) (*CreatePurchaseOkResponse, error) {
+func (api *Service) CreatePurchase(ctx context.Context, createPurchaseRequest CreatePurchaseRequest, params CreatePurchaseRequestParams, opts ...celitechconfig.RequestOption) (*CreatePurchaseOkResponse, error) {
 	config := *api.config()
 	for _, opt := range api.createPurchaseConfig {
 		opt(&config)
@@ -202,6 +203,7 @@ func (api *Service) CreatePurchase(ctx context.Context, createPurchaseRequest Cr
 		WithConfig(config).
 		WithBody(createPurchaseRequest).
 		AddHeader("CONTENT-TYPE", "application/json").
+		WithOptions(params).
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
@@ -218,7 +220,7 @@ func (api *Service) CreatePurchase(ctx context.Context, createPurchaseRequest Cr
 }
 
 // This endpoint is used to top-up an existing eSIM with the previously associated destination by providing its ICCID and package details. To determine if an eSIM can be topped up, use the Get eSIM endpoint, which returns the `isTopUpAllowed` flag.
-func (api *Service) TopUpEsim(ctx context.Context, topUpEsimRequest TopUpEsimRequest, opts ...celitechconfig.RequestOption) (*TopUpEsimOkResponse, error) {
+func (api *Service) TopUpEsim(ctx context.Context, topUpEsimRequest TopUpEsimRequest, params TopUpEsimRequestParams, opts ...celitechconfig.RequestOption) (*TopUpEsimOkResponse, error) {
 	config := *api.config()
 	for _, opt := range api.topUpEsimConfig {
 		opt(&config)
@@ -233,6 +235,7 @@ func (api *Service) TopUpEsim(ctx context.Context, topUpEsimRequest TopUpEsimReq
 		WithConfig(config).
 		WithBody(topUpEsimRequest).
 		AddHeader("CONTENT-TYPE", "application/json").
+		WithOptions(params).
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
@@ -256,7 +259,7 @@ func (api *Service) TopUpEsim(ctx context.Context, topUpEsimRequest TopUpEsimReq
 // - Updates must comply with the same pricing structure; the modification cannot alter the package size or change its duration category.
 //
 // The end date can be extended or shortened as long as it adheres to the same pricing category and does not exceed the allowed duration limits.
-func (api *Service) EditPurchase(ctx context.Context, editPurchaseRequest EditPurchaseRequest, opts ...celitechconfig.RequestOption) (*EditPurchaseOkResponse, error) {
+func (api *Service) EditPurchase(ctx context.Context, editPurchaseRequest EditPurchaseRequest, params EditPurchaseRequestParams, opts ...celitechconfig.RequestOption) (*EditPurchaseOkResponse, error) {
 	config := *api.config()
 	for _, opt := range api.editPurchaseConfig {
 		opt(&config)
@@ -271,6 +274,7 @@ func (api *Service) EditPurchase(ctx context.Context, editPurchaseRequest EditPu
 		WithConfig(config).
 		WithBody(editPurchaseRequest).
 		AddHeader("CONTENT-TYPE", "application/json").
+		WithOptions(params).
 		WithContentType(httptransport.ContentTypeJSON).
 		WithResponseContentType(httptransport.ContentTypeJSON).
 		WithScopes([]string{}).
