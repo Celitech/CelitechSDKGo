@@ -47,6 +47,10 @@ func UnmarshalNullable(source []byte, target any) error {
 
 	for i := 0; i < typ.NumField(); i++ {
 		field := typ.Field(i)
+		if field.PkgPath != "" {
+			// An unexported field (a privatized literal or stream flag) is set by the model's own code.
+			continue
+		}
 		jsonKey := field.Tag.Get("json")
 
 		split := strings.Split(jsonKey, ",")
@@ -66,6 +70,10 @@ func UnmarshalNullable(source []byte, target any) error {
 		fieldVal := val.Field(i)
 
 		// Handle null explicitly
+		if string(rawVal) == "null" && fieldVal.Kind() == reflect.Ptr && fieldVal.Type().Elem().Kind() != reflect.Struct {
+			// A plain optional pointer stays nil on null.
+			continue
+		}
 		if string(rawVal) == "null" && fieldVal.Kind() == reflect.Ptr {
 			// Create a new instance of the pointer's element (e.g. Nullable[T])
 			newNullable := reflect.New(fieldVal.Type().Elem()).Elem()
@@ -112,7 +120,13 @@ func checkRequiredKeys(rawMap map[string]json.RawMessage, t reflect.Type) error 
 		if r, ok := field.Tag.Lookup("required"); !ok || r != "true" {
 			continue
 		}
-		jsonKey := strings.SplitN(field.Tag.Get("json"), ",", 2)[0]
+		jsonTag := field.Tag.Get("json")
+		if jsonTag == "-" {
+			// Not part of the JSON (a folded path, query or header parameter), so it cannot be
+			// required in it.
+			continue
+		}
+		jsonKey := strings.SplitN(jsonTag, ",", 2)[0]
 		if jsonKey == "" {
 			jsonKey = field.Name
 		}

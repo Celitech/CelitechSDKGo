@@ -18,8 +18,8 @@ type TopUpEsimRequest struct {
 	Duration *float64 `json:"duration,omitempty" xml:"duration,omitempty"`
 	// Email address where the purchase confirmation email will be sent (excluding QR Code & activation steps).
 	Email *string `json:"email,omitempty" xml:"email,omitempty"`
-	// An identifier provided by the partner to link this purchase to their booking or transaction for analytics and debugging purposes.
-	ReferenceID *string `json:"referenceId,omitempty" xml:"referenceId,omitempty"`
+	// An identifier provided by the partner to link this purchase to their booking or transaction for analytics and debugging purposes. Letters, digits, `-`, `_`, `.`, `@` and `+` are allowed (so an email address works), up to 255 characters.
+	ReferenceID *string `json:"referenceId,omitempty" xml:"referenceId,omitempty" maxLength:"255" pattern:"^[a-zA-Z0-9\-_.@+]+$"`
 	// Customize the email subject brand. The `emailBrand` parameter cannot exceed 25 characters in length and must contain only letters, numbers, and spaces. This feature is available to platforms with Diamond tier only.
 	EmailBrand *string `json:"emailBrand,omitempty" xml:"emailBrand,omitempty"`
 	// Epoch value representing the start time of the package's validity. This timestamp can be set to the current time or any time within the next 12 months.

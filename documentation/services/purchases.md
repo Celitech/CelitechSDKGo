@@ -20,10 +20,11 @@ This endpoint is used to purchase a new eSIM by providing the package details.
 
 **Parameters**
 
-| Name                    | Type                    | Required | Description                 |
-| :---------------------- | :---------------------- | :------- | :-------------------------- |
-| ctx                     | Context                 | ✅       | Default go language context |
-| createPurchaseV2Request | CreatePurchaseV2Request | ✅       |                             |
+| Name                    | Type                          | Required | Description                   |
+| :---------------------- | :---------------------------- | :------- | :---------------------------- |
+| ctx                     | Context                       | ✅       | Default go language context   |
+| createPurchaseV2Request | CreatePurchaseV2Request       | ✅       |                               |
+| params                  | CreatePurchaseV2RequestParams | ✅       | Additional request parameters |
 
 **Return Type**
 
@@ -46,13 +47,16 @@ config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 
+params := purchases.CreatePurchaseV2RequestParams{}
+
+
 request := purchases.CreatePurchaseV2Request{
   Destination: "FRA",
   DataLimitInGb: float64(1),
   Quantity: float64(1),
 }
 
-response, err := client.Purchases.CreatePurchaseV2(context.Background(), request)
+response, err := client.Purchases.CreatePurchaseV2(context.Background(), request, params)
 if err != nil {
   panic(err)
 }
@@ -114,10 +118,11 @@ This endpoint is used to purchase a new eSIM by providing the package details.
 
 **Parameters**
 
-| Name                  | Type                  | Required | Description                 |
-| :-------------------- | :-------------------- | :------- | :-------------------------- |
-| ctx                   | Context               | ✅       | Default go language context |
-| createPurchaseRequest | CreatePurchaseRequest | ✅       |                             |
+| Name                  | Type                        | Required | Description                   |
+| :-------------------- | :-------------------------- | :------- | :---------------------------- |
+| ctx                   | Context                     | ✅       | Default go language context   |
+| createPurchaseRequest | CreatePurchaseRequest       | ✅       |                               |
+| params                | CreatePurchaseRequestParams | ✅       | Additional request parameters |
 
 **Return Type**
 
@@ -140,6 +145,9 @@ config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 
+params := purchases.CreatePurchaseRequestParams{}
+
+
 request := purchases.CreatePurchaseRequest{
   Destination: "FRA",
   DataLimitInGb: float64(1),
@@ -147,7 +155,7 @@ request := purchases.CreatePurchaseRequest{
   EndDate: "2023-11-20",
 }
 
-response, err := client.Purchases.CreatePurchase(context.Background(), request)
+response, err := client.Purchases.CreatePurchase(context.Background(), request, params)
 if err != nil {
   panic(err)
 }
@@ -164,10 +172,11 @@ This endpoint is used to top-up an existing eSIM with the previously associated 
 
 **Parameters**
 
-| Name             | Type             | Required | Description                 |
-| :--------------- | :--------------- | :------- | :-------------------------- |
-| ctx              | Context          | ✅       | Default go language context |
-| topUpEsimRequest | TopUpEsimRequest | ✅       |                             |
+| Name             | Type                   | Required | Description                   |
+| :--------------- | :--------------------- | :------- | :---------------------------- |
+| ctx              | Context                | ✅       | Default go language context   |
+| topUpEsimRequest | TopUpEsimRequest       | ✅       |                               |
+| params           | TopUpEsimRequestParams | ✅       | Additional request parameters |
 
 **Return Type**
 
@@ -190,12 +199,15 @@ config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 
+params := purchases.TopUpEsimRequestParams{}
+
+
 request := purchases.TopUpEsimRequest{
   Iccid: "1111222233334444555000",
   DataLimitInGb: float64(1),
 }
 
-response, err := client.Purchases.TopUpEsim(context.Background(), request)
+response, err := client.Purchases.TopUpEsim(context.Background(), request, params)
 if err != nil {
   panic(err)
 }
@@ -212,10 +224,11 @@ This endpoint allows you to modify the validity dates of an existing purchase. *
 
 **Parameters**
 
-| Name                | Type                | Required | Description                 |
-| :------------------ | :------------------ | :------- | :-------------------------- |
-| ctx                 | Context             | ✅       | Default go language context |
-| editPurchaseRequest | EditPurchaseRequest | ✅       |                             |
+| Name                | Type                      | Required | Description                   |
+| :------------------ | :------------------------ | :------- | :---------------------------- |
+| ctx                 | Context                   | ✅       | Default go language context   |
+| editPurchaseRequest | EditPurchaseRequest       | ✅       |                               |
+| params              | EditPurchaseRequestParams | ✅       | Additional request parameters |
 
 **Return Type**
 
@@ -238,13 +251,16 @@ config.SetClientSecret("CLIENT_SECRET")
 client := celitech.NewCelitech(config)
 
 
+params := purchases.EditPurchaseRequestParams{}
+
+
 request := purchases.EditPurchaseRequest{
   PurchaseID: "ae471106-c8b4-42cf-b83a-b061291f2922",
   StartDate: "2023-11-01",
   EndDate: "2023-11-20",
 }
 
-response, err := client.Purchases.EditPurchase(context.Background(), request)
+response, err := client.Purchases.EditPurchase(context.Background(), request, params)
 if err != nil {
   panic(err)
 }

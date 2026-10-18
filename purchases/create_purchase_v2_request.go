@@ -20,8 +20,8 @@ type CreatePurchaseV2Request struct {
 	Quantity float64 `json:"quantity" xml:"quantity" required:"true" min:"1" max:"5"`
 	// Email address where the purchase confirmation email will be sent (including QR Code & activation steps)
 	Email *string `json:"email,omitempty" xml:"email,omitempty"`
-	// An identifier provided by the partner to link this purchase to their booking or transaction for analytics and debugging purposes.
-	ReferenceID *string `json:"referenceId,omitempty" xml:"referenceId,omitempty"`
+	// An identifier provided by the partner to link this purchase to their booking or transaction for analytics and debugging purposes. Letters, digits, `-`, `_`, `.`, `@` and `+` are allowed (so an email address works), up to 255 characters.
+	ReferenceID *string `json:"referenceId,omitempty" xml:"referenceId,omitempty" maxLength:"255" pattern:"^[a-zA-Z0-9\-_.@+]+$"`
 	// Customize the network brand of the issued eSIM. The `networkBrand` parameter cannot exceed 15 characters in length and must contain only letters, numbers, dots (.), ampersands (&), and spaces. This feature is available to platforms with Diamond tier only.
 	NetworkBrand *string `json:"networkBrand,omitempty" xml:"networkBrand,omitempty"`
 	// Customize the email subject brand. The `emailBrand` parameter cannot exceed 25 characters in length and must contain only letters, numbers, and spaces. This feature is available to platforms with Diamond tier only.
