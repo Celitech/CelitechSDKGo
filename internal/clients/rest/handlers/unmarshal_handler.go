@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/httptransport"
-	"github.com/Celitech/CelitechSDKGo/v2/internal/contenttypes"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/clients/rest/httptransport"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/contenttypes"
 )
 
 // UnmarshalHandler deserializes response bodies based on content type.

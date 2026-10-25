@@ -18,14 +18,14 @@ Get eSIM
 
 **Parameters**
 
-| Name   | Type                 | Required | Description                   |
-| :----- | :------------------- | :------- | :---------------------------- |
-| ctx    | Context              | ✅       | Default go language context   |
-| params | GetEsimRequestParams | ✅       | Additional request parameters |
+| Name   | Type           | Required | Description                   |
+| :----- | :------------- | :------- | :---------------------------- |
+| ctx    | Context        | ✅       | Default go language context   |
+| params | GetEsimRequest | ✅       | Additional request parameters |
 
 **Return Type**
 
-`GetEsimOkResponse`
+`api.GetEsimResponse`
 
 **Example Usage Code Snippet**
 
@@ -34,21 +34,17 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
-  "github.com/Celitech/CelitechSDKGo/v2/esim"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
-
-params := esim.GetEsimRequestParams{
-  Iccid: celitech.Ptr("1111222233334444555000"),
-}
-
-response, err := client.ESim.GetEsim(context.Background(), params)
+response, err := client.ESim.GetEsim(context.Background(), &api.GetEsimRequest{
+  Iccid: api.Ptr("1111222233334444555000"),
+})
 if err != nil {
   panic(err)
 }
@@ -65,14 +61,15 @@ Get eSIM Device
 
 **Parameters**
 
-| Name  | Type    | Required | Description                 |
-| :---- | :------ | :------- | :-------------------------- |
-| ctx   | Context | ✅       | Default go language context |
-| iccid | string  | ✅       | ID of the eSIM              |
+| Name   | Type                 | Required | Description                   |
+| :----- | :------------------- | :------- | :---------------------------- |
+| ctx    | Context              | ✅       | Default go language context   |
+| iccid  | string               | ✅       | ID of the eSIM                |
+| params | GetEsimDeviceRequest | ✅       | Additional request parameters |
 
 **Return Type**
 
-`GetEsimDeviceOkResponse`
+`api.GetEsimDeviceResponse`
 
 **Example Usage Code Snippet**
 
@@ -81,15 +78,17 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
-response, err := client.ESim.GetEsimDevice(context.Background(), "1111222233334444555000")
+response, err := client.ESim.GetEsimDevice(context.Background(), &api.GetEsimDeviceRequest{
+  Iccid: "1111222233334444555000",
+})
 if err != nil {
   panic(err)
 }
@@ -106,14 +105,15 @@ Get eSIM History
 
 **Parameters**
 
-| Name  | Type    | Required | Description                 |
-| :---- | :------ | :------- | :-------------------------- |
-| ctx   | Context | ✅       | Default go language context |
-| iccid | string  | ✅       | ID of the eSIM              |
+| Name   | Type                  | Required | Description                   |
+| :----- | :-------------------- | :------- | :---------------------------- |
+| ctx    | Context               | ✅       | Default go language context   |
+| iccid  | string                | ✅       | ID of the eSIM                |
+| params | GetEsimHistoryRequest | ✅       | Additional request parameters |
 
 **Return Type**
 
-`GetEsimHistoryOkResponse`
+`api.GetEsimHistoryResponse`
 
 **Example Usage Code Snippet**
 
@@ -122,15 +122,17 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
-response, err := client.ESim.GetEsimHistory(context.Background(), "1111222233334444555000")
+response, err := client.ESim.GetEsimHistory(context.Background(), &api.GetEsimHistoryRequest{
+  Iccid: "1111222233334444555000",
+})
 if err != nil {
   panic(err)
 }
@@ -147,15 +149,15 @@ Suspends an eSIM to prevent abuse. All of the eSIM's packages are terminated and
 
 **Parameters**
 
-| Name   | Type                     | Required | Description                   |
-| :----- | :----------------------- | :------- | :---------------------------- |
-| ctx    | Context                  | ✅       | Default go language context   |
-| iccid  | string                   | ✅       | ID of the eSIM                |
-| params | SuspendEsimRequestParams | ✅       | Additional request parameters |
+| Name   | Type               | Required | Description                   |
+| :----- | :----------------- | :------- | :---------------------------- |
+| ctx    | Context            | ✅       | Default go language context   |
+| iccid  | string             | ✅       | ID of the eSIM                |
+| params | SuspendEsimRequest | ✅       | Additional request parameters |
 
 **Return Type**
 
-`SuspendEsimOkResponse`
+`api.SuspendEsimResponse`
 
 **Example Usage Code Snippet**
 
@@ -164,19 +166,17 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
-  "github.com/Celitech/CelitechSDKGo/v2/esim"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
-
-params := esim.SuspendEsimRequestParams{}
-
-response, err := client.ESim.SuspendEsim(context.Background(), "1111222233334444555000", params)
+response, err := client.ESim.SuspendEsim(context.Background(), &api.SuspendEsimRequest{
+  Iccid: "1111222233334444555000",
+})
 if err != nil {
   panic(err)
 }

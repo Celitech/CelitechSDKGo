@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/Celitech/CelitechSDKGo/v2/internal/utils"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/utils"
 )
 
 // Unmarshal deserializes JSON bytes into the target based on its type.

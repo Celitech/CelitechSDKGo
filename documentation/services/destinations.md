@@ -21,7 +21,7 @@ List Destinations
 
 **Return Type**
 
-`ListDestinationsOkResponse`
+`api.ListDestinationsResponse`
 
 **Example Usage Code Snippet**
 
@@ -30,13 +30,13 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
 response, err := client.Destinations.ListDestinations(context.Background())
 if err != nil {

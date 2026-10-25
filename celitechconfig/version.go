@@ -1,3 +1,3 @@
 package celitechconfig
 
-const Version = "2.0.10"
+const Version = "3.0.0"

@@ -3,7 +3,9 @@ package celitechconfig
 import (
 	"time"
 
-	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/hooks"
+	core "github.com/Celitech/CelitechSDKGo/v3/core"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/clients/rest/hooks"
+	"net/http"
 )
 
 // RetryConfig holds all runtime-configurable retry parameters for the SDK client.
@@ -23,13 +25,13 @@ type RetryConfig struct {
 // NewRetryConfig returns a RetryConfig initialized with the spec-derived default values.
 func NewRetryConfig() RetryConfig {
 	return RetryConfig{
-		MaxAttempts:        3,
-		RetryDelay:         150 * time.Millisecond,
-		MaxDelay:           5000 * time.Millisecond,
+		MaxAttempts:        2,
+		RetryDelay:         1000 * time.Millisecond,
+		MaxDelay:           60000 * time.Millisecond,
 		RetryDelayJitter:   50 * time.Millisecond,
 		BackOffFactor:      2,
 		MaxRetryAfterDelay: 60000 * time.Millisecond,
-		HTTPMethodsToRetry: []string{"GET", "PUT", "DELETE", "HEAD", "OPTIONS"},
+		HTTPMethodsToRetry: []string{"GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"},
 	}
 }
 
@@ -42,6 +44,8 @@ type Config struct {
 	ClientSecret *string
 	OAuthBaseURL string
 	Retry        RetryConfig
+	HTTPClient   core.HTTPClient
+	HTTPHeader   http.Header
 	HookParams   map[string]string
 	hook         hooks.Hook
 }
@@ -50,10 +54,11 @@ type Config struct {
 // Sets the base URL to the default environment and timeout to 10 seconds.
 func NewConfig() Config {
 	return Config{
-		BaseURL:      string(DefaultEnvironment),
+		BaseURL:      "https://api.celitech.net/v1",
 		Timeout:      time.Second * 10,
 		OAuthBaseURL: "https://auth.celitech.net",
 		Retry:        NewRetryConfig(),
+		HTTPHeader:   make(http.Header),
 		HookParams:   make(map[string]string),
 	}
 }
@@ -82,11 +87,18 @@ func (c *Config) SetRetryConfig(retry RetryConfig) {
 	c.Retry = retry
 }
 
+// SetHTTPClient overrides the HTTP client used for all requests.
+func (c *Config) SetHTTPClient(httpClient core.HTTPClient) {
+	c.HTTPClient = httpClient
+}
+
+// SetHTTPHeader sets a global request header applied to every outgoing request.
+func (c *Config) SetHTTPHeader(key, value string) {
+	c.HTTPHeader.Set(key, value)
+}
+
 // SetEnvironment configures the SDK to use the specified environment's base URL.
 // It is equivalent to calling SetBaseURL with the environment's URL value.
-func (c *Config) SetEnvironment(environment Environment) {
-	c.SetBaseURL(string(environment))
-}
 
 // RequestOption is a function that configures a single request.
 // Options are applied to a copy of the service config and do not affect subsequent calls.

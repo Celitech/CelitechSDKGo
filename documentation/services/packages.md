@@ -15,14 +15,14 @@ List Packages
 
 **Parameters**
 
-| Name   | Type                      | Required | Description                   |
-| :----- | :------------------------ | :------- | :---------------------------- |
-| ctx    | Context                   | ✅       | Default go language context   |
-| params | ListPackagesRequestParams | ✅       | Additional request parameters |
+| Name   | Type                | Required | Description                   |
+| :----- | :------------------ | :------- | :---------------------------- |
+| ctx    | Context             | ✅       | Default go language context   |
+| params | ListPackagesRequest | ✅       | Additional request parameters |
 
 **Return Type**
 
-`ListPackagesOkResponse`
+`api.ListPackagesResponse`
 
 **Example Usage Code Snippet**
 
@@ -31,19 +31,15 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
-  "github.com/Celitech/CelitechSDKGo/v2/packages"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
-
-params := packages.ListPackagesRequestParams{}
-
-response, err := client.Packages.ListPackages(context.Background(), params)
+response, err := client.Packages.ListPackages(context.Background(), &api.ListPackagesRequest{})
 if err != nil {
   panic(err)
 }

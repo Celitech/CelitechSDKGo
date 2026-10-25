@@ -1,11 +1,12 @@
-# Celitech Go SDK 2.0.10
+# Celitech Go SDK 3.0.0
 
 Welcome to the Celitech SDK documentation. This guide will help you get started with integrating and using the Celitech SDK in your project.
 
 ## Versions
 
-- API version: `2.0.10`
-- SDK version: `2.0.10`
+- SDK version: `3.0.0`
+- Authors: CELITECH
+- Homepage: [https://docs.celitech.com/](https://docs.celitech.com/)
 
 ## About the API
 
@@ -44,7 +45,6 @@ Token URL: `https://auth.celitech.net/oauth2/token`
   - [Supported Language Versions](#supported-language-versions)
 - [Authentication](#authentication)
   - [OAuth Authentication](#oauth-authentication)
-  - [Environment Variables](#environment-variables)
 - [Setting a Custom Timeout](#setting-a-custom-timeout)
 - [Sample Usage](#sample-usage)
 - [Services](#services)
@@ -67,24 +67,11 @@ The Celitech API uses OAuth for authentication.
 You need to provide the OAuth parameters when initializing the SDK.
 
 ```go
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 ```
-
-## Environment Variables
-
-These are the environment variables for the SDK:
-
-| Name          | Description             |
-| :------------ | :---------------------- |
-| CLIENT_ID     | Client ID parameter     |
-| CLIENT_SECRET | Client Secret parameter |
-
-Environment variables are a way to configure your application outside the code. You can set these environment variables on the command line or use your project's existing tooling for managing environment variables.
-
-If you are using a `.env` file, a template with the variable names is provided in the `.env.example` file located in the same directory as this README.
 
 ## Setting a Custom Timeout
 
@@ -93,9 +80,9 @@ You can set a custom timeout for the SDK's HTTP requests as follows:
 ```go
 import "time"
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 
-sdk := celitech.NewCelitech(config)
+sdk := api.NewClient(config)
 
 sdk.SetTimeout(10 * time.Second)
 ```
@@ -109,13 +96,13 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
 response, err := client.Destinations.ListDestinations(context.Background())
 if err != nil {
@@ -190,26 +177,27 @@ The SDK includes several models that represent the data structures used in API r
 <details>
 <summary>Below is a list of all available models with links to their detailed documentation:</summary>
 
-| Name                                                                                             | Description |
-| :----------------------------------------------------------------------------------------------- | :---------- |
-| [ListDestinationsOkResponse](documentation/models/list_destinations_ok_response.md)              |             |
-| [ListPackagesOkResponse](documentation/models/list_packages_ok_response.md)                      |             |
-| [CreatePurchaseV2OkResponse](documentation/models/create_purchase_v2_ok_response.md)             |             |
-| [CreatePurchaseV2Request](documentation/models/create_purchase_v2_request.md)                    |             |
-| [ListPurchasesOkResponse](documentation/models/list_purchases_ok_response.md)                    |             |
-| [CreatePurchaseOkResponse](documentation/models/create_purchase_ok_response.md)                  |             |
-| [CreatePurchaseRequest](documentation/models/create_purchase_request.md)                         |             |
-| [TopUpEsimOkResponse](documentation/models/top_up_esim_ok_response.md)                           |             |
-| [TopUpEsimRequest](documentation/models/top_up_esim_request.md)                                  |             |
-| [EditPurchaseOkResponse](documentation/models/edit_purchase_ok_response.md)                      |             |
-| [EditPurchaseRequest](documentation/models/edit_purchase_request.md)                             |             |
-| [GetPurchaseConsumptionOkResponse](documentation/models/get_purchase_consumption_ok_response.md) |             |
-| [GetEsimOkResponse](documentation/models/get_esim_ok_response.md)                                |             |
-| [GetEsimDeviceOkResponse](documentation/models/get_esim_device_ok_response.md)                   |             |
-| [GetEsimHistoryOkResponse](documentation/models/get_esim_history_ok_response.md)                 |             |
-| [SuspendEsimOkResponse](documentation/models/suspend_esim_ok_response.md)                        |             |
-| [TokenOkResponse](documentation/models/token_ok_response.md)                                     |             |
-| [GrantType](documentation/models/grant_type.md)                                                  |             |
+| Name                                                                                        | Description |
+| :------------------------------------------------------------------------------------------ | :---------- |
+| [ListDestinationsResponse](documentation/models/list_destinations_response.md)              |             |
+| [ErrorResponse](documentation/models/error_response.md)                                     |             |
+| [ListPackagesResponse](documentation/models/list_packages_response.md)                      |             |
+| [CreatePurchaseV2ResponseItem](documentation/models/create_purchase_v2_response_item.md)    |             |
+| [CreatePurchaseV2Request](documentation/models/create_purchase_v2_request.md)               |             |
+| [ListPurchasesResponse](documentation/models/list_purchases_response.md)                    |             |
+| [CreatePurchaseResponse](documentation/models/create_purchase_response.md)                  |             |
+| [CreatePurchaseRequest](documentation/models/create_purchase_request.md)                    |             |
+| [TopUpEsimResponse](documentation/models/top_up_esim_response.md)                           |             |
+| [TopUpEsimRequest](documentation/models/top_up_esim_request.md)                             |             |
+| [EditPurchaseResponse](documentation/models/edit_purchase_response.md)                      |             |
+| [EditPurchaseRequest](documentation/models/edit_purchase_request.md)                        |             |
+| [GetPurchaseConsumptionResponse](documentation/models/get_purchase_consumption_response.md) |             |
+| [GetEsimResponse](documentation/models/get_esim_response.md)                                |             |
+| [GetEsimDeviceResponse](documentation/models/get_esim_device_response.md)                   |             |
+| [GetEsimHistoryResponse](documentation/models/get_esim_history_response.md)                 |             |
+| [SuspendEsimResponse](documentation/models/suspend_esim_response.md)                        |             |
+| [TokenResponse](documentation/models/token_response.md)                                     |             |
+| [GrantType](documentation/models/grant_type.md)                                             |             |
 
 </details>
 
