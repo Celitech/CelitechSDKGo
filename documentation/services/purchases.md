@@ -20,15 +20,15 @@ This endpoint is used to purchase a new eSIM by providing the package details.
 
 **Parameters**
 
-| Name                    | Type                          | Required | Description                   |
-| :---------------------- | :---------------------------- | :------- | :---------------------------- |
-| ctx                     | Context                       | ✅       | Default go language context   |
-| createPurchaseV2Request | CreatePurchaseV2Request       | ✅       |                               |
-| params                  | CreatePurchaseV2RequestParams | ✅       | Additional request parameters |
+| Name                    | Type                        | Required | Description                   |
+| :---------------------- | :-------------------------- | :------- | :---------------------------- |
+| ctx                     | Context                     | ✅       | Default go language context   |
+| createPurchaseV2Request | api.CreatePurchaseV2Request | ✅       |                               |
+| params                  | CreatePurchaseV2Request     | ✅       | Additional request parameters |
 
 **Return Type**
 
-`[]CreatePurchaseV2OkResponse`
+`[]*api.CreatePurchaseV2ResponseItem`
 
 **Example Usage Code Snippet**
 
@@ -37,26 +37,22 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
-  "github.com/Celitech/CelitechSDKGo/v2/purchases"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
 
-params := purchases.CreatePurchaseV2RequestParams{}
-
-
-request := purchases.CreatePurchaseV2Request{
+request := api.CreatePurchaseV2Request{
   Destination: "FRA",
   DataLimitInGb: float64(1),
   Quantity: float64(1),
 }
 
-response, err := client.Purchases.CreatePurchaseV2(context.Background(), request, params)
+response, err := client.Purchases.CreatePurchaseV2(context.Background(), &request)
 if err != nil {
   panic(err)
 }
@@ -73,14 +69,14 @@ This endpoint can be used to list all the successful purchases made between a gi
 
 **Parameters**
 
-| Name   | Type                       | Required | Description                   |
-| :----- | :------------------------- | :------- | :---------------------------- |
-| ctx    | Context                    | ✅       | Default go language context   |
-| params | ListPurchasesRequestParams | ✅       | Additional request parameters |
+| Name   | Type                 | Required | Description                   |
+| :----- | :------------------- | :------- | :---------------------------- |
+| ctx    | Context              | ✅       | Default go language context   |
+| params | ListPurchasesRequest | ✅       | Additional request parameters |
 
 **Return Type**
 
-`ListPurchasesOkResponse`
+`api.ListPurchasesResponse`
 
 **Example Usage Code Snippet**
 
@@ -89,19 +85,15 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
-  "github.com/Celitech/CelitechSDKGo/v2/purchases"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
-
-params := purchases.ListPurchasesRequestParams{}
-
-response, err := client.Purchases.ListPurchases(context.Background(), params)
+response, err := client.Purchases.ListPurchases(context.Background(), &api.ListPurchasesRequest{})
 if err != nil {
   panic(err)
 }
@@ -118,15 +110,15 @@ This endpoint is used to purchase a new eSIM by providing the package details.
 
 **Parameters**
 
-| Name                  | Type                        | Required | Description                   |
-| :-------------------- | :-------------------------- | :------- | :---------------------------- |
-| ctx                   | Context                     | ✅       | Default go language context   |
-| createPurchaseRequest | CreatePurchaseRequest       | ✅       |                               |
-| params                | CreatePurchaseRequestParams | ✅       | Additional request parameters |
+| Name                  | Type                      | Required | Description                   |
+| :-------------------- | :------------------------ | :------- | :---------------------------- |
+| ctx                   | Context                   | ✅       | Default go language context   |
+| createPurchaseRequest | api.CreatePurchaseRequest | ✅       |                               |
+| params                | CreatePurchaseRequest     | ✅       | Additional request parameters |
 
 **Return Type**
 
-`CreatePurchaseOkResponse`
+`api.CreatePurchaseResponse`
 
 **Example Usage Code Snippet**
 
@@ -135,27 +127,23 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
-  "github.com/Celitech/CelitechSDKGo/v2/purchases"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
 
-params := purchases.CreatePurchaseRequestParams{}
-
-
-request := purchases.CreatePurchaseRequest{
+request := api.CreatePurchaseRequest{
   Destination: "FRA",
   DataLimitInGb: float64(1),
   StartDate: "2023-11-01",
   EndDate: "2023-11-20",
 }
 
-response, err := client.Purchases.CreatePurchase(context.Background(), request, params)
+response, err := client.Purchases.CreatePurchase(context.Background(), &request)
 if err != nil {
   panic(err)
 }
@@ -172,15 +160,15 @@ This endpoint is used to top-up an existing eSIM with the previously associated 
 
 **Parameters**
 
-| Name             | Type                   | Required | Description                   |
-| :--------------- | :--------------------- | :------- | :---------------------------- |
-| ctx              | Context                | ✅       | Default go language context   |
-| topUpEsimRequest | TopUpEsimRequest       | ✅       |                               |
-| params           | TopUpEsimRequestParams | ✅       | Additional request parameters |
+| Name             | Type                 | Required | Description                   |
+| :--------------- | :------------------- | :------- | :---------------------------- |
+| ctx              | Context              | ✅       | Default go language context   |
+| topUpEsimRequest | api.TopUpEsimRequest | ✅       |                               |
+| params           | TopUpEsimRequest     | ✅       | Additional request parameters |
 
 **Return Type**
 
-`TopUpEsimOkResponse`
+`api.TopUpEsimResponse`
 
 **Example Usage Code Snippet**
 
@@ -189,25 +177,21 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
-  "github.com/Celitech/CelitechSDKGo/v2/purchases"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
 
-params := purchases.TopUpEsimRequestParams{}
-
-
-request := purchases.TopUpEsimRequest{
+request := api.TopUpEsimRequest{
   Iccid: "1111222233334444555000",
   DataLimitInGb: float64(1),
 }
 
-response, err := client.Purchases.TopUpEsim(context.Background(), request, params)
+response, err := client.Purchases.TopUpEsim(context.Background(), &request)
 if err != nil {
   panic(err)
 }
@@ -224,15 +208,15 @@ This endpoint allows you to modify the validity dates of an existing purchase. *
 
 **Parameters**
 
-| Name                | Type                      | Required | Description                   |
-| :------------------ | :------------------------ | :------- | :---------------------------- |
-| ctx                 | Context                   | ✅       | Default go language context   |
-| editPurchaseRequest | EditPurchaseRequest       | ✅       |                               |
-| params              | EditPurchaseRequestParams | ✅       | Additional request parameters |
+| Name                | Type                    | Required | Description                   |
+| :------------------ | :---------------------- | :------- | :---------------------------- |
+| ctx                 | Context                 | ✅       | Default go language context   |
+| editPurchaseRequest | api.EditPurchaseRequest | ✅       |                               |
+| params              | EditPurchaseRequest     | ✅       | Additional request parameters |
 
 **Return Type**
 
-`EditPurchaseOkResponse`
+`api.EditPurchaseResponse`
 
 **Example Usage Code Snippet**
 
@@ -241,26 +225,22 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
-  "github.com/Celitech/CelitechSDKGo/v2/purchases"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
 
-params := purchases.EditPurchaseRequestParams{}
-
-
-request := purchases.EditPurchaseRequest{
+request := api.EditPurchaseRequest{
   PurchaseID: "ae471106-c8b4-42cf-b83a-b061291f2922",
   StartDate: "2023-11-01",
   EndDate: "2023-11-20",
 }
 
-response, err := client.Purchases.EditPurchase(context.Background(), request, params)
+response, err := client.Purchases.EditPurchase(context.Background(), &request)
 if err != nil {
   panic(err)
 }
@@ -277,14 +257,15 @@ This endpoint can be called for consumption notifications (e.g. every 1 hour or 
 
 **Parameters**
 
-| Name       | Type    | Required | Description                 |
-| :--------- | :------ | :------- | :-------------------------- |
-| ctx        | Context | ✅       | Default go language context |
-| purchaseID | string  | ✅       | ID of the purchase          |
+| Name       | Type                          | Required | Description                   |
+| :--------- | :---------------------------- | :------- | :---------------------------- |
+| ctx        | Context                       | ✅       | Default go language context   |
+| purchaseID | string                        | ✅       | ID of the purchase            |
+| params     | GetPurchaseConsumptionRequest | ✅       | Additional request parameters |
 
 **Return Type**
 
-`GetPurchaseConsumptionOkResponse`
+`api.GetPurchaseConsumptionResponse`
 
 **Example Usage Code Snippet**
 
@@ -293,15 +274,17 @@ import (
   "fmt"
   "encoding/json"
   "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
+  "github.com/Celitech/CelitechSDKGo/v3"
 )
 
-config := celitech.NewConfig()
+config := api.NewConfig()
 config.SetClientID("CLIENT_ID")
 config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+client := api.NewClient(config)
 
-response, err := client.Purchases.GetPurchaseConsumption(context.Background(), "4973fa15-6979-4daa-9cf3-672620df819c")
+response, err := client.Purchases.GetPurchaseConsumption(context.Background(), &api.GetPurchaseConsumptionRequest{
+  PurchaseID: "4973fa15-6979-4daa-9cf3-672620df819c",
+})
 if err != nil {
   panic(err)
 }

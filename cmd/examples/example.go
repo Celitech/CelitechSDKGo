@@ -7,16 +7,13 @@ import (
 	"strings"
 
 	"context"
-	"github.com/Celitech/CelitechSDKGo/v2"
+	"github.com/Celitech/CelitechSDKGo/v3/client"
 )
 
 func main() {
 	loadEnv()
 
-	config := celitech.NewConfig()
-	config.SetClientID("CLIENT_ID")
-	config.SetClientSecret("CLIENT_SECRET")
-	client := celitech.NewCelitech(config)
+	client := client.NewClient()
 
 	response, err := client.Destinations.ListDestinations(context.Background())
 	if err != nil {

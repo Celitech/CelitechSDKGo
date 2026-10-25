@@ -9,10 +9,11 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/Celitech/CelitechSDKGo/v2/celitechconfig"
-	"github.com/Celitech/CelitechSDKGo/v2/internal/contenttypes"
-	"github.com/Celitech/CelitechSDKGo/v2/internal/serialization"
-	"github.com/Celitech/CelitechSDKGo/v2/internal/utils"
+	"github.com/Celitech/CelitechSDKGo/v3/celitechconfig"
+	internal "github.com/Celitech/CelitechSDKGo/v3/internal"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/contenttypes"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/serialization"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/utils"
 )
 
 type paramMap struct {
@@ -76,7 +77,8 @@ type Request struct {
 	// to apply its credentials. Defaults to nil for hand-built Requests,
 	// which preserves the legacy "apply every configured credential"
 	// behaviour.
-	SecuritySchemes []AuthScheme
+	SecuritySchemes     []AuthScheme
+	ExtraBodyProperties map[string]interface{}
 }
 
 // NewRequest creates a new Request with default settings.
@@ -160,6 +162,10 @@ func (r *Request) GetQueryParam(header string) string {
 
 func (r *Request) SetQueryParam(header string, value string) {
 	r.QueryParams[header] = value
+}
+
+func (r *Request) SetExtraBodyProperties(properties map[string]interface{}) {
+	r.ExtraBodyProperties = properties
 }
 
 func (r *Request) GetOptions() any {
@@ -266,6 +272,13 @@ func (r *Request) bodyToBytesReader() (*bytes.Reader, error) {
 	}
 
 	if r.ContentType == ContentTypeJSON {
+		if len(r.ExtraBodyProperties) > 0 {
+			requestBytes, err := internal.MarshalJSONWithExtraProperties(r.Body, r.ExtraBodyProperties)
+			if err != nil {
+				return nil, err
+			}
+			return bytes.NewReader(requestBytes), nil
+		}
 		return contenttypes.ToJSON(r.Body)
 	} else if r.ContentType == ContentTypeMultipartFormData {
 		bytesReader, contentTypeHeader, err := contenttypes.ToFormData(r.Body)

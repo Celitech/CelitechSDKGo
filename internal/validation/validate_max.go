@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/Celitech/CelitechSDKGo/v2/internal/utils"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/utils"
 )
 
 // validateMax validates that a numeric field value is less than or equal to the 'max' tag value.

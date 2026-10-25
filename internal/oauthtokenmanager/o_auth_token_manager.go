@@ -3,7 +3,7 @@ package oauthtokenmanager
 import (
 	"errors"
 	"fmt"
-	"github.com/Celitech/CelitechSDKGo/v2/celitechconfig"
+	"github.com/Celitech/CelitechSDKGo/v3/celitechconfig"
 	"time"
 )
 
