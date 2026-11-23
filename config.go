@@ -1,9 +1,9 @@
-package celitech
+package api
 
 import (
-	"github.com/Celitech/CelitechSDKGo/v2/celitechconfig"
-	"github.com/Celitech/CelitechSDKGo/v2/internal/oauthtokenmanager"
-	"github.com/Celitech/CelitechSDKGo/v2/param"
+	"github.com/Celitech/CelitechSDKGo/v3/celitechconfig"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/oauthtokenmanager"
+	"github.com/Celitech/CelitechSDKGo/v3/param"
 )
 
 // The type aliases below let consumers use a single import path for the entire SDK.
@@ -14,9 +14,6 @@ type Config = celitechconfig.Config
 
 // RequestOption is a function that configures a single request.
 type RequestOption = celitechconfig.RequestOption
-
-// Environment defines the available API base URLs.
-type Environment = celitechconfig.Environment
 
 // RetryConfig holds all runtime-configurable retry parameters.
 type RetryConfig = celitechconfig.RetryConfig
@@ -53,11 +50,6 @@ func Null[T any]() *param.Nullable[T] { return param.Null[T]() }
 
 // Ptr returns a pointer to v — use when no type-specific helper exists.
 func Ptr[T any](v T) *T { return param.Ptr(v) }
-
-// Environment constants for the available API base URLs.
-const (
-	DefaultEnvironment Environment = celitechconfig.DefaultEnvironment
-)
 
 // TokenCache is the interface for persisting OAuth access tokens across process restarts.
 // Implement this interface and pass it to SetTokenCache to enable token persistence.

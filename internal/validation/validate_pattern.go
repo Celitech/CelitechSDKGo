@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"regexp"
 
-	"github.com/Celitech/CelitechSDKGo/v2/internal/utils"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/utils"
 )
 
 // validatePattern validates that a string field matches the regex pattern specified in its 'pattern' tag.
