@@ -6,7 +6,8 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/httptransport"
+	core "github.com/Celitech/CelitechSDKGo/v3/core"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/clients/rest/httptransport"
 )
 
 // TerminatingHandler is the final handler in the chain that executes the actual HTTP request.
@@ -25,17 +26,24 @@ func NewTerminatingHandler[T any, E any]() *TerminatingHandler[T, E] {
 func (h *TerminatingHandler[T, E]) Handle(request httptransport.Request) (*httptransport.Response[T], *httptransport.ErrorResponse[E]) {
 	requestClone := request.Clone()
 
-	client := http.Client{}
-	if requestClone.Config.Timeout != 0 {
-		client.Timeout = requestClone.Config.Timeout
-	}
-
 	req, err := requestClone.CreateHTTPRequest()
 	if err != nil {
 		return nil, httptransport.NewErrorResponse[E](err, nil)
 	}
 
-	resp, err := client.Do(req)
+	for k, vs := range requestClone.Config.HTTPHeader {
+		if _, exists := req.Header[k]; !exists {
+			req.Header[k] = vs
+		}
+	}
+
+	var doer core.HTTPClient
+	if requestClone.Config.HTTPClient != nil {
+		doer = requestClone.Config.HTTPClient
+	} else {
+		doer = &http.Client{Timeout: requestClone.Config.Timeout}
+	}
+	resp, err := doer.Do(req)
 	if err != nil {
 		return nil, httptransport.NewErrorResponse[E](err, nil)
 	}
@@ -64,17 +72,24 @@ func (h *TerminatingHandler[T, E]) Handle(request httptransport.Request) (*httpt
 func (h *TerminatingHandler[T, E]) HandleStream(request httptransport.Request) (*httptransport.Stream[T], *httptransport.ErrorResponse[E]) {
 	requestClone := request.Clone()
 
-	client := http.Client{}
-	if requestClone.Config.Timeout != 0 {
-		client.Timeout = requestClone.Config.Timeout
-	}
-
 	req, err := requestClone.CreateHTTPRequest()
 	if err != nil {
 		return nil, httptransport.NewErrorResponse[E](err, nil)
 	}
 
-	resp, err := client.Do(req)
+	for k, vs := range requestClone.Config.HTTPHeader {
+		if _, exists := req.Header[k]; !exists {
+			req.Header[k] = vs
+		}
+	}
+
+	var doer core.HTTPClient
+	if requestClone.Config.HTTPClient != nil {
+		doer = requestClone.Config.HTTPClient
+	} else {
+		doer = &http.Client{Timeout: requestClone.Config.Timeout}
+	}
+	resp, err := doer.Do(req)
 	if err != nil {
 		return nil, httptransport.NewErrorResponse[E](err, nil)
 	}

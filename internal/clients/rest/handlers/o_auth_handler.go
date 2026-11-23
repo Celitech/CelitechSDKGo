@@ -3,8 +3,8 @@ package handlers
 import (
 	"errors"
 	"fmt"
-	"github.com/Celitech/CelitechSDKGo/v2/internal/clients/rest/httptransport"
-	"github.com/Celitech/CelitechSDKGo/v2/internal/configmanager"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/clients/rest/httptransport"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/configmanager"
 )
 
 // OAuthHandler manages OAuth token injection into requests requiring OAuth authentication.

@@ -1,8 +1,8 @@
 package configmanager
 
 import (
-	"github.com/Celitech/CelitechSDKGo/v2/celitechconfig"
-	"github.com/Celitech/CelitechSDKGo/v2/internal/oauthtokenmanager"
+	"github.com/Celitech/CelitechSDKGo/v3/celitechconfig"
+	"github.com/Celitech/CelitechSDKGo/v3/internal/oauthtokenmanager"
 	"time"
 )
 
@@ -28,7 +28,7 @@ func NewConfigManager(config celitechconfig.Config, tokenService oauthtokenmanag
 		eSim:              config,
 		iFrame:            config,
 		oAuth:             config,
-		oAuthTokenManager: oauthtokenmanager.NewOAuthTokenManager(tokenService, 5),
+		oAuthTokenManager: oauthtokenmanager.NewOAuthTokenManager(tokenService, 30),
 	}
 }
 

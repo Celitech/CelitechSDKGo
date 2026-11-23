@@ -1,13 +1,6 @@
-# Celitech Go SDK 2.0.10
+# Celitech Go Library
 
-Welcome to the Celitech SDK documentation. This guide will help you get started with integrating and using the Celitech SDK in your project.
-
-## Versions
-
-- API version: `2.0.10`
-- SDK version: `2.0.10`
-
-## About the API
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Celitech%2FGo)
 
 Welcome to the CELITECH API documentation!
 
@@ -40,181 +33,143 @@ Token URL: `https://auth.celitech.net/oauth2/token`
 
 ## Table of Contents
 
-- [Setup & Configuration](#setup--configuration)
-  - [Supported Language Versions](#supported-language-versions)
-- [Authentication](#authentication)
-  - [OAuth Authentication](#oauth-authentication)
-  - [Environment Variables](#environment-variables)
-- [Setting a Custom Timeout](#setting-a-custom-timeout)
-- [Sample Usage](#sample-usage)
-- [Services](#services)
-  - [Response Wrappers](#response-wrappers)
-- [Models](#models)
-- [License](#license)
+- [Reference](#reference)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Errors](#errors)
+- [Request Options](#request-options)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Timeouts](#timeouts)
+- [Contributing](#contributing)
 
-# Setup & Configuration
+## Reference
 
-## Supported Language Versions
+A full reference for this library is available [here](./reference.md).
 
-This SDK is compatible with the following versions: `Go >= 1.19.0`
+## Installation
 
-## Authentication
+This SDK requires Go 1.22 or later.
 
-### OAuth Authentication
-
-The Celitech API uses OAuth for authentication.
-
-You need to provide the OAuth parameters when initializing the SDK.
-
-```go
-config := celitech.NewConfig()
-config.SetClientID("CLIENT_ID")
-config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
+```sh
+go get github.com/Celitech/CelitechSDKGo/v3
 ```
 
-## Environment Variables
-
-These are the environment variables for the SDK:
-
-| Name          | Description             |
-| :------------ | :---------------------- |
-| CLIENT_ID     | Client ID parameter     |
-| CLIENT_SECRET | Client Secret parameter |
-
-Environment variables are a way to configure your application outside the code. You can set these environment variables on the command line or use your project's existing tooling for managing environment variables.
-
-If you are using a `.env` file, a template with the variable names is provided in the `.env.example` file located in the same directory as this README.
-
-## Setting a Custom Timeout
-
-You can set a custom timeout for the SDK's HTTP requests as follows:
-
-```go
-import "time"
-
-config := celitech.NewConfig()
-
-sdk := celitech.NewCelitech(config)
-
-sdk.SetTimeout(10 * time.Second)
-```
-
-# Sample Usage
-
-Below is a comprehensive example demonstrating how to authenticate and call a simple endpoint:
+## Usage
 
 ```go
 import (
-  "fmt"
-  "encoding/json"
-  "context"
-  "github.com/Celitech/CelitechSDKGo/v2"
+	apiclient "github.com/Celitech/CelitechSDKGo/v3/client"
+	context "context"
+	option "github.com/Celitech/CelitechSDKGo/v3/option"
 )
 
-config := celitech.NewConfig()
-config.SetClientID("CLIENT_ID")
-config.SetClientSecret("CLIENT_SECRET")
-client := celitech.NewCelitech(config)
-
-response, err := client.Destinations.ListDestinations(context.Background())
-if err != nil {
-  panic(err)
-}
-
-fmt.Println(response)
-
+client := apiclient.NewCelitech(
+	option.WithClientID(
+		"YOUR_CLIENT_ID",
+	),
+	option.WithClientSecret(
+		"YOUR_CLIENT_SECRET",
+	),
+)
+client.Destinations.ListDestinations(
+	context.TODO(),
+)
 ```
 
-## Services
+## Environments
 
-The SDK provides various services to interact with the API.
+This SDK allows you to configure a different environment for API requests by passing the
+`WithBaseURL` request option to the client.
 
-<details>
-<summary>Below is a list of all available services with links to their detailed documentation:</summary>
+```go
+import (
+  "github.com/Celitech/CelitechSDKGo/v3/client"
+  "github.com/Celitech/CelitechSDKGo/v3/option"
+  "github.com/Celitech/CelitechSDKGo/v3"
+)
 
-| Name                                                   |
-| :----------------------------------------------------- |
-| [Destinations](documentation/services/destinations.md) |
-| [Packages](documentation/services/packages.md)         |
-| [Purchases](documentation/services/purchases.md)       |
-| [ESim](documentation/services/e_sim.md)                |
-| [IFrame](documentation/services/i_frame.md)            |
+client := client.NewCelitech(
+  option.WithBaseURL(api.Environments.Default),
+)
+```
 
-</details>
+Available environments:
 
-### Response Wrappers
+- `api.Environments.Default`
 
-All services use response wrappers to provide a consistent interface to return the responses from the API.
+`WithBaseURL` also accepts any URL string, such as a staging server or a local mock.
 
-The response wrapper itself is a generic struct that contains the response data and metadata.
+## Errors
 
-<details>
-<summary>Below are the response wrappers used in the SDK:</summary>
+A non-2xx response returns an `error` wrapping a `*core.APIError`, which carries the status code
+and raw response body:
 
-#### `CelitechResponse[T]`
+```go
+var apiErr *core.APIError
+if errors.As(err, &apiErr) {
+  fmt.Println(apiErr.StatusCode)
+}
+```
 
-This response wrapper is used to return the response data from the API. It contains the following fields:
+The `core` package also exposes typed errors for endpoints that declare them, each
+embedding `*core.APIError` so the status code is still reachable through it.
 
-| Name     | Type                       | Description                                 |
-| :------- | :------------------------- | :------------------------------------------ |
-| Data     | `T`                        | The body of the API response                |
-| Metadata | `CelitechResponseMetadata` | Status code and headers returned by the API |
+## Request Options
 
-#### `CelitechError[T]`
+Every method accepts variadic `opts ...option.RequestOption` to override behavior for a single
+call — a different base URL, additional headers, or a longer timeout:
 
-This response wrapper is used to return an error. It contains the following fields:
+```go
+response, err := client.SomeResource.SomeMethod(
+  ctx,
+  request,
+  option.WithHTTPHeader(httpHeader),
+  option.WithMaxAttempts(1),
+)
+```
 
-| Name     | Type                    | Description                                                       |
-| :------- | :---------------------- | :---------------------------------------------------------------- |
-| Err      | `error`                 | The error that occurred                                           |
-| Data     | `*T`                    | The deserialized error response data (nil if unmarshaling failed) |
-| Body     | `[]byte`                | The raw body of the API response                                  |
-| Metadata | `CelitechErrorMetadata` | Status code and headers returned by the API                       |
+## Advanced
 
-#### `CelitechResponseMetadata`
+### Custom Client
 
-This struct is shared by both response wrappers and contains the following fields:
+This SDK is built to work with any instance of `*http.Client`. By default, if no client is
+provided, the SDK constructs one. You can pass your own through `option.WithHTTPClient`:
 
-| Name       | Type                | Description                                      |
-| :--------- | :------------------ | :----------------------------------------------- |
-| Headers    | `map[string]string` | A map containing the headers returned by the API |
-| StatusCode | `int`               | The status code returned by the API              |
+```go
+customClient := &http.Client{}
 
-</details>
+client := client.NewClient(
+  option.WithHTTPClient(customClient),
+)
+```
 
-## Models
+### Timeouts
 
-The SDK includes several models that represent the data structures used in API requests and responses. These models help in organizing and managing the data efficiently.
+```go
+import (
+  "net/http"
+  "time"
+  "github.com/Celitech/CelitechSDKGo/v3/client"
+  "github.com/Celitech/CelitechSDKGo/v3/option"
+)
 
-<details>
-<summary>Below is a list of all available models with links to their detailed documentation:</summary>
+client := client.NewCelitech(
+  option.WithHTTPClient(
+    &http.Client{
+      Timeout: 10 * time.Second,
+    },
+  ),
+)
+```
 
-| Name                                                                                             | Description |
-| :----------------------------------------------------------------------------------------------- | :---------- |
-| [ListDestinationsOkResponse](documentation/models/list_destinations_ok_response.md)              |             |
-| [ListPackagesOkResponse](documentation/models/list_packages_ok_response.md)                      |             |
-| [CreatePurchaseV2OkResponse](documentation/models/create_purchase_v2_ok_response.md)             |             |
-| [CreatePurchaseV2Request](documentation/models/create_purchase_v2_request.md)                    |             |
-| [ListPurchasesOkResponse](documentation/models/list_purchases_ok_response.md)                    |             |
-| [CreatePurchaseOkResponse](documentation/models/create_purchase_ok_response.md)                  |             |
-| [CreatePurchaseRequest](documentation/models/create_purchase_request.md)                         |             |
-| [TopUpEsimOkResponse](documentation/models/top_up_esim_ok_response.md)                           |             |
-| [TopUpEsimRequest](documentation/models/top_up_esim_request.md)                                  |             |
-| [EditPurchaseOkResponse](documentation/models/edit_purchase_ok_response.md)                      |             |
-| [EditPurchaseRequest](documentation/models/edit_purchase_request.md)                             |             |
-| [GetPurchaseConsumptionOkResponse](documentation/models/get_purchase_consumption_ok_response.md) |             |
-| [GetEsimOkResponse](documentation/models/get_esim_ok_response.md)                                |             |
-| [GetEsimDeviceOkResponse](documentation/models/get_esim_device_ok_response.md)                   |             |
-| [GetEsimHistoryOkResponse](documentation/models/get_esim_history_ok_response.md)                 |             |
-| [SuspendEsimOkResponse](documentation/models/suspend_esim_ok_response.md)                        |             |
-| [TokenOkResponse](documentation/models/token_ok_response.md)                                     |             |
-| [GrantType](documentation/models/grant_type.md)                                                  |             |
+## Contributing
 
-</details>
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
 
-## License
-
-This SDK is licensed under the MIT License.
-
-See the [LICENSE](LICENSE) file for more details.
+On the other hand, contributions to the README are always very welcome!
