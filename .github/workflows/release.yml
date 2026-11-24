@@ -1,18 +1,24 @@
 name: Release
+
+# Runs when a merge to main changes the SDK version: creates the tag v<version> and the GitHub release.
+# Go has no registry to upload to: the semver git tag is the release, and proxy.golang.org / pkg.go.dev
+# pick it up from there. Same flow as the Postman workflow it replaces. Kept out of Fern's regeneration
+# by .fernignore.
+#
+# The version is read from .manifest.json (config.target.sdkVersion, with or without a leading "v"),
+# so this file never needs editing for a new version.
 on:
   push:
-    branches: ['main']
+    branches: [main]
     paths:
-      - '.github/workflows/release.yml'
+      - '.manifest.json'
       - 'go.mod'
+      - '.github/workflows/release.yml'
   workflow_dispatch:
 
-env:
-  # SDK identity baked in at generation time from the in-memory build context,
-  # so the workflow never reads go.mod or any other file at runtime.
-  SDK_VERSION: '2.0.10'
-  SDK_MODULE_PATH: 'github.com/Celitech/CelitechSDKGo/v2'
-  RELEASE_TAG: 'v2.0.10'
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 jobs:
   release:
@@ -20,29 +26,49 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - name: Create tag if it does not exist
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version
+        id: pkg
         run: |
-          if gh api "repos/${{ github.repository }}/git/refs/tags/$RELEASE_TAG" >/dev/null 2>&1; then
-            echo "::notice::Tag $RELEASE_TAG already exists, nothing to do"
-            exit 0
+          version=$(node -p "require('./.manifest.json').config.target.sdkVersion")
+          version="${version#v}"
+          if [ -z "$version" ] || [ "$version" = "undefined" ]; then
+            echo "::error::config.target.sdkVersion not found in .manifest.json"
+            exit 1
           fi
-          gh api -X POST "repos/${{ github.repository }}/git/refs" \
-            -f ref="refs/tags/$RELEASE_TAG" \
-            -f sha="${{ github.sha }}"
-          echo "::notice::Created tag $RELEASE_TAG at ${{ github.sha }}"
-      # Go has no central package registry to upload to: the semver Git tag IS
-      # the published release. The module proxy (proxy.golang.org) and pkg.go.dev
-      # index modules on demand the first time someone fetches them, so there is
-      # no upload step and the tag created above is what publishes the version.
-      - name: Create GitHub release
+          module=$(awk '/^module / { print $2 }' go.mod)
+          # Go requires the module path to end in /vN for major version N >= 2 (v3.x.x -> .../v3).
+          major="${version%%.*}"
+          if [ "$major" -ge 2 ] && [[ "$module" != */v${major} ]]; then
+            echo "::error::Version ${version} needs a module path ending in /v${major}, but go.mod says ${module}"
+            exit 1
+          fi
+          echo "tag=v${version}" >> "$GITHUB_OUTPUT"
+          echo "module=${module}" >> "$GITHUB_OUTPUT"
+
+      - name: Create tag and GitHub release
+        id: release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.pkg.outputs.tag }}
         run: |
-          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
-            echo "::notice::Release $RELEASE_TAG already exists"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::notice::Release $TAG already exists; nothing to release"
+            echo "created=false" >> "$GITHUB_OUTPUT"
           else
-            gh release create "$RELEASE_TAG" --title "$RELEASE_TAG" --generate-notes
+            gh release create "$TAG" --target "$GITHUB_SHA" --title "$TAG" --generate-notes
+            echo "created=true" >> "$GITHUB_OUTPUT"
           fi
+
+      # Optional: asks the Go module proxy to fetch the new version now, so it shows up on pkg.go.dev
+      # sooner. Without it, the proxy fetches it the first time someone runs `go get`.
+      - name: Notify the Go module proxy
+        if: steps.release.outputs.created == 'true'
+        env:
+          MODULE: ${{ steps.pkg.outputs.module }}
+          TAG: ${{ steps.pkg.outputs.tag }}
+        run: |
+          curl -sf "https://proxy.golang.org/${MODULE}/@v/${TAG}.info" \
+            || echo "::notice::The proxy will pick up ${TAG} on the first go get"
